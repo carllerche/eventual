@@ -58,7 +58,9 @@ pub fn test_stream_consumer_loses_interest() {
 
     let vals: Vec<usize> = dst.take(3).iter().collect();
     assert_eq!(&[1, 2, 3], &vals);
-    assert_eq!(vals, rx.iter().collect());
+
+    let vals: Vec<usize> = rx.iter().collect();
+    assert_eq!(&[1, 2, 3], &vals);
 }
 
 #[test]
