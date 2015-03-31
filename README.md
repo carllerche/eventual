@@ -8,8 +8,8 @@ number of computation builders to operate on them.
 To use `Eventual`, first add this to your `Cargo.toml`:
 
 ```toml
-[dependencies]
-eventual = "https://github.com/carllerche/eventual"
+[dependencies.eventual]
+git = "https://github.com/carllerche/eventual"
 ```
 
 Then, add this to your crate root:
