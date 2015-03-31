@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["Complete","An object that is used to fulfill or reject an associated Future."],["Future",""]]});

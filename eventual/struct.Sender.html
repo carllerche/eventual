@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `Sender` struct in crate `eventual`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, Sender">
+
+    <title>eventual::Sender - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../main.css">
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <section class="sidebar">
+        
+        <p class='location'><a href='index.html'>eventual</a></p><script>window.sidebarCurrent = {name: 'Sender', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </section>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press 'S' to search, '?' for more options..."
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content struct">
+<h1 class='fqn'><span class='in-band'>Struct <a href='index.html'>eventual</a>::<wbr><a class='struct' href=''>Sender</a><wbr></span><span class='out-of-band'><span id='render-detail'>
+            <a id="collapse-all" href="#">[-]</a>&nbsp;<a id="expand-all" href="#">[+]</a>
+        </span><a id='src-17046' href='../src/eventual/stream.rs.html#436-438'>[src]</a></span></h1>
+<pre class='rust struct'>pub struct Sender&lt;T: <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a>, E: <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a>&gt; {
+    // some fields omitted
+}</pre><div class='docblock'><p>The sending half of <code>Stream::pair()</code>. Can only be owned by a single task at
+a time.</p>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><a class='stability Unmarked' title='No stability level'></a><code>impl&lt;T: <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a>, E: <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a>&gt; <a class='struct' href='../eventual/struct.Sender.html' title='eventual::Sender'>Sender</a>&lt;T, E&gt;</code></h3><div class='impl-items'><h4 id='method.send' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.send' class='fnname'>send</a>(self, val: T) -&gt; <a class='struct' href='../eventual/struct.BusySender.html' title='eventual::BusySender'>BusySender</a>&lt;T, E&gt;</code></h4>
+<div class='docblock'><p>Attempts to send a value to its <code>Stream</code>. Consumes self and returns a
+future representing the operation completing successfully and interest
+in the next value being expressed.</p>
+</div><h4 id='method.fail' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.fail' class='fnname'>fail</a>(self, err: E)</code></h4>
+<div class='docblock'><p>Terminated the stream with the given error.</p>
+</div><h4 id='method.abort' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.abort' class='fnname'>abort</a>(self)</code></h4>
+<div class='docblock'><p>Fails the paired <code>Stream</code> with a cancellation error. This will
+eventually go away when carllerche/syncbox#10 lands. It is currently
+needed to keep the state correct (see async::sequence)</p>
+</div><h4 id='method.send_all' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.send_all' class='fnname'>send_all</a>&lt;S: Source&lt;Value=T&gt;&gt;(self, src: S) -&gt; <a class='struct' href='../eventual/struct.Future.html' title='eventual::Future'>Future</a>&lt;<a class='struct' href='../eventual/struct.Sender.html' title='eventual::Sender'>Sender</a>&lt;T, E&gt;, <a href='http://doc.rust-lang.org/nightly/std/primitive.tuple.html'>(Error, <a class='struct' href='../eventual/struct.Sender.html' title='eventual::Sender'>Sender</a>&lt;T, E&gt;)</a>&gt;</code></h4>
+<div class='docblock'><p>Send all the values in the given source</p>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><a class='stability Unmarked' title='No stability level'></a><code>impl&lt;T: <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a>, E: <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a>&gt; <a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Async</a> for <a class='struct' href='../eventual/struct.Sender.html' title='eventual::Sender'>Sender</a>&lt;T, E&gt;</code></h3><div class='impl-items'><h4 id='assoc_type.Value' class='type'><a class='stability Unmarked' title='No stability level'></a><code>type Value = <a class='struct' href='../eventual/struct.Sender.html' title='eventual::Sender'>Sender</a>&lt;T, E&gt;</code></h4>
+<h4 id='assoc_type.Error' class='type'><a class='stability Unmarked' title='No stability level'></a><code>type Error = <a href='http://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a></code></h4>
+<h4 id='assoc_type.Cancel' class='type'><a class='stability Unmarked' title='No stability level'></a><code>type Cancel = <a class='struct' href='../eventual/struct.Receipt.html' title='eventual::Receipt'>Receipt</a>&lt;<a class='struct' href='../eventual/struct.Sender.html' title='eventual::Sender'>Sender</a>&lt;T, E&gt;&gt;</code></h4>
+<h4 id='method.is_ready' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.is_ready' class='fnname'>is_ready</a>(&amp;self) -&gt; <a href='http://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
+<h4 id='method.is_err' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.is_err' class='fnname'>is_err</a>(&amp;self) -&gt; <a href='http://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
+<h4 id='method.poll' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.poll' class='fnname'>poll</a>(self) -&gt; <a class='enum' href='http://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='type' href='../eventual/type.AsyncResult.html' title='eventual::AsyncResult'>AsyncResult</a>&lt;<a class='struct' href='../eventual/struct.Sender.html' title='eventual::Sender'>Sender</a>&lt;T, E&gt;, <a href='http://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>&gt;, <a class='struct' href='../eventual/struct.Sender.html' title='eventual::Sender'>Sender</a>&lt;T, E&gt;&gt;</code></h4>
+<h4 id='method.ready' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.ready' class='fnname'>ready</a>&lt;F: <a class='trait' href='http://doc.rust-lang.org/nightly/core/ops/trait.FnOnce.html' title='core::ops::FnOnce'>FnOnce</a>(<a class='struct' href='../eventual/struct.Sender.html' title='eventual::Sender'>Sender</a>&lt;T, E&gt;) + <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static&gt;(self, f: F) -&gt; <a class='struct' href='../eventual/struct.Receipt.html' title='eventual::Receipt'>Receipt</a>&lt;<a class='struct' href='../eventual/struct.Sender.html' title='eventual::Sender'>Sender</a>&lt;T, E&gt;&gt;</code></h4>
+<h4 id='method.expect' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.expect' class='fnname'>expect</a>(self) -&gt; <a class='type' href='../eventual/type.AsyncResult.html' title='eventual::AsyncResult'>AsyncResult</a>&lt;Self::Value, Self::Error&gt;</code></h4>
+<h4 id='method.receive' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.receive' class='fnname'>receive</a>&lt;F&gt;(self, f: F) <span class='where'>where F: <a class='trait' href='http://doc.rust-lang.org/nightly/core/ops/trait.FnOnce.html' title='core::ops::FnOnce'>FnOnce</a>(<a class='type' href='../eventual/type.AsyncResult.html' title='eventual::AsyncResult'>AsyncResult</a>&lt;Self::Value, Self::Error&gt;) + <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a></span></code></h4>
+<h4 id='method.await' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.await' class='fnname'>await</a>(self) -&gt; <a class='type' href='../eventual/type.AsyncResult.html' title='eventual::AsyncResult'>AsyncResult</a>&lt;Self::Value, Self::Error&gt;</code></h4>
+<h4 id='method.fire' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.fire' class='fnname'>fire</a>(self)</code></h4>
+<h4 id='method.and' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.and' class='fnname'>and</a>&lt;U: <a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Async</a>&lt;Error=Self::Error&gt;&gt;(self, next: U) -&gt; <a class='struct' href='../eventual/struct.Future.html' title='eventual::Future'>Future</a>&lt;Value, Self::Error&gt;</code></h4>
+<h4 id='method.and_then' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.and_then' class='fnname'>and_then</a>&lt;F, U: <a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Async</a>&lt;Error=Self::Error&gt;&gt;(self, f: F) -&gt; <a class='struct' href='../eventual/struct.Future.html' title='eventual::Future'>Future</a>&lt;Value, Self::Error&gt; <span class='where'>where F: <a class='trait' href='http://doc.rust-lang.org/nightly/core/ops/trait.FnOnce.html' title='core::ops::FnOnce'>FnOnce</a>(Self::Value) -&gt; U + <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a>, Value: <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a></span></code></h4>
+<h4 id='method.or' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.or' class='fnname'>or</a>&lt;A&gt;(self, alt: A) -&gt; <a class='struct' href='../eventual/struct.Future.html' title='eventual::Future'>Future</a>&lt;Self::Value, Error&gt; <span class='where'>where A: <a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Async</a>&lt;Value=Self::Value&gt;</span></code></h4>
+<h4 id='method.or_else' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.or_else' class='fnname'>or_else</a>&lt;F, A&gt;(self, f: F) -&gt; <a class='struct' href='../eventual/struct.Future.html' title='eventual::Future'>Future</a>&lt;Self::Value, Error&gt; <span class='where'>where F: <a class='trait' href='http://doc.rust-lang.org/nightly/core/ops/trait.FnOnce.html' title='core::ops::FnOnce'>FnOnce</a>(Self::Error) -&gt; A + <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a>, A: <a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Async</a>&lt;Value=Self::Value&gt;</span></code></h4>
+</div><h3 class='impl'><a class='stability Stable' title='Stable'></a><code>impl&lt;T: <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a>, E: <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a>&gt; <a class='trait' href='http://doc.rust-lang.org/nightly/core/ops/trait.Drop.html' title='core::ops::Drop'>Drop</a> for <a class='struct' href='../eventual/struct.Sender.html' title='eventual::Sender'>Sender</a>&lt;T, E&gt;</code></h3><div class='impl-items'><h4 id='method.drop' class='method'><a class='stability Stable' title='Stable'></a><code>fn <a href='#method.drop' class='fnname'>drop</a>(&amp;mut self)</code></h4>
+</div><h3 class='impl'><a class='stability Stable' title='Stable'></a><code>impl&lt;T: <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a>, E: <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a>&gt; <a class='trait' href='http://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> for <a class='struct' href='../eventual/struct.Sender.html' title='eventual::Sender'>Sender</a>&lt;T, E&gt;</code></h3><div class='impl-items'><h4 id='method.fmt' class='method'><a class='stability Stable' title='Stable'></a><code>fn <a href='#method.fmt' class='fnname'>fmt</a>(&amp;self, fmt: &amp;mut <a class='struct' href='http://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html' title='core::fmt::Formatter'>Formatter</a>) -&gt; <a class='type' href='http://doc.rust-lang.org/nightly/core/fmt/type.Result.html' title='core::fmt::Result'>Result</a></code></h4>
+</div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <div id="help" class="hidden">
+        <div class="shortcuts">
+            <h1>Keyboard shortcuts</h1>
+            <dl>
+                <dt>?</dt>
+                <dd>Show this help dialog</dd>
+                <dt>S</dt>
+                <dd>Focus the search field</dd>
+                <dt>&larrb;</dt>
+                <dd>Move up in search results</dd>
+                <dt>&rarrb;</dt>
+                <dd>Move down in search results</dd>
+                <dt>&#9166;</dt>
+                <dd>Go to active search result</dd>
+            </dl>
+        </div>
+        <div class="infos">
+            <h1>Search tricks</h1>
+            <p>
+                Prefix searches with a type followed by a colon (e.g.
+                <code>fn:</code>) to restrict the search to a given type.
+            </p>
+            <p>
+                Accepted types are: <code>fn</code>, <code>mod</code>,
+                <code>struct</code>, <code>enum</code>,
+                <code>trait</code>, <code>typedef</code> (or
+                <code>tdef</code>).
+            </p>
+        </div>
+    </div>
+
+    
+
+    <script>
+        window.rootPath = "../";
+        window.currentCrate = "eventual";
+        window.playgroundUrl = "";
+    </script>
+    <script src="../jquery.js"></script>
+    <script src="../main.js"></script>
+    
+    <script async src="../search-index.js"></script>
+</body>
+</html>

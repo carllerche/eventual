@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `eventual` crate.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, eventual">
+
+    <title>eventual - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../main.css">
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <section class="sidebar">
+        
+        <p class='location'></p><script>window.sidebarCurrent = {name: 'eventual', ty: 'mod', relpath: '../'};</script>
+    </section>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press 'S' to search, '?' for more options..."
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content mod">
+<h1 class='fqn'><span class='in-band'>Crate <a class='mod' href=''>eventual</a><wbr></span><span class='out-of-band'><a href='stability.html'>[stability]</a> <span id='render-detail'>
+            <a id="collapse-all" href="#">[-]</a>&nbsp;<a id="expand-all" href="#">[+]</a>
+        </span><a id='src-0' href='../src/eventual/lib.rs.html#1-460'>[src]</a></span></h1>
+<div class='docblock'><p>Composable primitives for asynchronous computations</p>
+
+<p>The async module contains utilities for managing asynchronous computations.
+These utilities are primarily based around <code>Future</code> and <code>Stream</code> types as
+well as functions that allow composing computations on these types.</p>
+
+<h2 id="future" class='section-header'><a
+                           href="#future">Future</a></h2>
+<p>A <code>Future</code> is a proxy representing the result of a computation which may
+not be complete.  The computation may be running concurrently in another
+thread or may be triggered upon completion of an asynchronous callback. One
+way to think of a <code>Future</code> is as a <code>Result</code> where the value is
+asynchronously computed.</p>
+
+<p>For example:</p>
+<pre id='rust-example-rendered' class='rust '>
+<span class='kw'>use</span> <span class='ident'>eventual</span>::<span class='op'>*</span>;
+
+<span class='comment'>// Run a computation in another thread</span>
+<span class='kw'>let</span> <span class='ident'>future1</span> <span class='op'>=</span> <span class='ident'>Future</span>::<span class='ident'>spawn</span>(<span class='op'>||</span> {
+    <span class='comment'>// Represents an expensive computation, but for now just return a</span>
+    <span class='comment'>// number</span>
+    <span class='number'>42</span>
+});
+
+<span class='comment'>// Run another computation</span>
+<span class='kw'>let</span> <span class='ident'>future2</span> <span class='op'>=</span> <span class='ident'>Future</span>::<span class='ident'>spawn</span>(<span class='op'>||</span> {
+    <span class='comment'>// Another expensive computation</span>
+    <span class='number'>18</span>
+});
+
+<span class='kw'>let</span> <span class='ident'>res</span> <span class='op'>=</span> <span class='ident'>join</span>((
+        <span class='ident'>future1</span>.<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>v</span><span class='op'>|</span> <span class='ident'>v</span> <span class='op'>*</span> <span class='number'>2</span>),
+        <span class='ident'>future2</span>.<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>v</span><span class='op'>|</span> <span class='ident'>v</span> <span class='op'>+</span> <span class='number'>5</span>)))
+    .<span class='ident'>and_then</span>(<span class='op'>|</span>(<span class='ident'>v1</span>, <span class='ident'>v2</span>)<span class='op'>|</span> <span class='ident'>v1</span> <span class='op'>-</span> <span class='ident'>v2</span>)
+    .<span class='ident'>await</span>().<span class='ident'>unwrap</span>();
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='number'>61</span>, <span class='ident'>res</span>);
+</pre>
+
+<h2 id="stream" class='section-header'><a
+                           href="#stream">Stream</a></h2>
+<p>A <code>Stream</code> is like a <code>Future</code>, except that instead of representing a single
+value, it represents a sequence of values.</p>
+</div><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
+<table>
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='struct' href='struct.BusySender.html'
+                               title='eventual::BusySender'>BusySender</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='struct' href='struct.Complete.html'
+                               title='eventual::Complete'>Complete</a></td>
+                        <td class='docblock short'><p>An object that is used to fulfill or reject an associated Future.</p>
+</td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='struct' href='struct.Future.html'
+                               title='eventual::Future'>Future</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='struct' href='struct.Receipt.html'
+                               title='eventual::Receipt'>Receipt</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='struct' href='struct.Sender.html'
+                               title='eventual::Sender'>Sender</a></td>
+                        <td class='docblock short'><p>The sending half of <code>Stream::pair()</code>. Can only be owned by a single task at
+a time.</p>
+</td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='struct' href='struct.Stream.html'
+                               title='eventual::Stream'>Stream</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='struct' href='struct.StreamIter.html'
+                               title='eventual::StreamIter'>StreamIter</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                </table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
+<table>
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='enum' href='enum.AsyncError.html'
+                               title='eventual::AsyncError'>AsyncError</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                </table><h2 id='traits' class='section-header'><a href="#traits">Traits</a></h2>
+<table>
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='trait' href='trait.Async.html'
+                               title='eventual::Async'>Async</a></td>
+                        <td class='docblock short'><p>A value representing an asynchronous computation</p>
+</td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='trait' href='trait.Cancel.html'
+                               title='eventual::Cancel'>Cancel</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='trait' href='trait.Join.html'
+                               title='eventual::Join'>Join</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='trait' href='trait.Pair.html'
+                               title='eventual::Pair'>Pair</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='trait' href='trait.Select.html'
+                               title='eventual::Select'>Select</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                </table><h2 id='functions' class='section-header'><a href="#functions">Functions</a></h2>
+<table>
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='fn' href='fn.join.html'
+                               title='eventual::join'>join</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='fn' href='fn.select.html'
+                               title='eventual::select'>select</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='fn' href='fn.sequence.html'
+                               title='eventual::sequence'>sequence</a></td>
+                        <td class='docblock short'><p>Returns a <code>Stream</code> consisting of the completion of the supplied async
+values in the order that they are completed.</p>
+</td>
+                    </tr>
+                </table><h2 id='types' class='section-header'><a href="#types">Type Definitions</a></h2>
+<table>
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='type' href='type.AsyncResult.html'
+                               title='eventual::AsyncResult'>AsyncResult</a></td>
+                        <td class='docblock short'></td>
+                    </tr>
+                </table></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <div id="help" class="hidden">
+        <div class="shortcuts">
+            <h1>Keyboard shortcuts</h1>
+            <dl>
+                <dt>?</dt>
+                <dd>Show this help dialog</dd>
+                <dt>S</dt>
+                <dd>Focus the search field</dd>
+                <dt>&larrb;</dt>
+                <dd>Move up in search results</dd>
+                <dt>&rarrb;</dt>
+                <dd>Move down in search results</dd>
+                <dt>&#9166;</dt>
+                <dd>Go to active search result</dd>
+            </dl>
+        </div>
+        <div class="infos">
+            <h1>Search tricks</h1>
+            <p>
+                Prefix searches with a type followed by a colon (e.g.
+                <code>fn:</code>) to restrict the search to a given type.
+            </p>
+            <p>
+                Accepted types are: <code>fn</code>, <code>mod</code>,
+                <code>struct</code>, <code>enum</code>,
+                <code>trait</code>, <code>typedef</code> (or
+                <code>tdef</code>).
+            </p>
+        </div>
+    </div>
+
+    
+
+    <script>
+        window.rootPath = "../";
+        window.currentCrate = "eventual";
+        window.playgroundUrl = "";
+    </script>
+    <script src="../jquery.js"></script>
+    <script src="../main.js"></script>
+    
+    <script async src="../search-index.js"></script>
+</body>
+</html>
