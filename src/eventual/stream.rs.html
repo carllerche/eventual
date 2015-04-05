@@ -787,10 +787,6 @@
 <span id="745">745</span>
 <span id="746">746</span>
 <span id="747">747</span>
-<span id="748">748</span>
-<span id="749">749</span>
-<span id="750">750</span>
-<span id="751">751</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> {
     <span class='ident'>receipt</span>,
@@ -1158,7 +1154,7 @@
     }
 
     <span class='kw'>fn</span> <span class='ident'>poll</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>AsyncResult</span><span class='op'>&lt;</span><span class='ident'>Head</span><span class='op'>&lt;</span><span class='ident'>T</span>, <span class='ident'>E</span><span class='op'>&gt;</span>, <span class='ident'>E</span><span class='op'>&gt;</span>, <span class='ident'>Stream</span><span class='op'>&lt;</span><span class='ident'>T</span>, <span class='ident'>E</span><span class='op'>&gt;&gt;</span> {
-        <span class='kw'>let</span> <span class='ident'>core</span> <span class='op'>=</span> <span class='ident'>core</span>::<span class='ident'>take</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>core</span>);
+        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>core</span> <span class='op'>=</span> <span class='ident'>core</span>::<span class='ident'>take</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>core</span>);
 
         <span class='kw'>match</span> <span class='ident'>core</span>.<span class='ident'>consumer_poll</span>() {
             <span class='prelude-val'>Some</span>(<span class='ident'>res</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Ok</span>(<span class='ident'>res</span>),
@@ -1194,7 +1190,6 @@
     }
 }
 
-<span class='attribute'>#[<span class='ident'>unsafe_destructor</span>]</span>
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Send</span>, <span class='ident'>E</span>: <span class='ident'>Send</span><span class='op'>&gt;</span> <span class='ident'>Drop</span> <span class='kw'>for</span> <span class='ident'>Stream</span><span class='op'>&lt;</span><span class='ident'>T</span>, <span class='ident'>E</span><span class='op'>&gt;</span> {
     <span class='kw'>fn</span> <span class='ident'>drop</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
         <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>core</span>.<span class='ident'>is_some</span>() {
@@ -1248,7 +1243,7 @@
     <span class='doccomment'>/// future representing the operation completing successfully and interest</span>
     <span class='doccomment'>/// in the next value being expressed.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>send</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>val</span>: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='ident'>BusySender</span><span class='op'>&lt;</span><span class='ident'>T</span>, <span class='ident'>E</span><span class='op'>&gt;</span> {
-        <span class='kw'>let</span> <span class='ident'>core</span> <span class='op'>=</span> <span class='ident'>core</span>::<span class='ident'>take</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>core</span>);
+        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>core</span> <span class='op'>=</span> <span class='ident'>core</span>::<span class='ident'>take</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>core</span>);
         <span class='kw'>let</span> <span class='ident'>val</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>((<span class='ident'>val</span>, <span class='ident'>Stream</span> { <span class='ident'>core</span>: <span class='prelude-val'>Some</span>(<span class='ident'>core</span>.<span class='ident'>clone</span>()) }));
 
         <span class='comment'>// Complete the value</span>
@@ -1317,13 +1312,12 @@
     }
 }
 
-<span class='attribute'>#[<span class='ident'>unsafe_destructor</span>]</span>
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Send</span>, <span class='ident'>E</span>: <span class='ident'>Send</span><span class='op'>&gt;</span> <span class='ident'>Drop</span> <span class='kw'>for</span> <span class='ident'>Sender</span><span class='op'>&lt;</span><span class='ident'>T</span>, <span class='ident'>E</span><span class='op'>&gt;</span> {
     <span class='kw'>fn</span> <span class='ident'>drop</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
         <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>core</span>.<span class='ident'>is_some</span>() {
             <span class='macro'>debug</span><span class='macro'>!</span>(<span class='string'>&quot;Sender::drop(); cancelling future&quot;</span>);
             <span class='comment'>// Get the core</span>
-            <span class='kw'>let</span> <span class='ident'>core</span> <span class='op'>=</span> <span class='ident'>core</span>::<span class='ident'>take</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>core</span>);
+            <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>core</span> <span class='op'>=</span> <span class='ident'>core</span>::<span class='ident'>take</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>core</span>);
             <span class='ident'>core</span>.<span class='ident'>complete</span>(<span class='prelude-val'>Ok</span>(<span class='prelude-val'>None</span>), <span class='boolval'>true</span>);
         }
     }
@@ -1384,13 +1378,12 @@
     }
 }
 
-<span class='attribute'>#[<span class='ident'>unsafe_destructor</span>]</span>
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Send</span>, <span class='ident'>E</span>: <span class='ident'>Send</span><span class='op'>&gt;</span> <span class='ident'>Drop</span> <span class='kw'>for</span> <span class='ident'>BusySender</span><span class='op'>&lt;</span><span class='ident'>T</span>, <span class='ident'>E</span><span class='op'>&gt;</span> {
     <span class='kw'>fn</span> <span class='ident'>drop</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
         <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>core</span>.<span class='ident'>is_some</span>() {
             <span class='kw'>let</span> <span class='ident'>core</span> <span class='op'>=</span> <span class='ident'>core</span>::<span class='ident'>take</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>core</span>);
 
-            <span class='ident'>core</span>.<span class='ident'>producer_ready</span>(<span class='op'>|</span><span class='ident'>core</span><span class='op'>|</span> {
+            <span class='ident'>core</span>.<span class='ident'>producer_ready</span>(<span class='op'>|</span><span class='kw-2'>mut</span> <span class='ident'>core</span><span class='op'>|</span> {
                 <span class='kw'>if</span> <span class='ident'>core</span>.<span class='ident'>producer_is_ready</span>() {
                     <span class='ident'>core</span>.<span class='ident'>complete</span>(<span class='prelude-val'>Ok</span>(<span class='prelude-val'>None</span>), <span class='boolval'>true</span>);
                 }
@@ -1517,7 +1510,7 @@
     <span class='kw'>fn</span> <span class='ident'>next</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
         <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>mem</span>;
 
-        <span class='kw'>match</span> <span class='ident'>core</span>::<span class='ident'>get</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>core</span>).<span class='ident'>consumer_await</span>() {
+        <span class='kw'>match</span> <span class='ident'>core</span>::<span class='ident'>get_mut</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>core</span>).<span class='ident'>consumer_await</span>() {
             <span class='prelude-val'>Ok</span>(<span class='prelude-val'>Some</span>((<span class='ident'>h</span>, <span class='kw-2'>mut</span> <span class='ident'>rest</span>))) <span class='op'>=&gt;</span> {
                 <span class='ident'>mem</span>::<span class='ident'>replace</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>core</span>, <span class='prelude-val'>Some</span>(<span class='ident'>core</span>::<span class='ident'>take</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>rest</span>.<span class='ident'>core</span>)));
                 <span class='prelude-val'>Some</span>(<span class='ident'>h</span>)
@@ -1531,7 +1524,6 @@
     }
 }
 
-<span class='attribute'>#[<span class='ident'>unsafe_destructor</span>]</span>
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Send</span>, <span class='ident'>E</span>: <span class='ident'>Send</span><span class='op'>&gt;</span> <span class='ident'>Drop</span> <span class='kw'>for</span> <span class='ident'>StreamIter</span><span class='op'>&lt;</span><span class='ident'>T</span>, <span class='ident'>E</span><span class='op'>&gt;</span> {
     <span class='kw'>fn</span> <span class='ident'>drop</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
         <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>core</span>.<span class='ident'>is_some</span>() {
