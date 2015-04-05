@@ -1,11 +1,8 @@
 use {Async, BoxedReceive, AsyncResult, AsyncError};
-use alloc::heap;
 use syncbox::atomic::{self, AtomicU64, AtomicUsize, Ordering};
-use std::{fmt, mem, ptr};
-use std::num::FromPrimitive;
+use std::{fmt, mem};
 use std::sync::atomic::Ordering::{Acquire, Relaxed, Release};
 use std::thread;
-use stdcore::nonzero::NonZero;
 
 use self::Lifecycle::*;
 
@@ -17,13 +14,13 @@ use self::Lifecycle::*;
 
 // Core implementation of Future & Stream
 pub struct Core<T: Send, E: Send> {
-    ptr: NonZero<*mut CoreInner<T, E>>,
+    ptr: *mut CoreInner<T, E>,
 }
 
 impl<T: Send, E: Send> Core<T, E> {
     pub fn new() -> Core<T, E> {
         let ptr = Box::new(CoreInner::<T, E>::new());
-        Core { ptr: unsafe { NonZero::new(mem::transmute(ptr)) }}
+        Core { ptr: unsafe { mem::transmute(ptr) }}
     }
 
     pub fn with_value(val: AsyncResult<T, E>) -> Core<T, E> {
@@ -41,12 +38,12 @@ impl<T: Send, E: Send> Core<T, E> {
     }
 
     /// Returns the underlying value if it has been realized, None otherwise.
-    pub fn consumer_poll(&self) -> Option<AsyncResult<T, E>> {
-        self.inner().consumer_poll()
+    pub fn consumer_poll(&mut self) -> Option<AsyncResult<T, E>> {
+        self.inner_mut().consumer_poll()
     }
 
     /// Blocks the thread until calling `consumer_poll` will return a value.
-    pub fn consumer_await(&self) -> AsyncResult<T, E> {
+    pub fn consumer_await(&mut self) -> AsyncResult<T, E> {
         debug!("Core::consumer_await");
 
         let th = thread::current();
@@ -101,22 +98,22 @@ impl<T: Send, E: Send> Core<T, E> {
         self.inner().producer_ready(f);
     }
 
-    pub fn complete(&self, val: AsyncResult<T, E>, last: bool) {
-        self.inner().complete(val, last);
+    pub fn complete(&mut self, val: AsyncResult<T, E>, last: bool) {
+        self.inner_mut().complete(val, last);
     }
 
-    pub fn cancel(&self) {
-        self.inner().cancel();
+    pub fn cancel(&mut self) {
+        self.inner_mut().cancel();
     }
 
     #[inline]
     fn inner(&self) -> &CoreInner<T, E> {
-        unsafe { &**self.ptr }
+        unsafe { &*self.ptr }
     }
 
     #[inline]
     fn inner_mut(&mut self) -> &mut CoreInner<T, E> {
-        unsafe { &mut **self.ptr }
+        unsafe { &mut *self.ptr }
     }
 }
 
@@ -127,7 +124,6 @@ impl<T: Send, E: Send> Clone for Core<T, E> {
     }
 }
 
-#[unsafe_destructor]
 impl<T: Send, E: Send> Drop for Core<T, E> {
     fn drop(&mut self) {
         if self.inner().ref_dec(Release) != 1 {
@@ -152,20 +148,7 @@ impl<T: Send, E: Send> Drop for Core<T, E> {
         atomic::fence(Acquire);
 
         unsafe {
-            let curr = self.inner().state.load(Relaxed);
-
-            if curr.is_ready() {
-                // The future currently contains the realized value, free it.
-                let _ = self.inner().take_val();
-            }
-
-            let _ = self.inner_mut().consumer_wait.take();
-            let _ = self.inner_mut().producer_wait.take();
-
-            heap::deallocate(
-                *self.ptr as *mut u8,
-                mem::size_of::<CoreInner<T, E>>(),
-                mem::min_align_of::<CoreInner<T, E>>());
+            let _: Box<CoreInner<T, E>> = mem::transmute(self.ptr);
         }
     }
 }
@@ -174,6 +157,10 @@ unsafe impl<T: Send, E: Send> Send for Core<T, E> { }
 
 pub fn get<T: Send, E: Send>(core: &Option<Core<T, E>>) -> &Core<T, E> {
     core.as_ref().expect("expected future core")
+}
+
+pub fn get_mut<T: Send, E: Send>(core: &mut Option<Core<T, E>>) -> &mut Core<T, E> {
+    core.as_mut().expect("expected future core")
 }
 
 pub fn take<T: Send, E: Send>(core: &mut Option<Core<T, E>>) -> Core<T, E> {
@@ -192,7 +179,7 @@ struct CoreInner<T: Send, E: Send> {
     state: AtomicState,
     consumer_wait: Option<Callback<T, E>>,
     producer_wait: Option<Callback<T, E>>,
-    val: AsyncResult<T, E>, // May be uninitialized
+    val: Option<AsyncResult<T, E>>,
 }
 
 impl<T: Send, E: Send> CoreInner<T, E> {
@@ -202,7 +189,7 @@ impl<T: Send, E: Send> CoreInner<T, E> {
             state: AtomicState::new(),
             consumer_wait: None,
             producer_wait: None,
-            val: unsafe { mem::uninitialized() },
+            val: None,
         }
     }
 
@@ -212,7 +199,7 @@ impl<T: Send, E: Send> CoreInner<T, E> {
             state: AtomicState::of(Ready),
             consumer_wait: None,
             producer_wait: None,
-            val: val,
+            val: Some(val),
         }
     }
 
@@ -225,10 +212,12 @@ impl<T: Send, E: Send> CoreInner<T, E> {
             return false;
         }
 
-        self.val.is_err()
+        self.val.as_ref()
+            .expect("expected a value")
+            .is_err()
     }
 
-    pub fn consumer_poll(&self) -> Option<AsyncResult<T, E>> {
+    pub fn consumer_poll(&mut self) -> Option<AsyncResult<T, E>> {
         let curr = self.state.load(Relaxed);
 
         debug!("Core::consumer_poll; state={:?}", curr);
@@ -516,7 +505,7 @@ impl<T: Send, E: Send> CoreInner<T, E> {
         }
     }
 
-    fn cancel(&self) {
+    fn cancel(&mut self) {
         let mut curr = self.state.load(Relaxed);
         let mut next;
         let mut read_val;
@@ -578,7 +567,7 @@ impl<T: Send, E: Send> CoreInner<T, E> {
         }
 
         if read_val {
-            let _ = unsafe { self.take_val() };
+            let _ = self.take_val();
         }
 
         if notify_producer {
@@ -587,7 +576,7 @@ impl<T: Send, E: Send> CoreInner<T, E> {
         }
     }
 
-    fn complete(&self, val: AsyncResult<T, E>, last: bool) {
+    fn complete(&mut self, val: AsyncResult<T, E>, last: bool) {
         let mut curr = self.state.load(Relaxed);
         let mut next;
 
@@ -599,7 +588,7 @@ impl<T: Send, E: Send> CoreInner<T, E> {
         }
 
         // Set the val
-        unsafe { self.put_val(val); }
+        self.put_val(val);
 
         loop {
             next = match curr.lifecycle() {
@@ -610,7 +599,7 @@ impl<T: Send, E: Send> CoreInner<T, E> {
                     debug!("  - dropping val");
                     // The value was set, it will not get freed on drop, so
                     // free it now.
-                    let _ = unsafe { self.take_val() };
+                    let _ = self.take_val();
                     return;
                 }
                 ConsumerWait => {
@@ -701,12 +690,12 @@ impl<T: Send, E: Send> CoreInner<T, E> {
         }
     }
 
-    fn consume_val(&self, mut curr: State) -> AsyncResult<T, E> {
+    fn consume_val(&mut self, mut curr: State) -> AsyncResult<T, E> {
         // Ensure that the memory is synced
         atomic::fence(Acquire);
 
         // Get the value
-        let ret = unsafe { self.take_val() };
+        let ret = self.take_val();
 
         loop {
             let next = match curr.lifecycle() {
@@ -733,12 +722,12 @@ impl<T: Send, E: Send> CoreInner<T, E> {
         }
     }
 
-    unsafe fn put_val(&self, val: AsyncResult<T, E>) {
-        ptr::write(mem::transmute(&self.val), val);
+    fn put_val(&mut self, val: AsyncResult<T, E>) {
+        self.val = Some(val)
     }
 
-    unsafe fn take_val(&self) -> AsyncResult<T, E> {
-        ptr::read(&self.val)
+    fn take_val(&mut self) -> AsyncResult<T, E> {
+        self.val.take().expect("expected a value")
     }
 
     fn put_consumer_wait(&self, cb: Callback<T, E>) {
@@ -857,7 +846,7 @@ impl AtomicState {
     }
 }
 
-#[derive(Copy, Eq, PartialEq)]
+#[derive(Copy, Clone, Eq, PartialEq)]
 struct State {
     val: u64,
 }
@@ -877,8 +866,7 @@ impl State {
     }
 
     fn lifecycle(&self) -> Lifecycle {
-        FromPrimitive::from_u64(self.val & LIFECYCLE_MASK)
-            .expect("unexpected state value")
+        Lifecycle::from_u64(self.val & LIFECYCLE_MASK)
     }
 
     fn with_lifecycle(&self, val: Lifecycle) -> State {
@@ -983,6 +971,24 @@ enum Lifecycle {
     ConsumerNotifyProducerWait = 8,
     // FINAL - The future has been canceled
     Canceled = 9,
+}
+
+impl Lifecycle {
+    fn from_u64(v: u64) -> Lifecycle {
+        match v {
+            0 => New,
+            1 => ConsumerWait,
+            2 => ProducerWait,
+            3 => Ready,
+            4 => ReadyProducerWait,
+            5 => ProducerNotify,
+            6 => ProducerNotifyCanceled,
+            7 => ConsumerNotify,
+            8 => ConsumerNotifyProducerWait,
+            9 => Canceled,
+            _ => panic!("unexpected lifecycle value"),
+        }
+    }
 }
 
 #[cfg(test)]

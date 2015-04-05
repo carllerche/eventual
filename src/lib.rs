@@ -48,10 +48,6 @@
 
 #![crate_name = "eventual"]
 
-#![feature(alloc, core, unsafe_destructor)]
-
-extern crate alloc;
-extern crate core as stdcore;
 extern crate syncbox;
 
 #[macro_use]

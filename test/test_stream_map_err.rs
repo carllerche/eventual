@@ -11,7 +11,7 @@ pub fn test_stream_map_err_success() {
         .fire();
 
     let vals: Vec<i32> = rx.iter().collect();
-    assert_eq!(&[123, 234, 345], &vals);
+    assert_eq!(&[123, 234, 345], &vals[..]);
 }
 
 #[test]

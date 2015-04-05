@@ -22,5 +22,5 @@ pub fn test_stream_map_async() {
     receive(s, tx);
 
     let vals: Vec<usize> = rx.iter().collect();
-    assert_eq!([0, 2, 4, 6, 8], vals);
+    assert_eq!([0, 2, 4, 6, 8], &vals[..]);
 }

@@ -294,7 +294,7 @@ unsafe impl<T, U: Async, F> Sync for Inner<T, U, F> { }
 
 const LOCK: usize = 1 << 31;
 
-#[derive(Copy, Eq, PartialEq)]
+#[derive(Copy, Clone, Eq, PartialEq)]
 struct State(usize);
 
 impl State {

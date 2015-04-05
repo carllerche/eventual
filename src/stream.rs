@@ -364,7 +364,7 @@ impl<T: Send, E: Send> Async for Stream<T, E> {
     }
 
     fn poll(mut self) -> Result<AsyncResult<Head<T, E>, E>, Stream<T, E>> {
-        let core = core::take(&mut self.core);
+        let mut core = core::take(&mut self.core);
 
         match core.consumer_poll() {
             Some(res) => Ok(res),
@@ -400,7 +400,6 @@ impl<T: Send, E: Send> fmt::Debug for Stream<T, E> {
     }
 }
 
-#[unsafe_destructor]
 impl<T: Send, E: Send> Drop for Stream<T, E> {
     fn drop(&mut self) {
         if self.core.is_some() {
@@ -454,7 +453,7 @@ impl<T: Send, E: Send> Sender<T, E> {
     /// future representing the operation completing successfully and interest
     /// in the next value being expressed.
     pub fn send(mut self, val: T) -> BusySender<T, E> {
-        let core = core::take(&mut self.core);
+        let mut core = core::take(&mut self.core);
         let val = Some((val, Stream { core: Some(core.clone()) }));
 
         // Complete the value
@@ -523,13 +522,12 @@ impl<T: Send, E: Send> Async for Sender<T, E> {
     }
 }
 
-#[unsafe_destructor]
 impl<T: Send, E: Send> Drop for Sender<T, E> {
     fn drop(&mut self) {
         if self.core.is_some() {
             debug!("Sender::drop(); cancelling future");
             // Get the core
-            let core = core::take(&mut self.core);
+            let mut core = core::take(&mut self.core);
             core.complete(Ok(None), true);
         }
     }
@@ -590,13 +588,12 @@ impl<T: Send, E: Send> Async for BusySender<T, E> {
     }
 }
 
-#[unsafe_destructor]
 impl<T: Send, E: Send> Drop for BusySender<T, E> {
     fn drop(&mut self) {
         if self.core.is_some() {
             let core = core::take(&mut self.core);
 
-            core.producer_ready(|core| {
+            core.producer_ready(|mut core| {
                 if core.producer_is_ready() {
                     core.complete(Ok(None), true);
                 }
@@ -723,7 +720,7 @@ impl<T: Send, E: Send> Iterator for StreamIter<T, E> {
     fn next(&mut self) -> Option<T> {
         use std::mem;
 
-        match core::get(&self.core).consumer_await() {
+        match core::get_mut(&mut self.core).consumer_await() {
             Ok(Some((h, mut rest))) => {
                 mem::replace(&mut self.core, Some(core::take(&mut rest.core)));
                 Some(h)
@@ -737,7 +734,6 @@ impl<T: Send, E: Send> Iterator for StreamIter<T, E> {
     }
 }
 
-#[unsafe_destructor]
 impl<T: Send, E: Send> Drop for StreamIter<T, E> {
     fn drop(&mut self) {
         if self.core.is_some() {

@@ -15,7 +15,7 @@ pub fn test_stream_successfully_sending_all_values() {
         .fire();
 
     let vals: Vec<usize> = rx.iter().collect();
-    assert_eq!(&[1, 2, 3, 4, 5], &vals);
+    assert_eq!(&[1, 2, 3, 4, 5], &vals[..]);
 }
 
 #[test]
@@ -41,7 +41,7 @@ pub fn test_stream_producer_fails() {
         .fire();
 
     let vals: Vec<i32> = dst.iter().collect();
-    assert_eq!(&[1, 2, 3, 10], &vals);
+    assert_eq!(&[1, 2, 3, 10], &vals[..]);
 }
 
 #[test]
@@ -57,10 +57,10 @@ pub fn test_stream_consumer_loses_interest() {
     let _ = tx.send_all(src);
 
     let vals: Vec<usize> = dst.take(3).iter().collect();
-    assert_eq!(&[1, 2, 3], &vals);
+    assert_eq!(&[1, 2, 3], &vals[..]);
 
     let vals: Vec<usize> = rx.iter().collect();
-    assert_eq!(&[1, 2, 3], &vals);
+    assert_eq!(&[1, 2, 3], &vals[..]);
 }
 
 #[test]
@@ -76,7 +76,7 @@ pub fn test_future_send_success() {
         .fire();
 
     let vals: Vec<usize> = rx.iter().collect();
-    assert_eq!(&[1, 2, 3], &vals);
+    assert_eq!(&[1, 2, 3], &vals[..]);
 }
 
 #[test]
@@ -95,5 +95,5 @@ pub fn test_future_send_fail() {
         .fire();
 
     let vals: Vec<usize> = rx.iter().collect();
-    assert_eq!(&[1, 10, 3], &vals);
+    assert_eq!(&[1, 10, 3], &vals[..]);
 }

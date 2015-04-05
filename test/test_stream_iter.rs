@@ -19,5 +19,5 @@ pub fn test_stream_iter_async_producer() {
     gen(tx, 0);
 
     let vals: Vec<i32> = rx.iter().collect();
-    assert_eq!([0, 1, 2, 3, 4], vals);
+    assert_eq!([0, 1, 2, 3, 4], &vals[..]);
 }

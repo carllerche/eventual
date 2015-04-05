@@ -42,7 +42,7 @@ pub fn test_one_shot_stream_done() {
         .await().unwrap();
 
     let vals: Vec<&'static str> = rx.iter().collect();
-    assert_eq!(["hello"], vals);
+    assert_eq!(["hello"], &vals[..]);
 }
 
 #[test]

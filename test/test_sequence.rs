@@ -56,7 +56,7 @@ pub fn test_sequencing_two_futures_up_front() {
     c1.complete(234);
 
     let vals: Vec<i32> = rx.iter().collect();
-    assert_eq!(&[123, 234, -1], &vals);
+    assert_eq!(&[123, 234, -1], &vals[..]);
 }
 
 #[test]

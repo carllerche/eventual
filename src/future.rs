@@ -195,7 +195,7 @@ impl<T: Send, E: Send> Async for Future<T, E> {
     }
 
     fn poll(mut self) -> Result<AsyncResult<T, E>, Future<T, E>> {
-        let core = core::take(&mut self.core);
+        let mut core = core::take(&mut self.core);
 
         match core.consumer_poll() {
             Some(res) => Ok(res),
@@ -231,7 +231,6 @@ impl<T: Send, E: Send> fmt::Debug for Future<T, E> {
     }
 }
 
-#[unsafe_destructor]
 impl<T: Send, E: Send> Drop for Future<T, E> {
     fn drop(&mut self) {
         if self.core.is_some() {
@@ -362,7 +361,6 @@ impl<T: Send, E: Send> Async for Complete<T, E> {
     }
 }
 
-#[unsafe_destructor]
 impl<T: Send, E: Send> Drop for Complete<T, E> {
     fn drop(&mut self) {
         if self.core.is_some() {
@@ -389,5 +387,5 @@ pub fn test_size_of_future() {
     use std::mem;
 
     // TODO: This should go back to being ptr sized
-    assert_eq!(3 * mem::size_of::<usize>(), mem::size_of::<Future<String, String>>());
+    assert_eq!(4 * mem::size_of::<usize>(), mem::size_of::<Future<String, String>>());
 }

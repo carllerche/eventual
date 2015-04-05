@@ -15,8 +15,6 @@
 //!
 //! # Stream
 
-#![feature(std_misc)]
-
 extern crate eventual;
 extern crate time;
 
@@ -101,19 +99,5 @@ fn spawn<F: FnOnce() + Send + 'static>(f: F) {
 
 fn sleep_ms(ms: usize) {
     use std::thread;
-    use std::time::Duration;
-    use time::precise_time_ns;
-
-    let start = precise_time_ns();
-    let target = start + (ms as u64) * 1_000_000;
-
-    loop {
-        let now = precise_time_ns();
-
-        if now > target {
-            return;
-        }
-
-        thread::park_timeout(Duration::nanoseconds((target - now) as i64));
-    }
+    thread::sleep_ms(ms as u32);
 }

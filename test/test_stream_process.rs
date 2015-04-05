@@ -23,7 +23,7 @@ pub fn test_process_sync_result() {
     assert_eq!(4, counter.val());
 
     let vals: Vec<usize> = rx.iter().collect();
-    assert_eq!([0, 2, 4, 6], vals);
+    assert_eq!([0, 2, 4, 6], &vals[..]);
 }
 
 #[test]
@@ -49,7 +49,7 @@ pub fn test_process_async_result_less_than_buffer() {
     completes.remove(0).complete(234);
 
     let vals: Vec<usize> = rx.iter().collect();
-    assert_eq!([123, 234], vals);
+    assert_eq!([123, 234], &vals[..]);
 }
 
 #[test]
@@ -82,7 +82,7 @@ pub fn test_process_async_result_more_than_buffer() {
     completes.remove(0).complete(45);
 
     let vals: Vec<usize> = rx.iter().collect();
-    assert_eq!([23, 12, 34, 45], vals);
+    assert_eq!([23, 12, 34, 45], &vals[..]);
 }
 
 #[test]

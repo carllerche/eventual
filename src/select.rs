@@ -386,7 +386,7 @@ impl AtomicState {
  *      - init: Callbacks registered
  *      - Won: Index that won
  */
-#[derive(Copy, PartialEq, Eq)]
+#[derive(Copy, Clone, PartialEq, Eq)]
 struct State {
     val: u64,
 }

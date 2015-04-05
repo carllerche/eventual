@@ -10,5 +10,5 @@ pub fn test_stream_map_filter() {
     s.each(move |i| tx.send(i).unwrap()).fire();
 
     let vals: Vec<usize> = rx.iter().collect();
-    assert_eq!([0, 2, 4], vals);
+    assert_eq!([0, 2, 4], &vals[..]);
 }
