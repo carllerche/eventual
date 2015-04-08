@@ -1,15 +1,15 @@
 [package]
 
-name = "eventual"
-version = "0.0.1"
-license = "MIT"
-authors = ["Carl Lerche <me@carllerche.com>"]
-description = "Future & Stream abstraction"
+name          = "eventual"
+version       = "0.1.0"
+license       = "MIT"
+authors       = ["Carl Lerche <me@carllerche.com>"]
+description   = "Future & Stream abstraction"
 documentation = "https://carllerche.github.io/eventual/eventual"
 homepage      = "https://github.com/carllerche/eventual"
 repository    = "https://github.com/carllerche/eventual"
 readme        = "README.md"
-keywords      = ["async", "threading", "future", "stream"]
+keywords      = ["async", "concurrency", "future", "stream"]
 exclude       = [
   ".gitignore",
   ".travis.yml",
@@ -18,10 +18,8 @@ exclude       = [
 ]
 
 [dependencies]
-log = "0.3.0"
-
-[dependencies.syncbox]
-git = "https://github.com/carllerche/syncbox"
+log     = "0.3.0"
+syncbox = "0.2.0"
 
 [dev-dependencies]
 time = "0.1.22"
