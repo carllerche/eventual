@@ -3,7 +3,7 @@ use eventual::*;
 use std::sync::mpsc::channel;
 
 #[test]
-pub fn test_joining_two_futures_async() {
+pub fn test_joining_two_tuple_futures_async() {
     let (c1, f1) = Future::<i32, ()>::pair();
     let (c2, f2) = Future::<i32, ()>::pair();
     let (tx, rx) = channel();
@@ -104,3 +104,22 @@ pub fn test_joining_three_futures_async() {
     assert_eq!(rx.recv().unwrap(), (1, 2, 3));
 }
 */
+
+#[test]
+pub fn test_joining_two_vec_futures_async() {
+    let (c1, f1) = Future::<i32, ()>::pair();
+    let (c2, f2) = Future::<i32, ()>::pair();
+    let (tx, rx) = channel();
+
+    join(vec![f1, f2]).receive(move |res| {
+        tx.send(res.unwrap()).unwrap();
+    });
+
+    assert!(rx.try_recv().is_err());
+    c1.complete(1);
+
+    assert!(rx.try_recv().is_err());
+    c2.complete(2);
+
+    assert_eq!(rx.recv().unwrap(), [1, 2]);
+}

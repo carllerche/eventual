@@ -22,22 +22,44 @@ pub trait Join<T, E> : Send {
     fn join(self, complete: Complete<T, E>);
 }
 
+/// Stores the values as they are completed, before the join succeeds
+///
 trait Partial<R> {
     fn consume(&mut self) -> R;
 }
 
+/// In progress completed values for Vec
+///
+impl<T> Partial<Vec<T>> for Vec<Option<T>> {
+    fn consume(&mut self) -> Vec<T> {
+        let mut ret = Vec::with_capacity(self.len());
+
+        for i in 0..self.len() {
+            ret.push(self[i].take().unwrap())
+        }
+
+        ret
+    }
+}
+
+/// In progress completed values for 2-tuples
+///
 impl<T1, T2> Partial<(T1, T2)> for (Option<T1>, Option<T2>) {
     fn consume(&mut self) -> (T1, T2) {
         (self.0.take().unwrap(), self.1.take().unwrap())
     }
 }
 
+/// In progress completed values for 3-tuples
+///
 impl<T1, T2, T3> Partial<(T1, T2, T3)> for (Option<T1>, Option<T2>, Option<T3>) {
     fn consume(&mut self) -> (T1, T2, T3) {
         (self.0.take().unwrap(), self.1.take().unwrap(), self.2.take().unwrap())
     }
 }
 
+/// Join in progress state
+///
 struct Progress<P: Partial<R>, R: Send, E: Send> {
     inner: Arc<UnsafeCell<ProgressInner<P, R, E>>>,
 }
@@ -146,6 +168,59 @@ macro_rules! component {
             }
         });
     }};
+}
+
+/*
+ *
+ * ===== Join for Vec =====
+ *
+ */
+
+impl<A: Async> Join<Vec<A::Value>, A::Error> for Vec<A> {
+    fn join(self, complete: Complete<Vec<A::Value>, A::Error>) {
+        let mut vec = Vec::with_capacity(self.len());
+
+        for _ in 0..self.len() {
+            vec.push(None);
+        }
+
+        // Setup the in-progress state
+        let progress = Progress::new(
+            vec,
+            complete,
+            self.len() as isize);
+
+        for (i, async) in self.into_iter().enumerate() {
+            let progress = progress.clone();
+
+            async.receive(move |res| {
+                debug!(concat!("dependent future complete; id={}; success={}"), i, res.is_ok());
+
+                // Get a pointer to the value staging area (Option<T>). Values will
+                // be stored here until the join is complete
+
+                let slot = &mut progress.vals_mut()[i];
+
+                match res {
+                    Ok(v) => {
+                        // Set the value
+                        *slot = Some(v);
+
+                        // Track that the value has been received
+                        if progress.dec() == 0 {
+                            debug!("last future completed -- completing join");
+                            // If all values have been received, successfully
+                            // complete the future
+                            progress.succeed();
+                        }
+                    }
+                    Err(e) => {
+                        progress.fail(e);
+                    }
+                }
+            });
+        }
+    }
 }
 
 /*
