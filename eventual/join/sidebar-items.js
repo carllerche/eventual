@@ -1,1 +1,1 @@
-initSidebarItems({"trait":[["Join",""]],"fn":[["join",""]]});
+initSidebarItems({"fn":[["join",""]],"trait":[["Join",""]]});

@@ -43,7 +43,7 @@
     <section id='main' class="content struct">
 <h1 class='fqn'><span class='in-band'>Struct <a href='index.html'>eventual</a>::<wbr><a class='struct' href=''>Sender</a><wbr></span><span class='out-of-band'><span id='render-detail'>
             <a id="collapse-all" href="#">[-]</a>&nbsp;<a id="expand-all" href="#">[+]</a>
-        </span><a id='src-17121' href='../src/eventual/stream.rs.html#435-437'>[src]</a></span></h1>
+        </span><a id='src-17514' href='../src/eventual/stream.rs.html#435-437'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct Sender&lt;T: <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a>, E: <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a>&gt; {
     // some fields omitted
 }</pre><div class='docblock'><p>The sending half of <code>Stream::pair()</code>. Can only be owned by a single task at
@@ -58,7 +58,7 @@ in the next value being expressed.</p>
 <div class='docblock'><p>Fails the paired <code>Stream</code> with a cancellation error. This will
 eventually go away when carllerche/syncbox#10 lands. It is currently
 needed to keep the state correct (see async::sequence)</p>
-</div><h4 id='method.send_all' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.send_all' class='fnname'>send_all</a>&lt;S: Source&lt;Value=T&gt;&gt;(self, src: S) -&gt; <a class='struct' href='../eventual/struct.Future.html' title='eventual::Future'>Future</a>&lt;<a class='struct' href='../eventual/struct.Sender.html' title='eventual::Sender'>Sender</a>&lt;T, E&gt;, <a href='http://doc.rust-lang.org/nightly/std/primitive.tuple.html'>(S, <a class='struct' href='../eventual/struct.Sender.html' title='eventual::Sender'>Sender</a>&lt;T, E&gt;)</a>&gt;</code></h4>
+</div><h4 id='method.send_all' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.send_all' class='fnname'>send_all</a>&lt;S: Source&lt;Value=T&gt;&gt;(self, src: S) -&gt; <a class='struct' href='../eventual/struct.Future.html' title='eventual::Future'>Future</a>&lt;Self, <a href='http://doc.rust-lang.org/nightly/std/primitive.tuple.html'>(S, Self)</a>&gt;</code></h4>
 <div class='docblock'><p>Send all the values in the given source</p>
 </div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><a class='stability Unmarked' title='No stability level'></a><code>impl&lt;T: <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a>, E: <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a>&gt; <a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Async</a> for <a class='struct' href='../eventual/struct.Sender.html' title='eventual::Sender'>Sender</a>&lt;T, E&gt;</code></h3><div class='impl-items'><h4 id='assoc_type.Value' class='type'><a class='stability Unmarked' title='No stability level'></a><code>type Value = <a class='struct' href='../eventual/struct.Sender.html' title='eventual::Sender'>Sender</a>&lt;T, E&gt;</code></h4>
 <h4 id='assoc_type.Error' class='type'><a class='stability Unmarked' title='No stability level'></a><code>type Error = <a href='http://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a></code></h4>
