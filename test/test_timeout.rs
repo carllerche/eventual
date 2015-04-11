@@ -18,6 +18,5 @@ fn test_interval() {
 
     assert!(collected.is_ok());
     let collected = collected.unwrap();
-    println!("{}", collected.len());
     assert!(collected.len() == 4);
 }

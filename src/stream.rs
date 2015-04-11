@@ -615,16 +615,14 @@ impl Stream<(), ()> {
         fn sleep_then_send(max_ms: u32, how_long: u32, stream: Sender<(), ()>) {
             sleep_ms(how_long);
 
-            let before = precise_time_ns() * 1000;
+            let before = precise_time_ns() / 1000;
             stream.send(()).receive(move |res| {
-                match res {
-                    Ok(s) => {
-                        let after = precise_time_ns() * 1000;
-                        let duration = (after - before) as u32;
-                        sleep_then_send(max_ms, max_ms - duration, s);
-                    }
-                    Err(_) => {}
+                if let Ok(s) = res {
+                    let after = precise_time_ns() / 1000;
+                    let duration = (after - before) as u32;
+                    sleep_then_send(max_ms, max_ms - duration, s);
                 }
+
             });
         }
 
