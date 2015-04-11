@@ -255,6 +255,13 @@ impl<T: Send, E: Send> Cancel<Future<T, E>> for Receipt<Future<T, E>> {
     }
 }
 
+impl Future<(), ()> {
+    pub fn timeout(duration_ms: u32) -> Future<(), ()> {
+        use std::thread::sleep_ms;
+        Future::spawn(move || { sleep_ms(duration_ms) })
+    }
+}
+
 /// An object that is used to fulfill or reject an associated Future.
 ///
 /// ```

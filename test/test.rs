@@ -26,6 +26,7 @@ extern crate log;
  */
 
 // == Future tests ==
+mod test_timeout;
 mod test_future_and;
 mod test_future_await;
 mod test_future_cancel;
