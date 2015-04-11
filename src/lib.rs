@@ -49,6 +49,7 @@
 #![crate_name = "eventual"]
 
 extern crate syncbox;
+extern crate clock_ticks;
 
 #[macro_use]
 extern crate log;

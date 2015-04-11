@@ -20,6 +20,7 @@ exclude       = [
 [dependencies]
 log     = "0.3.0"
 syncbox = "0.2.0"
+clock_ticks = "0.0.5"
 
 [dev-dependencies]
 time = "0.1.22"

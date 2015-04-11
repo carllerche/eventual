@@ -10,6 +10,7 @@ use {
     AsyncError
 };
 use super::core::{self, Core};
+use clock_ticks::precise_time_ns;
 use std::fmt;
 
 /*
@@ -605,6 +606,33 @@ impl<T: Send, E: Send> Drop for BusySender<T, E> {
 impl<T: Send, E: Send> fmt::Debug for Sender<T, E> {
     fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
         write!(fmt, "Sender<?>")
+    }
+}
+
+impl Stream<(), ()> {
+    pub fn interval(interval_ms: u32) -> Stream<(), ()> {
+        use std::thread::{spawn, sleep_ms};
+        fn sleep_then_send(max_ms: u32, how_long: u32, stream: Sender<(), ()>) {
+            sleep_ms(how_long);
+
+            let before = precise_time_ns() * 1000;
+            stream.send(()).receive(move |res| {
+                match res {
+                    Ok(s) => {
+                        let after = precise_time_ns() * 1000;
+                        let duration = (after - before) as u32;
+                        sleep_then_send(max_ms, max_ms - duration, s);
+                    }
+                    Err(_) => {}
+                }
+            });
+        }
+
+        let (sx, rx) = Stream::pair();
+        spawn(move || {
+            sleep_then_send(interval_ms, interval_ms, sx);
+        });
+        rx
     }
 }
 
