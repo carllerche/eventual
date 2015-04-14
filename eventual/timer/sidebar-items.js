@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["Timer","Provides timeouts as a `Future` and periodic ticks as a `Stream`."]]});

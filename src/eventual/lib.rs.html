@@ -496,6 +496,9 @@
 <span id="454">454</span>
 <span id="455">455</span>
 <span id="456">456</span>
+<span id="457">457</span>
+<span id="458">458</span>
+<span id="459">459</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! Composable primitives for asynchronous computations</span>
 <span class='doccomment'>//!</span>
@@ -548,6 +551,7 @@
 <span class='attribute'>#<span class='op'>!</span>[<span class='ident'>crate_name</span> <span class='op'>=</span> <span class='string'>&quot;eventual&quot;</span>]</span>
 
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>syncbox</span>;
+<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>time</span>;
 
 <span class='attribute'>#[<span class='ident'>macro_use</span>]</span>
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>log</span>;
@@ -558,6 +562,7 @@
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>receipt</span>::<span class='ident'>Receipt</span>;
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>select</span>::{<span class='ident'>select</span>, <span class='ident'>Select</span>};
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>sequence</span>::<span class='ident'>sequence</span>;
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>timer</span>::<span class='ident'>Timer</span>;
 
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>fmt</span>;
 
@@ -578,6 +583,7 @@
 <span class='kw'>mod</span> <span class='ident'>select</span>;
 <span class='kw'>mod</span> <span class='ident'>sequence</span>;
 <span class='kw'>mod</span> <span class='ident'>stream</span>;
+<span class='kw'>mod</span> <span class='ident'>timer</span>;
 
 <span class='doccomment'>/// A value representing an asynchronous computation</span>
 <span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>Async</span> : <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Sized</span> {
