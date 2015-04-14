@@ -49,6 +49,7 @@
 #![crate_name = "eventual"]
 
 extern crate syncbox;
+extern crate time;
 
 #[macro_use]
 extern crate log;
@@ -59,6 +60,7 @@ pub use self::join::{join, Join};
 pub use self::receipt::Receipt;
 pub use self::select::{select, Select};
 pub use self::sequence::sequence;
+pub use self::timer::Timer;
 
 use std::fmt;
 
@@ -79,6 +81,7 @@ mod receipt;
 mod select;
 mod sequence;
 mod stream;
+mod timer;
 
 /// A value representing an asynchronous computation
 pub trait Async : Send + Sized {

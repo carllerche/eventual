@@ -58,6 +58,9 @@ mod test_stream_reduce;
 mod test_stream_send_all;
 mod test_stream_take;
 
+// == Timer tests ==
+mod test_timer;
+
 /*
  *
  * ===== Helpers =====
