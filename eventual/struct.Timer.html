@@ -43,7 +43,7 @@
     <section id='main' class="content struct">
 <h1 class='fqn'><span class='in-band'>Struct <a href='index.html'>eventual</a>::<wbr><a class='struct' href=''>Timer</a><wbr></span><span class='out-of-band'><span id='render-detail'>
             <a id="collapse-all" href="#">[-]</a>&nbsp;<a id="expand-all" href="#">[+]</a>
-        </span><a id='src-18751' href='../src/eventual/timer.rs.html#6-8'>[src]</a></span></h1>
+        </span><a id='src-18755' href='../src/eventual/timer.rs.html#6-8'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct Timer {
     // some fields omitted
 }</pre><div class='docblock'><p>Provides timeouts as a <code>Future</code> and periodic ticks as a <code>Stream</code>.</p>
@@ -53,6 +53,8 @@
 <div class='docblock'><p>Creates a new timer backed by a thread pool with <code>capacity</code> threads.</p>
 </div><h4 id='method.timeout_ms' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.timeout_ms' class='fnname'>timeout_ms</a>(&amp;self, ms: <a href='http://doc.rust-lang.org/nightly/std/primitive.u32.html'>u32</a>) -&gt; <a class='struct' href='../eventual/struct.Future.html' title='eventual::Future'>Future</a>&lt;<a href='http://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>, <a href='http://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>&gt;</code></h4>
 <div class='docblock'><p>Returns a <code>Future</code> that will be completed in <code>ms</code> milliseconds</p>
+</div><h4 id='method.interval_ms' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.interval_ms' class='fnname'>interval_ms</a>(&amp;self, ms: <a href='http://doc.rust-lang.org/nightly/std/primitive.u32.html'>u32</a>) -&gt; <a class='struct' href='../eventual/struct.Stream.html' title='eventual::Stream'>Stream</a>&lt;<a href='http://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>, <a href='http://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>&gt;</code></h4>
+<div class='docblock'><p>Return a <code>Stream</code> with values realized every <code>ms</code> milliseconds.</p>
 </div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><a class='stability Stable' title='Stable'></a><code>impl <a class='trait' href='http://doc.rust-lang.org/nightly/core/clone/trait.Clone.html' title='core::clone::Clone'>Clone</a> for <a class='struct' href='../eventual/struct.Timer.html' title='eventual::Timer'>Timer</a></code></h3><div class='impl-items'><h4 id='method.clone' class='method'><a class='stability Stable' title='Stable'></a><code>fn <a href='http://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone' class='fnname'>clone</a>(&amp;self) -&gt; <a class='struct' href='../eventual/struct.Timer.html' title='eventual::Timer'>Timer</a></code></h4>
 <h4 id='method.clone_from' class='method'><a class='stability Stable' title='Stable'></a><code>fn <a href='http://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from' class='fnname'>clone_from</a>(&amp;mut self, source: &amp;Self)</code></h4>
 </div></section>
