@@ -41,6 +41,21 @@ pub fn test_timer_register_late() {
     assert_eq!("done", rx.recv().unwrap());
 }
 
+#[test]
+pub fn test_timer_interval() {
+    let timer = Timer::new();
+
+    let mut prev = SteadyTime::now();
+    let ticks = timer.interval_ms(200).iter().take(10);
+
+    for _ in ticks {
+        let now = SteadyTime::now();
+        let diff = now - prev;
+        assert!(diff >= Duration::milliseconds(180), "actual={}", diff);
+        prev = now
+    }
+}
+
 fn ms(ms: u32) -> Duration {
     Duration::milliseconds(ms as i64)
 }

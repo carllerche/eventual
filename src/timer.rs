@@ -1,6 +1,6 @@
-use {Async, Future};
+use {Async, Future, Stream, Sender};
 use syncbox::ScheduledThreadPool;
-use time::SteadyTime;
+use time::{SteadyTime, Duration};
 
 /// Provides timeouts as a `Future` and periodic ticks as a `Stream`.
 pub struct Timer {
@@ -43,6 +43,40 @@ impl Timer {
 
         rx
     }
+
+    /// Return a `Stream` with values realized every `ms` milliseconds.
+    pub fn interval_ms(&self, ms: u32) -> Stream<(), ()> {
+        let (tx, rx) = Stream::pair();
+        let pool = self.pool.clone();
+        let interval = Duration::milliseconds(ms as i64);
+        let next = SteadyTime::now() + interval;
+
+        do_interval(pool, tx, next, interval);
+
+        rx
+    }
+}
+
+/// Processes the interval stream
+fn do_interval<S>(pool: ScheduledThreadPool,
+                  sender: S,
+                  next: SteadyTime,
+                  interval: Duration)
+        where S: Async<Value=Sender<(), ()>> {
+
+    sender.receive(move |res| {
+        if let Ok(sender) = res {
+            let now = SteadyTime::now();
+            let delay = next - now;
+            let next = next + interval;
+            let pool2 = pool.clone();
+
+            pool.schedule_ms(delay.num_milliseconds() as u32, move || {
+                let busy = sender.send(());
+                do_interval(pool2, busy, next, interval);
+            });
+        }
+    });
 }
 
 impl Clone for Timer {
