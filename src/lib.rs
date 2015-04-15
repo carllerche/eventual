@@ -55,11 +55,11 @@ extern crate time;
 extern crate log;
 
 pub use self::future::{Future, Complete};
-pub use self::stream::{Stream, StreamIter, Sender, BusySender};
 pub use self::join::{join, Join};
 pub use self::receipt::Receipt;
 pub use self::select::{select, Select};
 pub use self::sequence::sequence;
+pub use self::stream::{Stream, StreamIter, Sender, BusySender};
 pub use self::timer::Timer;
 
 use std::fmt;
@@ -84,9 +84,9 @@ mod stream;
 mod timer;
 
 /// A value representing an asynchronous computation
-pub trait Async : Send + Sized {
-    type Value: Send;
-    type Error: Send;
+pub trait Async : Send + 'static + Sized {
+    type Value: Send + 'static;
+    type Error: Send + 'static;
     type Cancel: Cancel<Self>;
 
     /// Returns true if `expect` will succeed.
@@ -109,11 +109,11 @@ pub trait Async : Send + Sized {
 
     /// Invokes the given function when the Async instance is ready to be
     /// consumed.
-    fn ready<F>(self, f: F) -> Self::Cancel where F: FnOnce(Self) + Send;
+    fn ready<F>(self, f: F) -> Self::Cancel where F: FnOnce(Self) + Send + 'static;
 
     /// Invoke the callback with the resolved `Async` result.
     fn receive<F>(self, f: F)
-            where F: FnOnce(AsyncResult<Self::Value, Self::Error>) + Send {
+            where F: FnOnce(AsyncResult<Self::Value, Self::Error>) + Send + 'static {
         self.ready(move |async| {
             match async.poll() {
                 Ok(res) => f(res),
@@ -187,8 +187,8 @@ pub trait Async : Send + Sized {
     /// }).await();
     /// ```
     fn and_then<F, U: Async<Error=Self::Error>>(self, f: F) -> Future<U::Value, Self::Error>
-            where F: FnOnce(Self::Value) -> U + Send,
-                  U::Value: Send {
+            where F: FnOnce(Self::Value) -> U + Send + 'static,
+                  U::Value: Send + 'static {
         let (complete, ret) = Future::pair();
 
         complete.receive(move |c| {
@@ -239,7 +239,7 @@ pub trait Async : Send + Sized {
     /// future returned by this method will complete with the completion value
     /// of that future. That can be either a success or error.
     fn or_else<F, A>(self, f: F) -> Future<Self::Value, A::Error>
-            where F: FnOnce(Self::Error) -> A + Send,
+            where F: FnOnce(Self::Error) -> A + Send + 'static,
                   A: Async<Value=Self::Value> {
 
         let (complete, ret) = Future::pair();
@@ -274,7 +274,7 @@ pub trait Pair {
     fn pair() -> (Self::Tx, Self);
 }
 
-pub trait Cancel<A: Send> : Send {
+pub trait Cancel<A: Send + 'static> : Send + 'static {
     fn cancel(self) -> Option<A>;
 }
 
@@ -284,7 +284,7 @@ pub trait Cancel<A: Send> : Send {
  *
  */
 
-impl<T: Send, E: Send> Async for Result<T, E> {
+impl<T: Send + 'static, E: Send + 'static> Async for Result<T, E> {
     type Value = T;
     type Error = E;
     type Cancel = Option<Result<T, E>>;
@@ -301,7 +301,7 @@ impl<T: Send, E: Send> Async for Result<T, E> {
         Ok(self.await())
     }
 
-    fn ready<F: FnOnce(Result<T, E>) + Send>(self, f: F) -> Option<Result<T, E>> {
+    fn ready<F: FnOnce(Result<T, E>) + Send + 'static>(self, f: F) -> Option<Result<T, E>> {
         f(self);
         None
     }
@@ -311,7 +311,7 @@ impl<T: Send, E: Send> Async for Result<T, E> {
     }
 }
 
-impl<A: Send> Cancel<A> for Option<A> {
+impl<A: Send + 'static> Cancel<A> for Option<A> {
     fn cancel(self) -> Option<A> {
         self
     }
@@ -337,7 +337,7 @@ macro_rules! async_impl_body {
             Ok(Ok(self))
         }
 
-        fn ready<F: FnOnce($ty) + Send>(self, f: F) -> Option<$ty> {
+        fn ready<F: FnOnce($ty) + Send + 'static>(self, f: F) -> Option<$ty> {
             f(self);
             None
         }
@@ -372,7 +372,7 @@ async_impl!(
     u8, u16, u32, u64, usize,
     i8, i16, i32, i64, isize);
 
-impl<E: Send> Async for Vec<E> {
+impl<E: Send + 'static> Async for Vec<E> {
     type Value = Vec<E>;
     type Error = ();
     type Cancel = Option<Vec<E>>;
@@ -389,12 +389,12 @@ impl<E: Send> Async for Vec<E> {
 pub type AsyncResult<T, E> = Result<T, AsyncError<E>>;
 
 #[derive(Eq, PartialEq)]
-pub enum AsyncError<E: Send> {
+pub enum AsyncError<E: Send + 'static> {
     Failed(E),
     Aborted,
 }
 
-impl<E: Send> AsyncError<E> {
+impl<E: Send + 'static> AsyncError<E> {
     pub fn failed(err: E) -> AsyncError<E> {
         AsyncError::Failed(err)
     }
@@ -432,7 +432,7 @@ impl<E: Send> AsyncError<E> {
     }
 }
 
-impl<E: Send + fmt::Debug> fmt::Debug for AsyncError<E> {
+impl<E: Send + 'static + fmt::Debug> fmt::Debug for AsyncError<E> {
     fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
         match *self {
             AsyncError::Failed(ref e) => write!(fmt, "AsyncError::Failed({:?})", e),
@@ -448,11 +448,11 @@ impl<E: Send + fmt::Debug> fmt::Debug for AsyncError<E> {
  */
 
 // Needed to allow virtual dispatch to Receive
-trait BoxedReceive<T> : Send {
+trait BoxedReceive<T> : Send + 'static {
     fn receive_boxed(self: Box<Self>, val: T);
 }
 
-impl<F: FnOnce(T) + Send, T> BoxedReceive<T> for F {
+impl<F: FnOnce(T) + Send + 'static, T> BoxedReceive<T> for F {
     fn receive_boxed(self: Box<F>, val: T) {
         (*self)(val)
     }

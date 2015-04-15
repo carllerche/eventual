@@ -13,11 +13,11 @@ use self::Lifecycle::*;
  */
 
 // Core implementation of Future & Stream
-pub struct Core<T: Send, E: Send> {
+pub struct Core<T: Send + 'static, E: Send + 'static> {
     ptr: *mut CoreInner<T, E>,
 }
 
-impl<T: Send, E: Send> Core<T, E> {
+impl<T: Send + 'static, E: Send + 'static> Core<T, E> {
     pub fn new() -> Core<T, E> {
         let ptr = Box::new(CoreInner::<T, E>::new());
         Core { ptr: unsafe { mem::transmute(ptr) }}
@@ -117,14 +117,14 @@ impl<T: Send, E: Send> Core<T, E> {
     }
 }
 
-impl<T: Send, E: Send> Clone for Core<T, E> {
+impl<T: Send + 'static, E: Send + 'static> Clone for Core<T, E> {
     fn clone(&self) -> Core<T, E> {
         // Increments ref count and returns a new core
         self.inner().core()
     }
 }
 
-impl<T: Send, E: Send> Drop for Core<T, E> {
+impl<T: Send + 'static, E: Send + 'static> Drop for Core<T, E> {
     fn drop(&mut self) {
         if self.inner().ref_dec(Release) != 1 {
             return;
@@ -153,17 +153,17 @@ impl<T: Send, E: Send> Drop for Core<T, E> {
     }
 }
 
-unsafe impl<T: Send, E: Send> Send for Core<T, E> { }
+unsafe impl<T: Send + 'static, E: Send + 'static> Send for Core<T, E> { }
 
-pub fn get<T: Send, E: Send>(core: &Option<Core<T, E>>) -> &Core<T, E> {
+pub fn get<T: Send + 'static, E: Send + 'static>(core: &Option<Core<T, E>>) -> &Core<T, E> {
     core.as_ref().expect("expected future core")
 }
 
-pub fn get_mut<T: Send, E: Send>(core: &mut Option<Core<T, E>>) -> &mut Core<T, E> {
+pub fn get_mut<T: Send + 'static, E: Send + 'static>(core: &mut Option<Core<T, E>>) -> &mut Core<T, E> {
     core.as_mut().expect("expected future core")
 }
 
-pub fn take<T: Send, E: Send>(core: &mut Option<Core<T, E>>) -> Core<T, E> {
+pub fn take<T: Send + 'static, E: Send + 'static>(core: &mut Option<Core<T, E>>) -> Core<T, E> {
     core.take().expect("expected future core")
 }
 
@@ -174,7 +174,7 @@ pub fn take<T: Send, E: Send>(core: &mut Option<Core<T, E>>) -> Core<T, E> {
  */
 
 
-struct CoreInner<T: Send, E: Send> {
+struct CoreInner<T: Send + 'static, E: Send + 'static> {
     refs: AtomicUsize,
     state: AtomicState,
     consumer_wait: Option<Callback<T, E>>,
@@ -182,7 +182,7 @@ struct CoreInner<T: Send, E: Send> {
     val: Option<AsyncResult<T, E>>,
 }
 
-impl<T: Send, E: Send> CoreInner<T, E> {
+impl<T: Send + 'static, E: Send + 'static> CoreInner<T, E> {
     fn new() -> CoreInner<T, E> {
         CoreInner {
             refs: AtomicUsize::new(1),
@@ -430,7 +430,7 @@ impl<T: Send, E: Send> CoreInner<T, E> {
         Some(Ok(self.core()))
     }
 
-    fn producer_ready<F: FnOnce(Core<T, E>) + Send + 'static>(&self, f: F) {
+    fn producer_ready<F: FnOnce(Core<T, E>) + Send + 'static >(&self, f: F) {
         let mut curr = self.state.load(Relaxed);
 
         debug!("Core::producer_ready; state={:?}", curr);
@@ -781,7 +781,7 @@ impl<T: Send, E: Send> CoreInner<T, E> {
     }
 }
 
-unsafe impl<T: Send, E: Send> Send for CoreInner<T, E> { }
+unsafe impl<T: Send + 'static, E: Send + 'static> Send for CoreInner<T, E> { }
 
 struct AtomicState {
     atomic: AtomicU64,

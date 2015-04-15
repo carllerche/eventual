@@ -6,7 +6,7 @@ use std::cell::UnsafeCell;
 use std::sync::Arc;
 use std::{fmt, u32};
 
-pub fn select<S: Select<E>, E: Send>(asyncs: S) -> Future<(u32, S), E> {
+pub fn select<S: Select<E>, E: Send + 'static>(asyncs: S) -> Future<(u32, S), E> {
     let (complete, res) = Future::pair();
 
     // Don't do any work until the consumer registers interest in the completed
@@ -21,7 +21,7 @@ pub fn select<S: Select<E>, E: Send>(asyncs: S) -> Future<(u32, S), E> {
 }
 
 
-pub trait Select<E: Send> : Send {
+pub trait Select<E: Send + 'static> : Send + 'static {
     fn select(self, complete: Complete<(u32, Self), E>);
 }
 
@@ -50,22 +50,22 @@ pub trait Select<E: Send> : Send {
 //     Blocked: rust-lang/rust#21664
 
 trait Values<S: Select<E>, E> {
-    type Tokens: Send;
+    type Tokens: Send + 'static;
 
     fn consume(&mut self) -> S;
 
     fn cancel_callbacks(&mut self, selected: u32, up_to: u32, tokens: &mut Self::Tokens) -> u32;
 }
 
-struct Selection<V: Values<S, E>, S: Select<E>, E: Send> {
+struct Selection<V: Values<S, E>, S: Select<E>, E: Send + 'static> {
     core: Arc<UnsafeCell<Core<V, S, E>>>,
 }
 
-unsafe impl<V: Values<S, E>, S: Select<E>, E: Send> Sync for Selection<V, S, E> {}
-unsafe impl<V: Values<S, E>, S: Select<E>, E: Send> Send for Selection<V, S, E> {}
+unsafe impl<V: Values<S, E>, S: Select<E>, E: Send + 'static> Sync for Selection<V, S, E> {}
+unsafe impl<V: Values<S, E>, S: Select<E>, E: Send + 'static> Send for Selection<V, S, E> {}
 
 // This implementation is very unsafe
-impl<V: Values<S, E>, S: Select<E>, E: Send> Selection<V, S, E> {
+impl<V: Values<S, E>, S: Select<E>, E: Send + 'static> Selection<V, S, E> {
 
     /// Create a new Selection instance
     fn new(vals: V,
@@ -203,13 +203,13 @@ impl<V: Values<S, E>, S: Select<E>, E: Send> Selection<V, S, E> {
     }
 }
 
-impl<V: Values<S, E>, S: Select<E>, E: Send> Selection<V, S, E> {
+impl<V: Values<S, E>, S: Select<E>, E: Send + 'static> Selection<V, S, E> {
     fn clone(&self) -> Selection<V, S, E> {
         Selection { core: self.core.clone() }
     }
 }
 
-struct Core<V: Values<S, E>, S: Select<E>, E: Send> {
+struct Core<V: Values<S, E>, S: Select<E>, E: Send + 'static> {
     vals: V,
     tokens: V::Tokens,
     complete: Option<Complete<(u32, S), E>>,
@@ -481,7 +481,7 @@ impl State {
  *
  */
 
-impl<A1: Async<Error=E>, A2: Async<Error=E>, E: Send> Select<E> for (A1, A2) {
+impl<A1: Async<Error=E>, A2: Async<Error=E>, E: Send + 'static> Select<E> for (A1, A2) {
     fn select(self, complete: Complete<(u32, (A1, A2)), E>) {
         let (a1, a2) = self;
 
@@ -494,7 +494,7 @@ impl<A1: Async<Error=E>, A2: Async<Error=E>, E: Send> Select<E> for (A1, A2) {
 }
 
 impl<A1: Async<Error=E>, A2: Async<Error=E>, E> Values<(A1, A2), E> for (Option<A1>, Option<A2>)
-        where E: Send {
+        where E: Send + 'static {
 
     type Tokens = (Option<A1::Cancel>, Option<A2::Cancel>);
 
@@ -517,7 +517,7 @@ impl<A1: Async<Error=E>, A2: Async<Error=E>, E> Values<(A1, A2), E> for (Option<
     }
 }
 
-impl<A1: Async<Error=E>, A2: Async<Error=E>, A3: Async<Error=E>, E: Send> Select<E> for (A1, A2, A3) {
+impl<A1: Async<Error=E>, A2: Async<Error=E>, A3: Async<Error=E>, E: Send + 'static> Select<E> for (A1, A2, A3) {
     fn select(self, complete: Complete<(u32, (A1, A2, A3)), E>) {
         let (a1, a2, a3) = self;
 
@@ -530,7 +530,7 @@ impl<A1: Async<Error=E>, A2: Async<Error=E>, A3: Async<Error=E>, E: Send> Select
 }
 
 impl<A1: Async<Error=E>, A2: Async<Error=E>, A3: Async<Error=E>, E> Values<(A1, A2, A3), E> for (Option<A1>, Option<A2>, Option<A3>)
-        where E: Send {
+        where E: Send + 'static {
 
     type Tokens = (Option<A1::Cancel>, Option<A2::Cancel>, Option<A3::Cancel>);
 

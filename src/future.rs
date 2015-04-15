@@ -17,11 +17,11 @@ use std::fmt;
  */
 
 #[must_use = "futures are lazy and do nothing unless consumed"]
-pub struct Future<T: Send, E: Send> {
+pub struct Future<T: Send + 'static, E: Send + 'static> {
     core: Option<Core<T, E>>,
 }
 
-impl<T: Send, E: Send> Future<T, E> {
+impl<T: Send +'static, E: Send +'static> Future<T, E> {
     pub fn pair() -> (Complete<T, E>, Future<T, E>) {
         let core = Core::new();
         let future = Future { core: Some(core.clone()) };
@@ -80,7 +80,7 @@ impl<T: Send, E: Send> Future<T, E> {
     /// // the HTTP request has now happened
     /// ```
     pub fn lazy<F, R>(f: F) -> Future<T, E>
-        where F: FnOnce() -> R + Send,
+        where F: FnOnce() -> R + Send + 'static,
               R: Async<Value=T, Error=E> {
 
         let (complete, future) = Future::pair();
@@ -108,8 +108,8 @@ impl<T: Send, E: Send> Future<T, E> {
      */
 
     pub fn map<F, U>(self, f: F) -> Future<U, E>
-        where F: FnOnce(T) -> U + Send,
-              U: Send {
+        where F: FnOnce(T) -> U + Send + 'static,
+              U: Send + 'static {
         self.and_then(move |val| Ok(f(val)))
     }
 
@@ -117,8 +117,8 @@ impl<T: Send, E: Send> Future<T, E> {
     /// original future fails, apply the given function on the error and use
     /// the result as the error of the new future.
     pub fn map_err<F, U>(self, f: F) -> Future<T, U>
-            where F: FnOnce(E) -> U + Send,
-                  U: Send {
+            where F: FnOnce(E) -> U + Send + 'static,
+                  U: Send + 'static {
         let (complete, future) = Future::pair();
 
         complete.receive(move |res| {
@@ -173,14 +173,14 @@ impl<T: Send + 'static> Future<T, ()> {
     }
 }
 
-impl<T: Send, E: Send> Future<Option<(T, Stream<T, E>)>, E> {
+impl<T: Send + 'static, E: Send + 'static> Future<Option<(T, Stream<T, E>)>, E> {
     /// An adapter that converts any future into a one-value stream
     pub fn to_stream(mut self) -> Stream<T, E> {
         stream::from_core(core::take(&mut self.core))
     }
 }
 
-impl<T: Send, E: Send> Async for Future<T, E> {
+impl<T: Send + 'static, E: Send + 'static> Async for Future<T, E> {
     type Value = T;
     type Error = E;
     type Cancel = Receipt<Future<T, E>>;
@@ -217,7 +217,7 @@ impl<T: Send, E: Send> Async for Future<T, E> {
     }
 }
 
-impl<T: Send, E: Send> Pair for Future<T, E> {
+impl<T: Send + 'static, E: Send + 'static> Pair for Future<T, E> {
     type Tx = Complete<T, E>;
 
     fn pair() -> (Complete<T, E>, Future<T, E>) {
@@ -225,7 +225,7 @@ impl<T: Send, E: Send> Pair for Future<T, E> {
     }
 }
 
-impl<T: Send, E: Send> fmt::Debug for Future<T, E> {
+impl<T: Send + 'static, E: Send + 'static> fmt::Debug for Future<T, E> {
     fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
         write!(fmt, "Future {{ ... }}")
     }
@@ -239,7 +239,7 @@ impl<T: Send, E: Send> Drop for Future<T, E> {
     }
 }
 
-impl<T: Send, E: Send> Cancel<Future<T, E>> for Receipt<Future<T, E>> {
+impl<T: Send + 'static, E: Send + 'static> Cancel<Future<T, E>> for Receipt<Future<T, E>> {
     fn cancel(self) -> Option<Future<T, E>> {
         let (core, count) = receipt::parts(self);
 
@@ -278,11 +278,11 @@ impl<T: Send, E: Send> Cancel<Future<T, E>> for Receipt<Future<T, E>> {
 /// }).fire();
 /// ```
 #[must_use = "Futures must be completed or they will panic on access"]
-pub struct Complete<T: Send, E: Send> {
+pub struct Complete<T: Send + 'static, E: Send + 'static> {
     core: Option<Core<T, E>>,
 }
 
-impl<T: Send, E: Send> Complete<T, E> {
+impl<T: Send + 'static, E: Send + 'static> Complete<T, E> {
     /// Fulfill the associated promise with a value
     pub fn complete(mut self, val: T) {
         core::take(&mut self.core).complete(Ok(val), true);
@@ -338,7 +338,7 @@ impl<T: Send, E: Send> Complete<T, E> {
     }
 }
 
-impl<T: Send, E: Send> Async for Complete<T, E> {
+impl<T: Send + 'static, E: Send + 'static> Async for Complete<T, E> {
     type Value = Complete<T, E>;
     type Error = ();
     type Cancel = Receipt<Complete<T, E>>;
@@ -361,7 +361,7 @@ impl<T: Send, E: Send> Async for Complete<T, E> {
     }
 }
 
-impl<T: Send, E: Send> Drop for Complete<T, E> {
+impl<T: Send + 'static, E: Send + 'static> Drop for Complete<T, E> {
     fn drop(&mut self) {
         if self.core.is_some() {
             debug!("Complete::drop -- canceling future");
@@ -370,13 +370,13 @@ impl<T: Send, E: Send> Drop for Complete<T, E> {
     }
 }
 
-impl<T: Send, E: Send> fmt::Debug for Complete<T, E> {
+impl<T: Send + 'static, E: Send + 'static> fmt::Debug for Complete<T, E> {
     fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
         write!(fmt, "Complete {{ ... }}")
     }
 }
 
-impl<T: Send, E: Send> Cancel<Complete<T, E>> for Receipt<Complete<T, E>> {
+impl<T: Send + 'static, E: Send + 'static> Cancel<Complete<T, E>> for Receipt<Complete<T, E>> {
     fn cancel(self) -> Option<Complete<T, E>> {
         None
     }

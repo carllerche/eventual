@@ -8,7 +8,7 @@ use std::sync::atomic::{self, AtomicUsize, Ordering};
 /// Returns a `Stream` consisting of the completion of the supplied async
 /// values in the order that they are completed.
 pub fn sequence<I, A>(asyncs: I) -> Stream<A::Value, A::Error>
-        where I: IntoIterator<Item=A> + Send,
+        where I: IntoIterator<Item=A> + Send + 'static,
               A: Async {
 
     // Create a stream pair
@@ -133,7 +133,6 @@ impl<A: Async> Inner<A> {
 
                 self.state.swap(BUSY, Ordering::Release);
                 sender.send(val).receive(move |res| {
-                    debug!("Inner::send() - sender ready; res={:?}; self={:p}", res, self);
                     match res {
                         Ok(sender) => {
                             inner.send_ready(sender, i);

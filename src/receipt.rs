@@ -10,7 +10,7 @@ pub struct Receipt<A: Async> {
 
 unsafe impl<A: Async> Send for Receipt<A> { }
 
-pub fn new<A, T: Send, E: Send>(core: Core<T, E>, count: u64) -> Receipt<A>
+pub fn new<A, T: Send + 'static, E: Send + 'static>(core: Core<T, E>, count: u64) -> Receipt<A>
         where A: Async<Value=T, Error=E> {
     Receipt {
         core: Some(core),
@@ -27,7 +27,7 @@ pub fn none<A: Async>() -> Receipt<A> {
     }
 }
 
-pub fn parts<A, T: Send, E: Send>(receipt: Receipt<A>) -> (Option<Core<T, E>>, u64)
+pub fn parts<A, T: Send + 'static, E: Send + 'static>(receipt: Receipt<A>) -> (Option<Core<T, E>>, u64)
         where A: Async<Value=T, Error=E> {
     (receipt.core, receipt.count)
 }

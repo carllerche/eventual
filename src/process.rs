@@ -10,9 +10,9 @@ use std::sync::atomic::{AtomicUsize, Ordering};
 const MAX_IN_FLIGHT: usize = (1 << 16) - 1;
 
 pub fn process<T, U, F>(source: Stream<T, U::Error>, in_flight: usize, action: F) -> Stream<U::Value, U::Error>
-        where T: Send,
+        where T: Send + 'static,
               U: Async,
-              F: Fn(T) -> U + Send {
+              F: Fn(T) -> U + Send + 'static {
 
     // New stream
     let (tx, rx) = Stream::pair();
@@ -30,15 +30,15 @@ pub fn process<T, U, F>(source: Stream<T, U::Error>, in_flight: usize, action: F
 }
 
 fn setup<T, U, F>(source: Stream<T, U::Error>, in_flight: usize, action: F, dest: Sender<U::Value, U::Error>)
-        where T: Send,
+        where T: Send + 'static,
               U: Async,
-              F: Fn(T) -> U + Send {
+              F: Fn(T) -> U + Send + 'static {
 
     let mut inner = Inner::new(source, in_flight, action, dest);
     inner.maybe_process_next(false);
 }
 
-struct Core<T: Send, U: Async, F> {
+struct Core<T: Send + 'static, U: Async, F> {
     max: usize,
     queue: ArrayQueue<AsyncResult<U::Value, U::Error>>,
     sender: Option<Sender<U::Value, U::Error>>,
@@ -47,14 +47,14 @@ struct Core<T: Send, U: Async, F> {
     produce_state: AtomicState,
 }
 
-struct Source<T: Send, U: Async, F> {
+struct Source<T: Send + 'static, U: Async, F> {
     stream: Stream<T, U::Error>,
     action: F,
 }
 
-struct Inner<T: Send, U: Async, F>(Arc<UnsafeCell<Core<T, U, F>>>);
+struct Inner<T: Send + 'static, U: Async, F>(Arc<UnsafeCell<Core<T, U, F>>>);
 
-impl<T: Send, U: Async, F: Fn(T) -> U + Send> Inner<T, U, F> {
+impl<T: Send + 'static, U: Async, F: Fn(T) -> U + Send + 'static> Inner<T, U, F> {
     fn new(source: Stream<T, U::Error>,
            in_flight: usize,
            action: F,
@@ -269,7 +269,7 @@ impl<T: Send, U: Async, F: Fn(T) -> U + Send> Inner<T, U, F> {
     }
 }
 
-impl<T: Send, U: Async, F> ops::Deref for Inner<T, U, F> {
+impl<T: Send + 'static, U: Async, F> ops::Deref for Inner<T, U, F> {
     type Target = Core<T, U, F>;
 
     fn deref(&self) -> &Core<T, U, F> {
@@ -277,13 +277,13 @@ impl<T: Send, U: Async, F> ops::Deref for Inner<T, U, F> {
     }
 }
 
-impl<T: Send, U: Async, F> ops::DerefMut for Inner<T, U, F> {
+impl<T: Send + 'static, U: Async, F> ops::DerefMut for Inner<T, U, F> {
     fn deref_mut(&mut self) -> &mut Core<T, U, F> {
         unsafe { mem::transmute(self.0.get()) }
     }
 }
 
-impl<T: Send, U: Async, F> Clone for Inner<T, U, F> {
+impl<T: Send + 'static, U: Async, F> Clone for Inner<T, U, F> {
     fn clone(&self) -> Inner<T, U, F> {
         Inner(self.0.clone())
     }

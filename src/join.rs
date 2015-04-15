@@ -4,7 +4,7 @@ use std::sync::Arc;
 use std::sync::atomic::{self, AtomicIsize};
 use std::sync::atomic::Ordering;
 
-pub fn join<J: Join<T, E>, T: Send, E: Send>(asyncs: J) -> Future<T, E> {
+pub fn join<J: Join<T, E>, T: Send + 'static, E: Send + 'static>(asyncs: J) -> Future<T, E> {
     let (complete, future) = Future::pair();
 
     // Don't do any work until the consumer registers interest in the completed
@@ -18,7 +18,7 @@ pub fn join<J: Join<T, E>, T: Send, E: Send>(asyncs: J) -> Future<T, E> {
     future
 }
 
-pub trait Join<T, E> : Send {
+pub trait Join<T, E> : Send + 'static {
     fn join(self, complete: Complete<T, E>);
 }
 
@@ -60,14 +60,14 @@ impl<T1, T2, T3> Partial<(T1, T2, T3)> for (Option<T1>, Option<T2>, Option<T3>) 
 
 /// Join in progress state
 ///
-struct Progress<P: Partial<R>, R: Send, E: Send> {
+struct Progress<P: Partial<R>, R: Send + 'static, E: Send + 'static> {
     inner: Arc<UnsafeCell<ProgressInner<P, R, E>>>,
 }
 
-unsafe impl<P: Partial<R>, R: Send, E: Send> Sync for Progress<P, R, E> {}
-unsafe impl<P: Partial<R>, R: Send, E: Send> Send for Progress<P, R, E> {}
+unsafe impl<P: Partial<R>, R: Send + 'static, E: Send + 'static> Sync for Progress<P, R, E> {}
+unsafe impl<P: Partial<R>, R: Send + 'static, E: Send + 'static> Send for Progress<P, R, E> {}
 
-impl<P: Partial<R>, R: Send, E: Send> Progress<P, R, E> {
+impl<P: Partial<R>, R: Send + 'static, E: Send + 'static> Progress<P, R, E> {
     fn new(vals: P, complete: Complete<R, E>, remaining: isize) -> Progress<P, R, E> {
         let inner = Arc::new(UnsafeCell::new(ProgressInner {
             vals: vals,
@@ -122,13 +122,13 @@ impl<P: Partial<R>, R: Send, E: Send> Progress<P, R, E> {
     }
 }
 
-impl<P: Partial<R>, R: Send, E: Send> Clone for Progress<P, R, E> {
+impl<P: Partial<R>, R: Send + 'static, E: Send + 'static> Clone for Progress<P, R, E> {
     fn clone(&self) -> Progress<P, R, E> {
         Progress { inner: self.inner.clone() }
     }
 }
 
-struct ProgressInner<P: Partial<R>, R: Send, E: Send> {
+struct ProgressInner<P: Partial<R>, R: Send + 'static, E: Send + 'static> {
     vals: P,
     complete: Option<Complete<R, E>>,
     remaining: AtomicIsize,
@@ -230,9 +230,9 @@ impl<A: Async> Join<Vec<A::Value>, A::Error> for Vec<A> {
  */
 
 impl<A1: Async<Error=E>, A2: Async<Error=E>, E> Join<(A1::Value, A2::Value), E> for (A1, A2)
-        where E: Send,
-              A1::Value: Send,
-              A2::Value: Send {
+        where E: Send + 'static,
+              A1::Value: Send + 'static,
+              A2::Value: Send + 'static {
 
     fn join(self, complete: Complete<(<A1 as Async>::Value, <A2 as Async>::Value), E>) {
         let (a1, a2) = self;
@@ -244,10 +244,10 @@ impl<A1: Async<Error=E>, A2: Async<Error=E>, E> Join<(A1::Value, A2::Value), E> 
 }
 
 impl<A1: Async<Error=E>, A2: Async<Error=E>, A3: Async<Error=E>, E> Join<(A1::Value, A2::Value, A3::Value), E> for (A1, A2, A3)
-        where E: Send,
-              A1::Value: Send,
-              A2::Value: Send,
-              A3::Value: Send {
+        where E: Send + 'static,
+              A1::Value: Send + 'static,
+              A2::Value: Send + 'static,
+              A3::Value: Send + 'static {
 
     fn join(self, complete: Complete<(A1::Value, A2::Value, A3::Value), E>) {
         let (a1, a2, a3) = self;
