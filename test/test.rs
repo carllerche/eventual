@@ -15,7 +15,9 @@
 //!
 //! # Stream
 
+extern crate env_logger;
 extern crate eventual;
+extern crate syncbox;
 extern crate time;
 
 #[macro_use]
@@ -36,6 +38,9 @@ mod test_future_receive;
 
 // == Join tests ==
 mod test_join;
+
+// == Run tests ==
+mod test_run;
 
 // == Select tests ==
 mod test_select;
