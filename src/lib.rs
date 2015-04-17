@@ -33,7 +33,7 @@
 //! let res = join((
 //!         future1.map(|v| v * 2),
 //!         future2.map(|v| v + 5)))
-//!     .and_then(|(v1, v2)| v1 - v2)
+//!     .and_then(|(v1, v2)| Ok(v1 - v2))
 //!     .await().unwrap();
 //!
 //! assert_eq!(61, res);
