@@ -317,67 +317,32 @@ impl<A: Send + 'static> Cancel<A> for Option<A> {
     }
 }
 
-/*
- *
- * ===== Async implementations =====
- *
- */
+/// Convenience implementation for (), to ease use of side-effecting functions returning unit
+impl Async for () {
+    type Value  = ();
+    type Error  = ();
+    type Cancel = Option<()>;
 
-macro_rules! async_impl_body {
-    ($ty:ty) => (
-        fn is_ready(&self) -> bool {
-            true
-        }
+    fn is_ready(&self) -> bool {
+        true
+    }
 
-        fn is_err(&self) -> bool {
-            false
-        }
+    fn is_err(&self) -> bool {
+        false
+    }
 
-        fn poll(self) -> Result<AsyncResult<$ty, ()>, $ty> {
-            Ok(Ok(self))
-        }
+    fn poll(self) -> Result<AsyncResult<(), ()>, ()> {
+        Ok(Ok(self))
+    }
 
-        fn ready<F: FnOnce($ty) + Send + 'static>(self, f: F) -> Option<$ty> {
-            f(self);
-            None
-        }
+    fn ready<F: FnOnce(()) + Send + 'static>(self, f: F) -> Option<()> {
+        f(self);
+        None
+    }
 
-        fn await(self) -> AsyncResult<$ty, ()> {
-            Ok(self)
-        }
-    );
-}
-
-macro_rules! async_impl {
-    ($ty:ty) => (
-        impl Async for $ty {
-            type Value  = $ty;
-            type Error  = ();
-            type Cancel = Option<$ty>;
-
-            async_impl_body!($ty);
-        }
-    );
-
-    ($ty:ty, $($rest:tt),*) => (
-        async_impl!($ty);
-        async_impl!($($rest),*);
-    );
-}
-
-// For now, implement on as many concrete types as possible. One day, Rust will
-// support specialization (hopefully) and this won't be necessary.
-async_impl!(
-    (), bool, String,
-    u8, u16, u32, u64, usize,
-    i8, i16, i32, i64, isize);
-
-impl<E: Send + 'static> Async for Vec<E> {
-    type Value = Vec<E>;
-    type Error = ();
-    type Cancel = Option<Vec<E>>;
-
-    async_impl_body!(Vec<E>);
+    fn await(self) -> AsyncResult<(), ()> {
+         Ok(self)
+    }
 }
 
 /*
