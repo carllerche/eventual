@@ -41,9 +41,9 @@
     </nav>
 
     <section id='main' class="content mod">
-<h1 class='fqn'><span class='in-band'>Crate <a class='mod' href=''>eventual</a><wbr></span><span class='out-of-band'><a href='stability.html'>[stability]</a> <span id='render-detail'>
+<h1 class='fqn'><span class='in-band'>Crate <a class='mod' href=''>eventual</a></span><span class='out-of-band'><span id='render-detail'>
             <a id="collapse-all" href="#">[-]</a>&nbsp;<a id="expand-all" href="#">[+]</a>
-        </span><a id='src-0' href='../src/eventual/lib.rs.html#1-459'>[src]</a></span></h1>
+        </span><a id='src-0' class='srclink' href='../src/eventual/lib.rs.html#1-424'>[src]</a></span></h1>
 <div class='docblock'><p>Composable primitives for asynchronous computations</p>
 
 <p>The async module contains utilities for managing asynchronous computations.
@@ -78,7 +78,7 @@ asynchronously computed.</p>
 <span class='kw'>let</span> <span class='ident'>res</span> <span class='op'>=</span> <span class='ident'>join</span>((
         <span class='ident'>future1</span>.<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>v</span><span class='op'>|</span> <span class='ident'>v</span> <span class='op'>*</span> <span class='number'>2</span>),
         <span class='ident'>future2</span>.<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>v</span><span class='op'>|</span> <span class='ident'>v</span> <span class='op'>+</span> <span class='number'>5</span>)))
-    .<span class='ident'>and_then</span>(<span class='op'>|</span>(<span class='ident'>v1</span>, <span class='ident'>v2</span>)<span class='op'>|</span> <span class='ident'>v1</span> <span class='op'>-</span> <span class='ident'>v2</span>)
+    .<span class='ident'>and_then</span>(<span class='op'>|</span>(<span class='ident'>v1</span>, <span class='ident'>v2</span>)<span class='op'>|</span> <span class='prelude-val'>Ok</span>(<span class='ident'>v1</span> <span class='op'>-</span> <span class='ident'>v2</span>))
     .<span class='ident'>await</span>().<span class='ident'>unwrap</span>();
 
 <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='number'>61</span>, <span class='ident'>res</span>);
@@ -90,123 +90,159 @@ asynchronously computed.</p>
 value, it represents a sequence of values.</p>
 </div><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
 <table>
-                    <tr>
-                        <td><a class='stability Unmarked' title='No stability level'></a><a class='struct' href='struct.BusySender.html'
+                    <tr class=' module-item'>
+                        <td><a class='struct' href='struct.BusySender.html'
                                title='eventual::BusySender'>BusySender</a></td>
-                        <td class='docblock short'></td>
+                        <td class='docblock short'>
+                             
+                        </td>
                     </tr>
                 
-                    <tr>
-                        <td><a class='stability Unmarked' title='No stability level'></a><a class='struct' href='struct.Complete.html'
+                    <tr class=' module-item'>
+                        <td><a class='struct' href='struct.Complete.html'
                                title='eventual::Complete'>Complete</a></td>
-                        <td class='docblock short'><p>An object that is used to fulfill or reject an associated Future.</p>
-</td>
+                        <td class='docblock short'>
+                             <p>An object that is used to fulfill or reject an associated Future.</p>
+
+                        </td>
                     </tr>
                 
-                    <tr>
-                        <td><a class='stability Unmarked' title='No stability level'></a><a class='struct' href='struct.Future.html'
+                    <tr class=' module-item'>
+                        <td><a class='struct' href='struct.Future.html'
                                title='eventual::Future'>Future</a></td>
-                        <td class='docblock short'></td>
+                        <td class='docblock short'>
+                             
+                        </td>
                     </tr>
                 
-                    <tr>
-                        <td><a class='stability Unmarked' title='No stability level'></a><a class='struct' href='struct.Receipt.html'
+                    <tr class=' module-item'>
+                        <td><a class='struct' href='struct.Receipt.html'
                                title='eventual::Receipt'>Receipt</a></td>
-                        <td class='docblock short'></td>
+                        <td class='docblock short'>
+                             
+                        </td>
                     </tr>
                 
-                    <tr>
-                        <td><a class='stability Unmarked' title='No stability level'></a><a class='struct' href='struct.Sender.html'
+                    <tr class=' module-item'>
+                        <td><a class='struct' href='struct.Sender.html'
                                title='eventual::Sender'>Sender</a></td>
-                        <td class='docblock short'><p>The sending half of <code>Stream::pair()</code>. Can only be owned by a single task at
+                        <td class='docblock short'>
+                             <p>The sending half of <code>Stream::pair()</code>. Can only be owned by a single task at
 a time.</p>
-</td>
+
+                        </td>
                     </tr>
                 
-                    <tr>
-                        <td><a class='stability Unmarked' title='No stability level'></a><a class='struct' href='struct.Stream.html'
+                    <tr class=' module-item'>
+                        <td><a class='struct' href='struct.Stream.html'
                                title='eventual::Stream'>Stream</a></td>
-                        <td class='docblock short'></td>
+                        <td class='docblock short'>
+                             
+                        </td>
                     </tr>
                 
-                    <tr>
-                        <td><a class='stability Unmarked' title='No stability level'></a><a class='struct' href='struct.StreamIter.html'
+                    <tr class=' module-item'>
+                        <td><a class='struct' href='struct.StreamIter.html'
                                title='eventual::StreamIter'>StreamIter</a></td>
-                        <td class='docblock short'></td>
+                        <td class='docblock short'>
+                             
+                        </td>
                     </tr>
                 
-                    <tr>
-                        <td><a class='stability Unmarked' title='No stability level'></a><a class='struct' href='struct.Timer.html'
+                    <tr class=' module-item'>
+                        <td><a class='struct' href='struct.Timer.html'
                                title='eventual::Timer'>Timer</a></td>
-                        <td class='docblock short'><p>Provides timeouts as a <code>Future</code> and periodic ticks as a <code>Stream</code>.</p>
-</td>
+                        <td class='docblock short'>
+                             <p>Provides timeouts as a <code>Future</code> and periodic ticks as a <code>Stream</code>.</p>
+
+                        </td>
                     </tr>
                 </table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
 <table>
-                    <tr>
-                        <td><a class='stability Unmarked' title='No stability level'></a><a class='enum' href='enum.AsyncError.html'
+                    <tr class=' module-item'>
+                        <td><a class='enum' href='enum.AsyncError.html'
                                title='eventual::AsyncError'>AsyncError</a></td>
-                        <td class='docblock short'></td>
+                        <td class='docblock short'>
+                             
+                        </td>
                     </tr>
                 </table><h2 id='traits' class='section-header'><a href="#traits">Traits</a></h2>
 <table>
-                    <tr>
-                        <td><a class='stability Unmarked' title='No stability level'></a><a class='trait' href='trait.Async.html'
+                    <tr class=' module-item'>
+                        <td><a class='trait' href='trait.Async.html'
                                title='eventual::Async'>Async</a></td>
-                        <td class='docblock short'><p>A value representing an asynchronous computation</p>
-</td>
+                        <td class='docblock short'>
+                             <p>A value representing an asynchronous computation</p>
+
+                        </td>
                     </tr>
                 
-                    <tr>
-                        <td><a class='stability Unmarked' title='No stability level'></a><a class='trait' href='trait.Cancel.html'
+                    <tr class=' module-item'>
+                        <td><a class='trait' href='trait.Cancel.html'
                                title='eventual::Cancel'>Cancel</a></td>
-                        <td class='docblock short'></td>
+                        <td class='docblock short'>
+                             
+                        </td>
                     </tr>
                 
-                    <tr>
-                        <td><a class='stability Unmarked' title='No stability level'></a><a class='trait' href='trait.Join.html'
+                    <tr class=' module-item'>
+                        <td><a class='trait' href='trait.Join.html'
                                title='eventual::Join'>Join</a></td>
-                        <td class='docblock short'></td>
+                        <td class='docblock short'>
+                             
+                        </td>
                     </tr>
                 
-                    <tr>
-                        <td><a class='stability Unmarked' title='No stability level'></a><a class='trait' href='trait.Pair.html'
+                    <tr class=' module-item'>
+                        <td><a class='trait' href='trait.Pair.html'
                                title='eventual::Pair'>Pair</a></td>
-                        <td class='docblock short'></td>
+                        <td class='docblock short'>
+                             
+                        </td>
                     </tr>
                 
-                    <tr>
-                        <td><a class='stability Unmarked' title='No stability level'></a><a class='trait' href='trait.Select.html'
+                    <tr class=' module-item'>
+                        <td><a class='trait' href='trait.Select.html'
                                title='eventual::Select'>Select</a></td>
-                        <td class='docblock short'></td>
+                        <td class='docblock short'>
+                             
+                        </td>
                     </tr>
                 </table><h2 id='functions' class='section-header'><a href="#functions">Functions</a></h2>
 <table>
-                    <tr>
-                        <td><a class='stability Unmarked' title='No stability level'></a><a class='fn' href='fn.join.html'
+                    <tr class=' module-item'>
+                        <td><a class='fn' href='fn.join.html'
                                title='eventual::join'>join</a></td>
-                        <td class='docblock short'></td>
+                        <td class='docblock short'>
+                             
+                        </td>
                     </tr>
                 
-                    <tr>
-                        <td><a class='stability Unmarked' title='No stability level'></a><a class='fn' href='fn.select.html'
+                    <tr class=' module-item'>
+                        <td><a class='fn' href='fn.select.html'
                                title='eventual::select'>select</a></td>
-                        <td class='docblock short'></td>
+                        <td class='docblock short'>
+                             
+                        </td>
                     </tr>
                 
-                    <tr>
-                        <td><a class='stability Unmarked' title='No stability level'></a><a class='fn' href='fn.sequence.html'
+                    <tr class=' module-item'>
+                        <td><a class='fn' href='fn.sequence.html'
                                title='eventual::sequence'>sequence</a></td>
-                        <td class='docblock short'><p>Returns a <code>Stream</code> consisting of the completion of the supplied async
+                        <td class='docblock short'>
+                             <p>Returns a <code>Stream</code> consisting of the completion of the supplied async
 values in the order that they are completed.</p>
-</td>
+
+                        </td>
                     </tr>
                 </table><h2 id='types' class='section-header'><a href="#types">Type Definitions</a></h2>
 <table>
-                    <tr>
-                        <td><a class='stability Unmarked' title='No stability level'></a><a class='type' href='type.AsyncResult.html'
+                    <tr class=' module-item'>
+                        <td><a class='type' href='type.AsyncResult.html'
                                title='eventual::AsyncResult'>AsyncResult</a></td>
-                        <td class='docblock short'></td>
+                        <td class='docblock short'>
+                             
+                        </td>
                     </tr>
                 </table></section>
     <section id='search' class="content hidden"></section>

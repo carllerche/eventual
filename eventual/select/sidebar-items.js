@@ -1,1 +1,1 @@
-initSidebarItems({"fn":[["select",""]],"trait":[["Select",""]]});
+initSidebarItems({"trait":[["Select",""]],"fn":[["select",""]]});
