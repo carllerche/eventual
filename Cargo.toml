@@ -19,7 +19,7 @@ exclude       = [
 
 [dependencies]
 log     = "0.3.0"
-time    = "0.1.22"
+time    = "0.1.25"
 
 [dependencies.syncbox]
 git = "https://github.com/carllerche/syncbox"
