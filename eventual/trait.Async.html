@@ -42,13 +42,12 @@
 
     <section id='main' class="content trait">
 <h1 class='fqn'><span class='in-band'>Trait <a href='index.html'>eventual</a>::<wbr><a class='trait' href=''>Async</a></span><span class='out-of-band'><span id='render-detail'>
-            <a id="toggle-all-docs" href="#" title="collapse all docs">[-]</a>
-        </span><a id='src-18839' class='srclink' href='../src/eventual/lib.rs.html#87-269' title='goto source code'>[src]</a></span></h1>
+            <a id="toggle-all-docs" href="#" title="collapse all docs">[&minus;]</a>
+        </span><a id='src-18828' class='srclink' href='../src/eventual/lib.rs.html#87-269' title='goto source code'>[src]</a></span></h1>
 <pre class='rust trait'>pub trait Async: <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static + <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a> {
     type Value: <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static;
     type Error: <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static;
     type Cancel: <a class='trait' href='../eventual/trait.Cancel.html' title='eventual::Cancel'>Cancel</a>&lt;Self&gt;;
-
     fn <a href='#tymethod.is_ready' class='fnname'>is_ready</a>(&amp;self) -&gt; <a href='http://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>;
     fn <a href='#tymethod.is_err' class='fnname'>is_err</a>(&amp;self) -&gt; <a href='http://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>;
     fn <a href='#tymethod.poll' class='fnname'>poll</a>(self) -&gt; <a class='enum' href='http://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='type' href='../eventual/type.AsyncResult.html' title='eventual::AsyncResult'>AsyncResult</a>&lt;Self::<a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Value</a>, Self::<a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Error</a>&gt;, Self&gt;;
