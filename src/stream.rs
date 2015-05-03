@@ -339,6 +339,11 @@ impl<T: Send + 'static, E: Send + 'static> Stream<T, E> {
             }).to_stream()
     }
 
+    pub fn to_future(mut self) -> Future<Head<T, E>, E> {
+        use super::future;
+        future::from_core(core::take(&mut self.core))
+    }
+
     /*
      *
      * ===== Internal Helpers =====
