@@ -787,6 +787,11 @@
 <span id="745">745</span>
 <span id="746">746</span>
 <span id="747">747</span>
+<span id="748">748</span>
+<span id="749">749</span>
+<span id="750">750</span>
+<span id="751">751</span>
+<span id="752">752</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> {
     <span class='ident'>receipt</span>,
@@ -1127,6 +1132,11 @@
                     }
                 }
             }).<span class='ident'>to_stream</span>()
+    }
+
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>to_future</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Future</span><span class='op'>&lt;</span><span class='ident'>Head</span><span class='op'>&lt;</span><span class='ident'>T</span>, <span class='ident'>E</span><span class='op'>&gt;</span>, <span class='ident'>E</span><span class='op'>&gt;</span> {
+        <span class='kw'>use</span> <span class='ident'>super</span>::<span class='ident'>future</span>;
+        <span class='ident'>future</span>::<span class='ident'>from_core</span>(<span class='ident'>core</span>::<span class='ident'>take</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>core</span>))
     }
 
     <span class='comment'>/*

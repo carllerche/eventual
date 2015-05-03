@@ -43,7 +43,7 @@
     <section id='main' class="content struct">
 <h1 class='fqn'><span class='in-band'>Struct <a href='index.html'>eventual</a>::<wbr><a class='struct' href=''>Stream</a></span><span class='out-of-band'><span id='render-detail'>
             <a id="toggle-all-docs" href="#" title="collapse all docs">[&minus;]</a>
-        </span><a id='src-15718' class='srclink' href='../src/eventual/stream.rs.html#22-24' title='goto source code'>[src]</a></span></h1>
+        </span><a id='src-15739' class='srclink' href='../src/eventual/stream.rs.html#22-24' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>#[must_use = "streams are lazy and do nothing unless consumed"]
 pub struct Stream&lt;T: <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static, E: <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static&gt; {
     // some fields omitted
@@ -100,6 +100,7 @@ iteration.</p>
 stream.</p>
 </div><h4 id='method.take_while' class='method'><code>fn <a href='#method.take_while' class='fnname'>take_while</a>&lt;F&gt;(self, _f: F) -&gt; <a class='struct' href='../eventual/struct.Stream.html' title='eventual::Stream'>Stream</a>&lt;T, E&gt; <span class='where'>where F: <a class='trait' href='http://doc.rust-lang.org/nightly/core/ops/trait.Fn.html' title='core::ops::Fn'>Fn</a>(&amp;T) -&gt; <a href='http://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a> + <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static</span></code></h4>
 <h4 id='method.take_until' class='method'><code>fn <a href='#method.take_until' class='fnname'>take_until</a>&lt;A&gt;(self, cond: A) -&gt; <a class='struct' href='../eventual/struct.Stream.html' title='eventual::Stream'>Stream</a>&lt;T, E&gt; <span class='where'>where A: <a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Async</a>&lt;Error=E&gt;</span></code></h4>
+<h4 id='method.to_future' class='method'><code>fn <a href='#method.to_future' class='fnname'>to_future</a>(self) -&gt; <a class='struct' href='../eventual/struct.Future.html' title='eventual::Future'>Future</a>&lt;Head&lt;T, E&gt;, E&gt;</code></h4>
 </div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><code>impl&lt;T: <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static, E: <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static&gt; <a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Async</a> for <a class='struct' href='../eventual/struct.Stream.html' title='eventual::Stream'>Stream</a>&lt;T, E&gt;</code></h3><div class='impl-items'><h4 id='assoc_type.Value' class='type'><code>type Value = Head&lt;T, E&gt;</code></h4>
 <h4 id='assoc_type.Error' class='type'><code>type Error = E</code></h4>
 <h4 id='assoc_type.Cancel' class='type'><code>type Cancel = <a class='struct' href='../eventual/struct.Receipt.html' title='eventual::Receipt'>Receipt</a>&lt;<a class='struct' href='../eventual/struct.Stream.html' title='eventual::Stream'>Stream</a>&lt;T, E&gt;&gt;</code></h4>

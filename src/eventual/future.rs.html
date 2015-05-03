@@ -431,6 +431,10 @@
 <span id="389">389</span>
 <span id="390">390</span>
 <span id="391">391</span>
+<span id="392">392</span>
+<span id="393">393</span>
+<span id="394">394</span>
+<span id="395">395</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='ident'>super</span>::{
     <span class='ident'>receipt</span>,
@@ -814,6 +818,10 @@
     <span class='kw'>fn</span> <span class='ident'>cancel</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Complete</span><span class='op'>&lt;</span><span class='ident'>T</span>, <span class='ident'>E</span><span class='op'>&gt;&gt;</span> {
         <span class='prelude-val'>None</span>
     }
+}
+
+<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>from_core</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Send</span> <span class='op'>+</span> <span class='lifetime'>&#39;static</span>, <span class='ident'>E</span>: <span class='ident'>Send</span> <span class='op'>+</span> <span class='lifetime'>&#39;static</span><span class='op'>&gt;</span>(<span class='ident'>core</span>: <span class='ident'>Core</span><span class='op'>&lt;</span><span class='ident'>T</span>, <span class='ident'>E</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>Future</span><span class='op'>&lt;</span><span class='ident'>T</span>, <span class='ident'>E</span><span class='op'>&gt;</span> {
+    <span class='ident'>Future</span> { <span class='ident'>core</span>: <span class='prelude-val'>Some</span>(<span class='ident'>core</span>) }
 }
 
 <span class='attribute'>#[<span class='ident'>test</span>]</span>
