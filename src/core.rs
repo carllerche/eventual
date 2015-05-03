@@ -411,7 +411,8 @@ impl<T: Send + 'static, E: Send + 'static> CoreInner<T, E> {
     }
 
     fn producer_is_err(&self) -> bool {
-        unimplemented!();
+        let curr = self.state.load(Relaxed);
+        curr.is_canceled()
     }
 
     pub fn producer_poll(&self) -> Option<AsyncResult<Core<T, E>, ()>> {
