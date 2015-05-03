@@ -382,6 +382,10 @@ impl<T: Send + 'static, E: Send + 'static> Cancel<Complete<T, E>> for Receipt<Co
     }
 }
 
+pub fn from_core<T: Send + 'static, E: Send + 'static>(core: Core<T, E>) -> Future<T, E> {
+    Future { core: Some(core) }
+}
+
 #[test]
 pub fn test_size_of_future() {
     use std::mem;
