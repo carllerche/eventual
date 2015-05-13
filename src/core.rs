@@ -47,7 +47,7 @@ impl<T: Send + 'static, E: Send + 'static> Core<T, E> {
         debug!("Core::consumer_await");
 
         let th = thread::current();
-        self.inner().consumer_ready(move |_| {
+        self.inner_mut().consumer_ready(move |_| {
             debug!("Core::consumer_await - unparking thread");
             th.unpark()
         });
@@ -63,7 +63,7 @@ impl<T: Send + 'static, E: Send + 'static> Core<T, E> {
     /// Registers a callback that will be invoked when calling `consumer_poll`
     /// will return a value.
     pub fn consumer_ready<F: FnOnce(Core<T, E>) + Send + 'static>(&self, f: F) -> Option<u64> {
-        self.inner().consumer_ready(f)
+        self.transmute_inner_mut().consumer_ready(f)
     }
 
     pub fn consumer_ready_cancel(&self, count: u64) -> bool {
@@ -87,7 +87,7 @@ impl<T: Send + 'static, E: Send + 'static> Core<T, E> {
 
         let th = thread::current();
 
-        self.inner().producer_ready(move |_| th.unpark());
+        self.transmute_inner_mut().producer_ready(move |_| th.unpark());
 
         while !self.producer_is_ready() {
             thread::park();
@@ -95,7 +95,7 @@ impl<T: Send + 'static, E: Send + 'static> Core<T, E> {
     }
 
     pub fn producer_ready<F: FnOnce(Core<T, E>) + Send + 'static>(&self, f: F) {
-        self.inner().producer_ready(f);
+        self.transmute_inner_mut().producer_ready(f);
     }
 
     pub fn complete(&mut self, val: AsyncResult<T, E>, last: bool) {
@@ -113,6 +113,11 @@ impl<T: Send + 'static, E: Send + 'static> Core<T, E> {
 
     #[inline]
     fn inner_mut(&mut self) -> &mut CoreInner<T, E> {
+        unsafe { &mut *self.ptr }
+    }
+
+    #[inline]
+    fn transmute_inner_mut(&self) -> &mut CoreInner<T, E> {
         unsafe { &mut *self.ptr }
     }
 }
@@ -229,7 +234,7 @@ impl<T: Send + 'static, E: Send + 'static> CoreInner<T, E> {
         Some(self.consume_val(curr))
     }
 
-    fn consumer_ready<F: FnOnce(Core<T, E>) + Send + 'static>(&self, f: F) -> Option<u64> {
+    fn consumer_ready<F: FnOnce(Core<T, E>) + Send + 'static>(&mut self, f: F) -> Option<u64> {
         let mut curr = self.state.load(Relaxed);
 
         debug!("Core::consumer_ready; state={:?}", curr);
@@ -262,7 +267,7 @@ impl<T: Send + 'static, E: Send + 'static> CoreInner<T, E> {
 
     // Transition the state to indicate that a consumer is waiting.
     //
-    fn consumer_wait(&self, mut curr: State) -> Option<u64> {
+    fn consumer_wait(&mut self, mut curr: State) -> Option<u64> {
         let mut next;
         let mut notify_producer;
 
@@ -323,7 +328,7 @@ impl<T: Send + 'static, E: Send + 'static> CoreInner<T, E> {
         Some(next.count())
     }
 
-    fn notify_consumer(&self, curr: State) {
+    fn notify_consumer(&mut self, curr: State) {
         // Already in a consumer callback, track that it should be invoked
         // again
         if curr.is_invoking_consumer() {
@@ -352,7 +357,7 @@ impl<T: Send + 'static, E: Send + 'static> CoreInner<T, E> {
         }
     }
 
-    fn notify_consumer_loop(&self, mut curr: State) {
+    fn notify_consumer_loop(&mut self, mut curr: State) {
         loop {
             let cb = self.take_consumer_wait();
 
@@ -431,7 +436,7 @@ impl<T: Send + 'static, E: Send + 'static> CoreInner<T, E> {
         Some(Ok(self.core()))
     }
 
-    fn producer_ready<F: FnOnce(Core<T, E>) + Send + 'static >(&self, f: F) {
+    fn producer_ready<F: FnOnce(Core<T, E>) + Send + 'static >(&mut self, f: F) {
         let mut curr = self.state.load(Relaxed);
 
         debug!("Core::producer_ready; state={:?}", curr);
@@ -463,7 +468,7 @@ impl<T: Send + 'static, E: Send + 'static> CoreInner<T, E> {
         self.producer_wait(curr);
     }
 
-    fn producer_wait(&self, mut curr: State) -> State {
+    fn producer_wait(&mut self, mut curr: State) -> State {
         loop {
             let next = match curr.lifecycle() {
                 New => {
@@ -630,7 +635,7 @@ impl<T: Send + 'static, E: Send + 'static> CoreInner<T, E> {
         }
     }
 
-    fn notify_producer(&self, curr: State) -> State {
+    fn notify_producer(&mut self, curr: State) -> State {
         debug!("Core::notify_producer");
 
         if curr.is_invoking_producer() {
@@ -665,7 +670,7 @@ impl<T: Send + 'static, E: Send + 'static> CoreInner<T, E> {
     // calling into the next produce callback until the first one has returned.
     // This requires invoking produce callbacks in a loop, and calling the next
     // one as long as the state is ProducerNotify
-    fn notify_producer_loop(&self, mut curr: State) -> State {
+    fn notify_producer_loop(&mut self, mut curr: State) -> State {
         loop {
             let cb = self.take_producer_wait();
 
@@ -731,32 +736,20 @@ impl<T: Send + 'static, E: Send + 'static> CoreInner<T, E> {
         self.val.take().expect("expected a value")
     }
 
-    fn put_consumer_wait(&self, cb: Callback<T, E>) {
-        unsafe {
-            let s: &mut CoreInner<T, E> = mem::transmute(self);
-            s.consumer_wait = Some(cb);
-        }
+    fn put_consumer_wait(&mut self, cb: Callback<T, E>) {
+        self.consumer_wait = Some(cb);
     }
 
-    fn take_consumer_wait(&self) -> Callback<T, E> {
-        unsafe {
-            let s: &mut CoreInner<T, E> = mem::transmute(self);
-            s.consumer_wait.take().expect("consumer_wait is none")
-        }
+    fn take_consumer_wait(&mut self) -> Callback<T, E> {
+        self.consumer_wait.take().expect("consumer_wait is none")
     }
 
-    fn put_producer_wait(&self, cb: Callback<T, E>) {
-        unsafe {
-            let s: &mut CoreInner<T, E> = mem::transmute(self);
-            s.producer_wait = Some(cb);
-        }
+    fn put_producer_wait(&mut self, cb: Callback<T, E>) {
+        self.producer_wait = Some(cb);
     }
 
-    fn take_producer_wait(&self) -> Callback<T, E> {
-        unsafe {
-            let s: &mut CoreInner<T, E> = mem::transmute(self);
-            s.producer_wait.take().expect("producer_wait is none")
-        }
+    fn take_producer_wait(&mut self) -> Callback<T, E> {
+        self.producer_wait.take().expect("producer_wait is none")
     }
 
     fn ref_inc(&self, order: Ordering) -> usize {
