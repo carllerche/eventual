@@ -45,9 +45,8 @@
 //! A `Stream` is like a `Future`, except that instead of representing a single
 //! value, it represents a sequence of values.
 //!
-
+#![feature(core)]
 #![crate_name = "eventual"]
-
 extern crate syncbox;
 extern crate time;
 
@@ -57,7 +56,7 @@ extern crate log;
 pub use self::future::{Future, Complete};
 pub use self::join::{join, Join};
 pub use self::receipt::Receipt;
-pub use self::run::defer;
+pub use self::run::{background, defer};
 pub use self::select::{select, Select};
 pub use self::sequence::sequence;
 pub use self::stream::{Stream, StreamIter, Sender, BusySender};
