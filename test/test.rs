@@ -17,6 +17,7 @@
 
 extern crate eventual;
 extern crate time;
+extern crate syncbox;
 
 #[macro_use]
 extern crate log;
@@ -36,6 +37,7 @@ mod test_future_receive;
 
 // == Join tests ==
 mod test_join;
+mod test_run;
 
 // == Select tests ==
 mod test_select;
