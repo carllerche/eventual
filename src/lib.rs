@@ -62,6 +62,7 @@ pub use self::sequence::sequence;
 pub use self::stream::{Stream, StreamIter, Sender, BusySender};
 pub use self::timer::Timer;
 
+use std::error::Error;
 use std::fmt;
 
 // ## TODO
@@ -397,11 +398,36 @@ impl<E: Send + 'static> AsyncError<E> {
     }
 }
 
+impl<E: Send + Error + 'static> Error for AsyncError<E> {
+    fn description(&self) -> &str {
+        match *self {
+            AsyncError::Failed(ref e) => e.description(),
+            AsyncError::Aborted => "aborted",
+        }
+    }
+
+    fn cause(&self) -> Option<&Error> {
+        match *self {
+            AsyncError::Failed(ref e) => e.cause(),
+            AsyncError::Aborted => None,
+        }
+    }
+}
+
 impl<E: Send + 'static + fmt::Debug> fmt::Debug for AsyncError<E> {
     fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
         match *self {
             AsyncError::Failed(ref e) => write!(fmt, "AsyncError::Failed({:?})", e),
             AsyncError::Aborted => write!(fmt, "AsyncError::Aborted"),
+        }
+    }
+}
+
+impl<E: Send + 'static + fmt::Display> fmt::Display for AsyncError<E> {
+    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
+        match *self {
+            AsyncError::Failed(ref e) => write!(fmt, "{}", e),
+            AsyncError::Aborted => write!(fmt, "[aborted]"),
         }
     }
 }
