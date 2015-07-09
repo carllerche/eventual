@@ -76,16 +76,11 @@ pub fn test_join_errors_on_failure() {
     assert_eq!("win", rx.try_recv().unwrap());
 }
 
-/*
-
-    Test is blocked by a Rust bug
-    https://github.com/rust-lang/rust/issues/21080
-
 #[test]
 pub fn test_joining_three_futures_async() {
-    let (f1, c1) = Future::<i32, ()>::pair();
-    let (f2, c2) = Future::<i32, ()>::pair();
-    let (f3, c3) = Future::<i32, ()>::pair();
+    let (c1, f1) = Future::<i32, ()>::pair();
+    let (c2, f2) = Future::<i32, ()>::pair();
+    let (c3, f3) = Future::<i32, ()>::pair();
     let (tx, rx) = channel::<(i32, i32, i32)>();
 
     join((f1, f2, f3)).receive(move |res: AsyncResult<(i32, i32, i32), ()>| {
@@ -103,7 +98,6 @@ pub fn test_joining_three_futures_async() {
 
     assert_eq!(rx.recv().unwrap(), (1, 2, 3));
 }
-*/
 
 #[test]
 pub fn test_joining_two_vec_futures_async() {
