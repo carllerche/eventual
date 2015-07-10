@@ -4,10 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="API documentation for the Rust `AsyncResult` type in crate `eventual`.">
-    <meta name="keywords" content="rust, rustlang, rust-lang, AsyncResult">
+    <meta name="description" content="API documentation for the Rust `defer` fn in crate `eventual`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, defer">
 
-    <title>eventual::AsyncResult - Rust</title>
+    <title>eventual::defer - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../main.css">
 
@@ -26,7 +26,7 @@
 
     <section class="sidebar">
         
-        <p class='location'><a href='index.html'>eventual</a></p><script>window.sidebarCurrent = {name: 'AsyncResult', ty: 'type', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'><a href='index.html'>eventual</a></p><script>window.sidebarCurrent = {name: 'defer', ty: 'fn', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </section>
 
     <nav class="sub">
@@ -40,13 +40,15 @@
         </form>
     </nav>
 
-    <section id='main' class="content type">
-<h1 class='fqn'><span class='in-band'><a href='index.html'>eventual</a>::<wbr><a class='type' href=''>AsyncResult</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content fn">
+<h1 class='fqn'><span class='in-band'>Function <a href='index.html'>eventual</a>::<wbr><a class='fn' href=''>defer</a></span><span class='out-of-band'><span id='render-detail'>
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-19659' class='srclink' href='../src/eventual/lib.rs.html#357' title='goto source code'>[src]</a></span></h1>
-<pre class='rust typedef'>type AsyncResult&lt;T, E&gt; = <a class='enum' href='http://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;T, <a class='enum' href='../eventual/enum.AsyncError.html' title='eventual::AsyncError'>AsyncError</a>&lt;E&gt;&gt;;</pre></section>
+        </span><a id='src-11470' class='srclink' href='../src/eventual/run.rs.html#8-23' title='goto source code'>[src]</a></span></h1>
+<pre class='rust fn'>pub fn defer&lt;R: Run&lt;<a class='struct' href='http://doc.rust-lang.org/nightly/alloc/boxed/struct.Box.html' title='alloc::boxed::Box'>Box</a>&lt;TaskBox&gt;&gt; + <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static, A: <a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Async</a> + 'static&gt;(task_runner: R, future_in: A) -&gt; <a class='struct' href='../eventual/struct.Future.html' title='eventual::Future'>Future</a>&lt;A, A&gt;</pre><div class='docblock'><p>This method defers a task onto a task runner until we can complete that call.
+Currently we only support using a ThreadPool as the task runner itself.</p>
+</div></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>

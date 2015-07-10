@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["background","This method backgrounds a task onto a task runner waiting for complete to be called. Currently we only support using a ThreadPool as the task runner itself."],["defer","This method defers a task onto a task runner until we can complete that call. Currently we only support using a ThreadPool as the task runner itself."]]});

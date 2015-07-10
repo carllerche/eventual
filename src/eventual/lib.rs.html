@@ -490,6 +490,8 @@
 <span id="448">448</span>
 <span id="449">449</span>
 <span id="450">450</span>
+<span id="451">451</span>
+<span id="452">452</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! Composable primitives for asynchronous computations</span>
 <span class='doccomment'>//!</span>
@@ -550,6 +552,7 @@
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>future</span>::{<span class='ident'>Future</span>, <span class='ident'>Complete</span>};
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>join</span>::{<span class='ident'>join</span>, <span class='ident'>Join</span>};
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>receipt</span>::<span class='ident'>Receipt</span>;
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>run</span>::{<span class='ident'>background</span>, <span class='ident'>defer</span>};
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>select</span>::{<span class='ident'>select</span>, <span class='ident'>Select</span>};
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>sequence</span>::<span class='ident'>sequence</span>;
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>stream</span>::{<span class='ident'>Stream</span>, <span class='ident'>StreamIter</span>, <span class='ident'>Sender</span>, <span class='ident'>BusySender</span>};
@@ -572,6 +575,7 @@
 <span class='kw'>mod</span> <span class='ident'>join</span>;
 <span class='kw'>mod</span> <span class='ident'>process</span>;
 <span class='kw'>mod</span> <span class='ident'>receipt</span>;
+<span class='kw'>mod</span> <span class='ident'>run</span>;
 <span class='kw'>mod</span> <span class='ident'>select</span>;
 <span class='kw'>mod</span> <span class='ident'>sequence</span>;
 <span class='kw'>mod</span> <span class='ident'>stream</span>;
