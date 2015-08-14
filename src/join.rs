@@ -190,6 +190,13 @@ impl<A: Async> Join<Vec<A::Value>, A::Error> for Vec<A> {
             complete,
             self.len() as isize);
 
+        // If we never enter the loop below, it's important that we complete the
+        // future or it will be dropped and then failed
+        if self.len() == 0 {
+            progress.succeed();
+            return;
+        }
+
         for (i, async) in self.into_iter().enumerate() {
             let progress = progress.clone();
 

@@ -117,3 +117,9 @@ pub fn test_joining_two_vec_futures_async() {
 
     assert_eq!(rx.recv().unwrap(), [1, 2]);
 }
+
+#[test]
+pub fn test_empty_join() {
+    let v: Vec<Future<i32, ()>> = vec![];
+    assert_eq!(join(v).await().ok(), Some(vec![]));
+}
