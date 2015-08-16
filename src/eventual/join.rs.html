@@ -300,6 +300,13 @@
 <span id="258">258</span>
 <span id="259">259</span>
 <span id="260">260</span>
+<span id="261">261</span>
+<span id="262">262</span>
+<span id="263">263</span>
+<span id="264">264</span>
+<span id="265">265</span>
+<span id="266">266</span>
+<span id="267">267</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='ident'>super</span>::{<span class='ident'>Async</span>, <span class='ident'>Future</span>, <span class='ident'>Complete</span>, <span class='ident'>AsyncError</span>};
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>cell</span>::<span class='ident'>UnsafeCell</span>;
@@ -492,6 +499,13 @@
             <span class='ident'>vec</span>,
             <span class='ident'>complete</span>,
             <span class='self'>self</span>.<span class='ident'>len</span>() <span class='kw'>as</span> <span class='ident'>isize</span>);
+
+        <span class='comment'>// If we never enter the loop below, it&#39;s important that we complete the</span>
+        <span class='comment'>// future or it will be dropped and then failed</span>
+        <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>len</span>() <span class='op'>==</span> <span class='number'>0</span> {
+            <span class='ident'>progress</span>.<span class='ident'>succeed</span>();
+            <span class='kw'>return</span>;
+        }
 
         <span class='kw'>for</span> (<span class='ident'>i</span>, <span class='ident'>async</span>) <span class='kw'>in</span> <span class='self'>self</span>.<span class='ident'>into_iter</span>().<span class='ident'>enumerate</span>() {
             <span class='kw'>let</span> <span class='ident'>progress</span> <span class='op'>=</span> <span class='ident'>progress</span>.<span class='ident'>clone</span>();
