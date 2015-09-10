@@ -21,7 +21,7 @@ pub fn select<S: Select<E>, E: Send + 'static>(asyncs: S) -> Future<(u32, S), E>
 }
 
 
-pub trait Select<E: Send + 'static> : Send + 'static {
+pub trait Select<E: Send + 'static> : Sized + Send + 'static {
     fn select(self, complete: Complete<(u32, Self), E>);
 }
 
@@ -49,7 +49,7 @@ pub trait Select<E: Send + 'static> : Send + 'static {
 // - Switch to associated types over Index & Error
 //     Blocked: rust-lang/rust#21664
 
-trait Values<S: Select<E>, E> {
+trait Values<S: Select<E>, E: Send + 'static> {
     type Tokens: Send + 'static;
 
     fn consume(&mut self) -> S;

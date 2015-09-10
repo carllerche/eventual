@@ -47,6 +47,7 @@
 //!
 
 #![crate_name = "eventual"]
+#![deny(warnings)]
 
 extern crate syncbox;
 extern crate time;

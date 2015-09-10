@@ -18,7 +18,7 @@ pub fn join<J: Join<T, E>, T: Send + 'static, E: Send + 'static>(asyncs: J) -> F
     future
 }
 
-pub trait Join<T, E> : Send + 'static {
+pub trait Join<T: Send + 'static, E: Send + 'static> : Sized + Send + 'static {
     fn join(self, complete: Complete<T, E>);
 }
 
