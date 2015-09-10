@@ -12,7 +12,7 @@ const MAX_IN_FLIGHT: usize = (1 << 16) - 1;
 pub fn process<T, U, F>(source: Stream<T, U::Error>, in_flight: usize, action: F) -> Stream<U::Value, U::Error>
         where T: Send + 'static,
               U: Async,
-              F: Fn(T) -> U + Send + 'static {
+              F: FnMut(T) -> U + Send + 'static {
 
     // New stream
     let (tx, rx) = Stream::pair();
@@ -32,7 +32,7 @@ pub fn process<T, U, F>(source: Stream<T, U::Error>, in_flight: usize, action: F
 fn setup<T, U, F>(source: Stream<T, U::Error>, in_flight: usize, action: F, dest: Sender<U::Value, U::Error>)
         where T: Send + 'static,
               U: Async,
-              F: Fn(T) -> U + Send + 'static {
+              F: FnMut(T) -> U + Send + 'static {
 
     let mut inner = Inner::new(source, in_flight, action, dest);
     inner.maybe_process_next(false);
@@ -54,7 +54,7 @@ struct Source<T: Send + 'static, U: Async, F> {
 
 struct Inner<T: Send + 'static, U: Async, F>(Arc<UnsafeCell<Core<T, U, F>>>);
 
-impl<T: Send + 'static, U: Async, F: Fn(T) -> U + Send + 'static> Inner<T, U, F> {
+impl<T: Send + 'static, U: Async, F: FnMut(T) -> U + Send + 'static> Inner<T, U, F> {
     fn new(source: Stream<T, U::Error>,
            in_flight: usize,
            action: F,
@@ -78,7 +78,7 @@ impl<T: Send + 'static, U: Async, F: Fn(T) -> U + Send + 'static> Inner<T, U, F>
         // source value is readable.
         if self.try_acquire_consume_lock(dec_in_flight, Ordering::Acquire) {
             // Access to the source has been acquired
-            let Source { stream, action } = self.source.take().expect("source should be present");
+            let Source { stream, mut action } = self.source.take().expect("source should be present");
             let mut inner = self.clone();
 
             // Wait for the next value to be provided

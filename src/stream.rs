@@ -71,7 +71,7 @@ impl<T: Send + 'static, E: Send + 'static> Stream<T, E> {
 
     /// Sequentially yields each value to the supplied function. Returns a
     /// future representing the completion of the final yield.
-    pub fn each<F: Fn(T) + Send + 'static>(self, f: F) -> Future<(), E> {
+    pub fn each<F: FnMut(T) + Send + 'static>(self, f: F) -> Future<(), E> {
         let (complete, ret) = Future::pair();
 
         complete.receive(move |res| {
@@ -84,7 +84,7 @@ impl<T: Send + 'static, E: Send + 'static> Stream<T, E> {
     }
 
     // Perform the iteration
-    fn do_each<F: Fn(T) + Send + 'static>(self, f: F, complete: Complete<(), E>) {
+    fn do_each<F: FnMut(T) + Send + 'static>(self, mut f: F, complete: Complete<(), E>) {
         self.receive(move |head| {
             match head {
                 Ok(Some((v, rest))) => {
@@ -104,14 +104,14 @@ impl<T: Send + 'static, E: Send + 'static> Stream<T, E> {
 
     /// Returns a new stream containing the values of the original stream that
     /// match the given predicate.
-    pub fn filter<F: Fn(&T) -> bool + Send + 'static>(self, f: F) -> Stream<T, E> {
+    pub fn filter<F: FnMut(&T) -> bool + Send + 'static>(self, f: F) -> Stream<T, E> {
         let (sender, stream) = Stream::pair();
         self.do_filter(f, sender);
         stream
     }
 
-    fn do_filter<F, A>(self, f: F, sender: A)
-            where F: Fn(&T) -> bool + Send + 'static,
+    fn do_filter<F, A>(self, mut f: F, sender: A)
+            where F: FnMut(&T) -> bool + Send + 'static,
                   A: Async<Value=Sender<T, E>> {
 
         // Wait for the consumer to express interest
@@ -137,7 +137,7 @@ impl<T: Send + 'static, E: Send + 'static> Stream<T, E> {
 
     /// Returns a new stream representing the application of the specified
     /// function to each value of the original stream.
-    pub fn map<F: Fn(T) -> U + Send + 'static, U: Send + 'static>(self, f: F) -> Stream<U, E> {
+    pub fn map<F: FnMut(T) -> U + Send + 'static, U: Send + 'static>(self, mut f: F) -> Stream<U, E> {
         self.map_async(move |val| Ok(f(val)))
     }
 
@@ -146,7 +146,7 @@ impl<T: Send + 'static, E: Send + 'static> Stream<T, E> {
     /// the async result of the mapping to realize before continuing on to the
     /// next value.
     pub fn map_async<F, U>(self, action: F) -> Stream<U::Value, E>
-            where F: Fn(T) -> U + Send + 'static,
+            where F: FnMut(T) -> U + Send + 'static,
                   U: Async<Error=E> {
 
         let (sender, ret) = Stream::pair();
@@ -160,8 +160,8 @@ impl<T: Send + 'static, E: Send + 'static> Stream<T, E> {
         ret
     }
 
-    fn do_map<F, U>(self, sender: Sender<U::Value, E>, f: F)
-            where F: Fn(T) -> U + Send + 'static,
+    fn do_map<F, U>(self, sender: Sender<U::Value, E>, mut f: F)
+            where F: FnMut(T) -> U + Send + 'static,
                   U: Async<Error=E> {
 
         self.receive(move |head| {
@@ -225,7 +225,7 @@ impl<T: Send + 'static, E: Send + 'static> Stream<T, E> {
     }
 
     pub fn process<F, U>(self, in_flight: usize, f: F) -> Stream<U::Value, E>
-            where F: Fn(T) -> U + Send + 'static,
+            where F: FnMut(T) -> U + Send + 'static,
                   U: Async<Error=E> {
         use process::process;
         process(self, in_flight, f)
