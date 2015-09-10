@@ -328,7 +328,7 @@
     <span class='ident'>future</span>
 }
 
-<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>Join</span><span class='op'>&lt;</span><span class='ident'>T</span>, <span class='ident'>E</span><span class='op'>&gt;</span> : <span class='ident'>Send</span> <span class='op'>+</span> <span class='lifetime'>&#39;static</span> {
+<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>Join</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Send</span> <span class='op'>+</span> <span class='lifetime'>&#39;static</span>, <span class='ident'>E</span>: <span class='ident'>Send</span> <span class='op'>+</span> <span class='lifetime'>&#39;static</span><span class='op'>&gt;</span> : <span class='ident'>Sized</span> <span class='op'>+</span> <span class='ident'>Send</span> <span class='op'>+</span> <span class='lifetime'>&#39;static</span> {
     <span class='kw'>fn</span> <span class='ident'>join</span>(<span class='self'>self</span>, <span class='ident'>complete</span>: <span class='ident'>Complete</span><span class='op'>&lt;</span><span class='ident'>T</span>, <span class='ident'>E</span><span class='op'>&gt;</span>);
 }
 

@@ -481,8 +481,8 @@
     }
 }
 
-<span class='kw'>unsafe</span> <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>A</span><span class='op'>&gt;</span> <span class='ident'>Send</span> <span class='kw'>for</span> <span class='ident'>Inner</span><span class='op'>&lt;</span><span class='ident'>A</span><span class='op'>&gt;</span> { }
-<span class='kw'>unsafe</span> <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>A</span><span class='op'>&gt;</span> <span class='ident'>Sync</span> <span class='kw'>for</span> <span class='ident'>Inner</span><span class='op'>&lt;</span><span class='ident'>A</span><span class='op'>&gt;</span> { }
+<span class='kw'>unsafe</span> <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>A</span>: <span class='ident'>Async</span><span class='op'>&gt;</span> <span class='ident'>Send</span> <span class='kw'>for</span> <span class='ident'>Inner</span><span class='op'>&lt;</span><span class='ident'>A</span><span class='op'>&gt;</span> { }
+<span class='kw'>unsafe</span> <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>A</span>: <span class='ident'>Async</span><span class='op'>&gt;</span> <span class='ident'>Sync</span> <span class='kw'>for</span> <span class='ident'>Inner</span><span class='op'>&lt;</span><span class='ident'>A</span><span class='op'>&gt;</span> { }
 </pre>
 </section>
     <section id='search' class="content hidden"></section>
