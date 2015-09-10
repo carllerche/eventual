@@ -289,8 +289,8 @@ impl<T: Send + 'static, U: Async, F> Clone for Inner<T, U, F> {
     }
 }
 
-unsafe impl<T, U: Async, F> Send for Inner<T, U, F> { }
-unsafe impl<T, U: Async, F> Sync for Inner<T, U, F> { }
+unsafe impl<T: Send, U: Async, F> Send for Inner<T, U, F> { }
+unsafe impl<T: Send, U: Async, F> Sync for Inner<T, U, F> { }
 
 const LOCK: usize = 1 << 31;
 

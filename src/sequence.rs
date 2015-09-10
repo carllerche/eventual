@@ -217,5 +217,5 @@ impl<A: Async> Clone for Inner<A> {
     }
 }
 
-unsafe impl<A> Send for Inner<A> { }
-unsafe impl<A> Sync for Inner<A> { }
+unsafe impl<A: Async> Send for Inner<A> { }
+unsafe impl<A: Async> Sync for Inner<A> { }
