@@ -24,17 +24,17 @@
 
     
 
-    <section class="sidebar">
+    <nav class="sidebar">
         
         <p class='location'><a href='index.html'>eventual</a></p><script>window.sidebarCurrent = {name: 'Async', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
-    </section>
+    </nav>
 
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
                 <input class="search-input" name="search"
                        autocomplete="off"
-                       placeholder="Click or press 'S' to search, '?' for more options..."
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
                        type="search">
             </div>
         </form>
@@ -45,41 +45,41 @@
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-19040' class='srclink' href='../src/eventual/lib.rs.html#91-273' title='goto source code'>[src]</a></span></h1>
-<pre class='rust trait'>pub trait Async: <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static + <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a> {
-    type Value: <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static;
-    type Error: <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static;
+        </span><a id='src-2247' class='srclink' href='../src/eventual/lib.rs.html#91-273' title='goto source code'>[src]</a></span></h1>
+<pre class='rust trait'>pub trait Async: <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static + <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a> {
+    type Value: <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static;
+    type Error: <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static;
     type Cancel: <a class='trait' href='../eventual/trait.Cancel.html' title='eventual::Cancel'>Cancel</a>&lt;Self&gt;;
-    fn <a href='#tymethod.is_ready' class='fnname'>is_ready</a>(&amp;self) -&gt; <a href='http://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>;
-    fn <a href='#tymethod.is_err' class='fnname'>is_err</a>(&amp;self) -&gt; <a href='http://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>;
-    fn <a href='#tymethod.poll' class='fnname'>poll</a>(self) -&gt; <a class='enum' href='http://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='type' href='../eventual/type.AsyncResult.html' title='eventual::AsyncResult'>AsyncResult</a>&lt;Self::<a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Value</a>, Self::<a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Error</a>&gt;, Self&gt;;
-    fn <a href='#tymethod.ready' class='fnname'>ready</a>&lt;F&gt;(self, f: F) -&gt; Self::<a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Cancel</a> <span class='where'>where F: <a class='trait' href='http://doc.rust-lang.org/nightly/core/ops/trait.FnOnce.html' title='core::ops::FnOnce'>FnOnce</a>(Self) + <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static</span>;
+    fn <a href='#tymethod.is_ready' class='fnname'>is_ready</a>(&amp;self) -&gt; <a href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>;
+    fn <a href='#tymethod.is_err' class='fnname'>is_err</a>(&amp;self) -&gt; <a href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>;
+    fn <a href='#tymethod.poll' class='fnname'>poll</a>(self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='type' href='../eventual/type.AsyncResult.html' title='eventual::AsyncResult'>AsyncResult</a>&lt;Self::<a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Value</a>, Self::<a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Error</a>&gt;, Self&gt;;
+    fn <a href='#tymethod.ready' class='fnname'>ready</a>&lt;F&gt;(self, f: F) -&gt; Self::<a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Cancel</a> <span class='where'>where F: <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.FnOnce.html' title='core::ops::FnOnce'>FnOnce</a>(Self) + <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static</span>;
 
     fn <a href='#method.expect' class='fnname'>expect</a>(self) -&gt; <a class='type' href='../eventual/type.AsyncResult.html' title='eventual::AsyncResult'>AsyncResult</a>&lt;Self::<a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Value</a>, Self::<a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Error</a>&gt; { ... }
-    fn <a href='#method.receive' class='fnname'>receive</a>&lt;F&gt;(self, f: F) <span class='where'>where F: <a class='trait' href='http://doc.rust-lang.org/nightly/core/ops/trait.FnOnce.html' title='core::ops::FnOnce'>FnOnce</a>(<a class='type' href='../eventual/type.AsyncResult.html' title='eventual::AsyncResult'>AsyncResult</a>&lt;Self::<a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Value</a>, Self::<a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Error</a>&gt;) + <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static</span> { ... }
+    fn <a href='#method.receive' class='fnname'>receive</a>&lt;F&gt;(self, f: F) <span class='where'>where F: <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.FnOnce.html' title='core::ops::FnOnce'>FnOnce</a>(<a class='type' href='../eventual/type.AsyncResult.html' title='eventual::AsyncResult'>AsyncResult</a>&lt;Self::<a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Value</a>, Self::<a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Error</a>&gt;) + <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static</span> { ... }
     fn <a href='#method.await' class='fnname'>await</a>(self) -&gt; <a class='type' href='../eventual/type.AsyncResult.html' title='eventual::AsyncResult'>AsyncResult</a>&lt;Self::<a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Value</a>, Self::<a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Error</a>&gt; { ... }
     fn <a href='#method.fire' class='fnname'>fire</a>(self) { ... }
     fn <a href='#method.and' class='fnname'>and</a>&lt;U: <a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Async</a>&lt;Error=Self::<a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Error</a>&gt;&gt;(self, next: U) -&gt; <a class='struct' href='../eventual/struct.Future.html' title='eventual::Future'>Future</a>&lt;U::Value, Self::<a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Error</a>&gt; { ... }
-    fn <a href='#method.and_then' class='fnname'>and_then</a>&lt;F, U: <a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Async</a>&lt;Error=Self::<a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Error</a>&gt;&gt;(self, f: F) -&gt; <a class='struct' href='../eventual/struct.Future.html' title='eventual::Future'>Future</a>&lt;U::Value, Self::<a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Error</a>&gt; <span class='where'>where F: <a class='trait' href='http://doc.rust-lang.org/nightly/core/ops/trait.FnOnce.html' title='core::ops::FnOnce'>FnOnce</a>(Self::<a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Value</a>) -&gt; U + <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static, U::Value: <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static</span> { ... }
+    fn <a href='#method.and_then' class='fnname'>and_then</a>&lt;F, U: <a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Async</a>&lt;Error=Self::<a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Error</a>&gt;&gt;(self, f: F) -&gt; <a class='struct' href='../eventual/struct.Future.html' title='eventual::Future'>Future</a>&lt;U::Value, Self::<a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Error</a>&gt; <span class='where'>where F: <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.FnOnce.html' title='core::ops::FnOnce'>FnOnce</a>(Self::<a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Value</a>) -&gt; U + <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static, U::Value: <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static</span> { ... }
     fn <a href='#method.or' class='fnname'>or</a>&lt;A&gt;(self, alt: A) -&gt; <a class='struct' href='../eventual/struct.Future.html' title='eventual::Future'>Future</a>&lt;Self::<a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Value</a>, A::Error&gt; <span class='where'>where A: <a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Async</a>&lt;Value=Self::<a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Value</a>&gt;</span> { ... }
-    fn <a href='#method.or_else' class='fnname'>or_else</a>&lt;F, A&gt;(self, f: F) -&gt; <a class='struct' href='../eventual/struct.Future.html' title='eventual::Future'>Future</a>&lt;Self::<a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Value</a>, A::Error&gt; <span class='where'>where F: <a class='trait' href='http://doc.rust-lang.org/nightly/core/ops/trait.FnOnce.html' title='core::ops::FnOnce'>FnOnce</a>(Self::<a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Error</a>) -&gt; A + <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static, A: <a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Async</a>&lt;Value=Self::<a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Value</a>&gt;</span> { ... }
+    fn <a href='#method.or_else' class='fnname'>or_else</a>&lt;F, A&gt;(self, f: F) -&gt; <a class='struct' href='../eventual/struct.Future.html' title='eventual::Future'>Future</a>&lt;Self::<a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Value</a>, A::Error&gt; <span class='where'>where F: <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.FnOnce.html' title='core::ops::FnOnce'>FnOnce</a>(Self::<a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Error</a>) -&gt; A + <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static, A: <a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Async</a>&lt;Value=Self::<a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Value</a>&gt;</span> { ... }
 }</pre><div class='docblock'><p>A value representing an asynchronous computation</p>
 </div>
             <h2 id='associated-types'>Associated Types</h2>
             <div class='methods'>
-        <h3 id='associatedtype.Value' class='method stab '><code>type Value: <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static</code></h3><h3 id='associatedtype.Error' class='method stab '><code>type Error: <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static</code></h3><h3 id='associatedtype.Cancel' class='method stab '><code>type Cancel: <a class='trait' href='../eventual/trait.Cancel.html' title='eventual::Cancel'>Cancel</a>&lt;Self&gt;</code></h3></div>
+        <h3 id='associatedtype.Value' class='method stab '><code>type Value: <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static</code></h3><h3 id='associatedtype.Error' class='method stab '><code>type Error: <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static</code></h3><h3 id='associatedtype.Cancel' class='method stab '><code>type Cancel: <a class='trait' href='../eventual/trait.Cancel.html' title='eventual::Cancel'>Cancel</a>&lt;Self&gt;</code></h3></div>
             <h2 id='required-methods'>Required Methods</h2>
             <div class='methods'>
-        <h3 id='tymethod.is_ready' class='method stab '><code>fn <a href='#tymethod.is_ready' class='fnname'>is_ready</a>(&amp;self) -&gt; <a href='http://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h3><div class='docblock'><p>Returns true if <code>expect</code> will succeed.</p>
-</div><h3 id='tymethod.is_err' class='method stab '><code>fn <a href='#tymethod.is_err' class='fnname'>is_err</a>(&amp;self) -&gt; <a href='http://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h3><div class='docblock'><p>Returns true if the async value is ready and has failed</p>
-</div><h3 id='tymethod.poll' class='method stab '><code>fn <a href='#tymethod.poll' class='fnname'>poll</a>(self) -&gt; <a class='enum' href='http://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='type' href='../eventual/type.AsyncResult.html' title='eventual::AsyncResult'>AsyncResult</a>&lt;Self::<a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Value</a>, Self::<a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Error</a>&gt;, Self&gt;</code></h3><div class='docblock'><p>Get the underlying value if present</p>
-</div><h3 id='tymethod.ready' class='method stab '><code>fn <a href='#tymethod.ready' class='fnname'>ready</a>&lt;F&gt;(self, f: F) -&gt; Self::<a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Cancel</a> <span class='where'>where F: <a class='trait' href='http://doc.rust-lang.org/nightly/core/ops/trait.FnOnce.html' title='core::ops::FnOnce'>FnOnce</a>(Self) + <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static</span></code></h3><div class='docblock'><p>Invokes the given function when the Async instance is ready to be
+        <h3 id='tymethod.is_ready' class='method stab '><code>fn <a href='#tymethod.is_ready' class='fnname'>is_ready</a>(&amp;self) -&gt; <a href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h3><div class='docblock'><p>Returns true if <code>expect</code> will succeed.</p>
+</div><h3 id='tymethod.is_err' class='method stab '><code>fn <a href='#tymethod.is_err' class='fnname'>is_err</a>(&amp;self) -&gt; <a href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h3><div class='docblock'><p>Returns true if the async value is ready and has failed</p>
+</div><h3 id='tymethod.poll' class='method stab '><code>fn <a href='#tymethod.poll' class='fnname'>poll</a>(self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='type' href='../eventual/type.AsyncResult.html' title='eventual::AsyncResult'>AsyncResult</a>&lt;Self::<a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Value</a>, Self::<a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Error</a>&gt;, Self&gt;</code></h3><div class='docblock'><p>Get the underlying value if present</p>
+</div><h3 id='tymethod.ready' class='method stab '><code>fn <a href='#tymethod.ready' class='fnname'>ready</a>&lt;F&gt;(self, f: F) -&gt; Self::<a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Cancel</a> <span class='where'>where F: <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.FnOnce.html' title='core::ops::FnOnce'>FnOnce</a>(Self) + <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static</span></code></h3><div class='docblock'><p>Invokes the given function when the Async instance is ready to be
 consumed.</p>
 </div></div>
             <h2 id='provided-methods'>Provided Methods</h2>
             <div class='methods'>
         <h3 id='method.expect' class='method stab '><code>fn <a href='#method.expect' class='fnname'>expect</a>(self) -&gt; <a class='type' href='../eventual/type.AsyncResult.html' title='eventual::AsyncResult'>AsyncResult</a>&lt;Self::<a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Value</a>, Self::<a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Error</a>&gt;</code></h3><div class='docblock'><p>Get the underlying value if present, panic otherwise</p>
-</div><h3 id='method.receive' class='method stab '><code>fn <a href='#method.receive' class='fnname'>receive</a>&lt;F&gt;(self, f: F) <span class='where'>where F: <a class='trait' href='http://doc.rust-lang.org/nightly/core/ops/trait.FnOnce.html' title='core::ops::FnOnce'>FnOnce</a>(<a class='type' href='../eventual/type.AsyncResult.html' title='eventual::AsyncResult'>AsyncResult</a>&lt;Self::<a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Value</a>, Self::<a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Error</a>&gt;) + <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static</span></code></h3><div class='docblock'><p>Invoke the callback with the resolved <code>Async</code> result.</p>
+</div><h3 id='method.receive' class='method stab '><code>fn <a href='#method.receive' class='fnname'>receive</a>&lt;F&gt;(self, f: F) <span class='where'>where F: <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.FnOnce.html' title='core::ops::FnOnce'>FnOnce</a>(<a class='type' href='../eventual/type.AsyncResult.html' title='eventual::AsyncResult'>AsyncResult</a>&lt;Self::<a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Value</a>, Self::<a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Error</a>&gt;) + <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static</span></code></h3><div class='docblock'><p>Invoke the callback with the resolved <code>Async</code> result.</p>
 </div><h3 id='method.await' class='method stab '><code>fn <a href='#method.await' class='fnname'>await</a>(self) -&gt; <a class='type' href='../eventual/type.AsyncResult.html' title='eventual::AsyncResult'>AsyncResult</a>&lt;Self::<a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Value</a>, Self::<a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Error</a>&gt;</code></h3><div class='docblock'><p>Blocks the thread until the async value is complete and returns the
 result.</p>
 </div><h3 id='method.fire' class='method stab '><code>fn <a href='#method.fire' class='fnname'>fire</a>(self)</code></h3><div class='docblock'><p>Trigger the computation without waiting for the result</p>
@@ -91,7 +91,7 @@ this method completes with that error.</p>
 
 <p>If the original future completes successfully, the future returned by
 this method completes with the completion value of <code>next</code>.</p>
-</div><h3 id='method.and_then' class='method stab '><code>fn <a href='#method.and_then' class='fnname'>and_then</a>&lt;F, U: <a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Async</a>&lt;Error=Self::<a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Error</a>&gt;&gt;(self, f: F) -&gt; <a class='struct' href='../eventual/struct.Future.html' title='eventual::Future'>Future</a>&lt;U::Value, Self::<a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Error</a>&gt; <span class='where'>where F: <a class='trait' href='http://doc.rust-lang.org/nightly/core/ops/trait.FnOnce.html' title='core::ops::FnOnce'>FnOnce</a>(Self::<a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Value</a>) -&gt; U + <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static, U::Value: <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static</span></code></h3><div class='docblock'><p>This method returns a future whose completion value depends on the
+</div><h3 id='method.and_then' class='method stab '><code>fn <a href='#method.and_then' class='fnname'>and_then</a>&lt;F, U: <a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Async</a>&lt;Error=Self::<a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Error</a>&gt;&gt;(self, f: F) -&gt; <a class='struct' href='../eventual/struct.Future.html' title='eventual::Future'>Future</a>&lt;U::Value, Self::<a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Error</a>&gt; <span class='where'>where F: <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.FnOnce.html' title='core::ops::FnOnce'>FnOnce</a>(Self::<a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Value</a>) -&gt; U + <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static, U::Value: <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static</span></code></h3><div class='docblock'><p>This method returns a future whose completion value depends on the
 completion value of the original future.</p>
 
 <p>If the original future completes with an error, the future returned by
@@ -118,8 +118,7 @@ value of that returned future.</p>
 <span class='ident'>e</span>.<span class='ident'>and_then</span>(<span class='op'>|</span><span class='ident'>v</span><span class='op'>|</span> {
     <span class='macro'>panic</span><span class='macro'>!</span>(<span class='string'>&quot;unreachable&quot;</span>);
     <span class='prelude-val'>Ok</span>(())
-}).<span class='ident'>await</span>();
-</pre>
+}).<span class='ident'>await</span>();</pre>
 </div><h3 id='method.or' class='method stab '><code>fn <a href='#method.or' class='fnname'>or</a>&lt;A&gt;(self, alt: A) -&gt; <a class='struct' href='../eventual/struct.Future.html' title='eventual::Future'>Future</a>&lt;Self::<a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Value</a>, A::Error&gt; <span class='where'>where A: <a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Async</a>&lt;Value=Self::<a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Value</a>&gt;</span></code></h3><div class='docblock'><p>This method returns a future whose completion value depends on the
 completion value of the original future.</p>
 
@@ -129,7 +128,7 @@ this method will complete with that value.</p>
 <p>If the original future completes with an error, the future returned by
 this method will complete with the completion value of the <code>alt</code> future
 passed in. That can be either a success or error.</p>
-</div><h3 id='method.or_else' class='method stab '><code>fn <a href='#method.or_else' class='fnname'>or_else</a>&lt;F, A&gt;(self, f: F) -&gt; <a class='struct' href='../eventual/struct.Future.html' title='eventual::Future'>Future</a>&lt;Self::<a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Value</a>, A::Error&gt; <span class='where'>where F: <a class='trait' href='http://doc.rust-lang.org/nightly/core/ops/trait.FnOnce.html' title='core::ops::FnOnce'>FnOnce</a>(Self::<a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Error</a>) -&gt; A + <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static, A: <a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Async</a>&lt;Value=Self::<a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Value</a>&gt;</span></code></h3><div class='docblock'><p>This method returns a future whose completion value depends on the
+</div><h3 id='method.or_else' class='method stab '><code>fn <a href='#method.or_else' class='fnname'>or_else</a>&lt;F, A&gt;(self, f: F) -&gt; <a class='struct' href='../eventual/struct.Future.html' title='eventual::Future'>Future</a>&lt;Self::<a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Value</a>, A::Error&gt; <span class='where'>where F: <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.FnOnce.html' title='core::ops::FnOnce'>FnOnce</a>(Self::<a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Error</a>) -&gt; A + <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static, A: <a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Async</a>&lt;Value=Self::<a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Value</a>&gt;</span></code></h3><div class='docblock'><p>This method returns a future whose completion value depends on the
 completion value of the original future.</p>
 
 <p>If the original future completes successfully, the future returned by
@@ -142,13 +141,13 @@ of that future. That can be either a success or error.</p>
 </div></div>
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>
-    <li><code>impl&lt;T: <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static, E: <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static&gt; <a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Async</a> for <a class='struct' href='../eventual/struct.Future.html' title='eventual::Future'>Future</a>&lt;T, E&gt;</code></li>
-<li><code>impl&lt;T: <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static, E: <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static&gt; <a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Async</a> for <a class='struct' href='../eventual/struct.Complete.html' title='eventual::Complete'>Complete</a>&lt;T, E&gt;</code></li>
-<li><code>impl&lt;T: <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static, E: <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static&gt; <a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Async</a> for <a class='struct' href='../eventual/struct.Stream.html' title='eventual::Stream'>Stream</a>&lt;T, E&gt;</code></li>
-<li><code>impl&lt;T: <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static, E: <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static&gt; <a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Async</a> for <a class='struct' href='../eventual/struct.Sender.html' title='eventual::Sender'>Sender</a>&lt;T, E&gt;</code></li>
-<li><code>impl&lt;T: <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static, E: <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static&gt; <a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Async</a> for <a class='struct' href='../eventual/struct.BusySender.html' title='eventual::BusySender'>BusySender</a>&lt;T, E&gt;</code></li>
-<li><code>impl&lt;T: <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static, E: <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static&gt; <a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Async</a> for <a class='enum' href='http://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;T, E&gt;</code></li>
-<li><code>impl <a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Async</a> for <a href='http://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a></code></li>
+    <li><code>impl&lt;T: <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static, E: <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static&gt; <a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Async</a> for <a class='struct' href='../eventual/struct.Future.html' title='eventual::Future'>Future</a>&lt;T, E&gt;</code></li>
+<li><code>impl&lt;T: <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static, E: <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static&gt; <a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Async</a> for <a class='struct' href='../eventual/struct.Complete.html' title='eventual::Complete'>Complete</a>&lt;T, E&gt;</code></li>
+<li><code>impl&lt;T: <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static, E: <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static&gt; <a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Async</a> for <a class='struct' href='../eventual/struct.Stream.html' title='eventual::Stream'>Stream</a>&lt;T, E&gt;</code></li>
+<li><code>impl&lt;T: <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static, E: <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static&gt; <a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Async</a> for <a class='struct' href='../eventual/struct.Sender.html' title='eventual::Sender'>Sender</a>&lt;T, E&gt;</code></li>
+<li><code>impl&lt;T: <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static, E: <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static&gt; <a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Async</a> for <a class='struct' href='../eventual/struct.BusySender.html' title='eventual::BusySender'>BusySender</a>&lt;T, E&gt;</code></li>
+<li><code>impl&lt;T: <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static, E: <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static&gt; <a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Async</a> for <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;T, E&gt;</code></li>
+<li><code>impl <a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Async</a> for <a href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a></code></li>
 </ul><script type="text/javascript" async
                               src="../implementors/eventual/trait.Async.js">
                       </script></section>
@@ -156,40 +155,49 @@ of that future. That can be either a success or error.</p>
 
     <section class="footer"></section>
 
-    <div id="help" class="hidden">
-        <div class="shortcuts">
-            <h1>Keyboard shortcuts</h1>
-            <dl>
-                <dt>?</dt>
-                <dd>Show this help dialog</dd>
-                <dt>S</dt>
-                <dd>Focus the search field</dd>
-                <dt>&larrb;</dt>
-                <dd>Move up in search results</dd>
-                <dt>&rarrb;</dt>
-                <dd>Move down in search results</dd>
-                <dt>&#9166;</dt>
-                <dd>Go to active search result</dd>
-            </dl>
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code>)
+                </p>
+            </div>
         </div>
-        <div class="infos">
-            <h1>Search tricks</h1>
-            <p>
-                Prefix searches with a type followed by a colon (e.g.
-                <code>fn:</code>) to restrict the search to a given type.
-            </p>
-            <p>
-                Accepted types are: <code>fn</code>, <code>mod</code>,
-                <code>struct</code>, <code>enum</code>,
-                <code>trait</code>, <code>typedef</code> (or
-                <code>tdef</code>).
-            </p>
-            <p>
-                Search functions by type signature (e.g.
-                <code>vec -> usize</code>)
-            </p>
-        </div>
-    </div>
+    </aside>
 
     
 
