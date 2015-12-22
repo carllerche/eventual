@@ -251,7 +251,7 @@ impl<T: Send + 'static, E: Send + 'static> CoreInner<T, E> {
             curr = self.state.done_invoking_consumer_ready();
 
             if curr.is_consumer_notify() {
-                self.notify_consumer_loop(curr);
+                self.notify_consumer_loop();
             }
 
             return None;
@@ -336,7 +336,7 @@ impl<T: Send + 'static, E: Send + 'static> CoreInner<T, E> {
             return self.defer_consumer_notify(curr);
         }
 
-        self.notify_consumer_loop(curr)
+        self.notify_consumer_loop()
     }
 
     fn defer_consumer_notify(&self, mut curr: State) {
@@ -357,7 +357,9 @@ impl<T: Send + 'static, E: Send + 'static> CoreInner<T, E> {
         }
     }
 
-    fn notify_consumer_loop(&mut self, mut curr: State) {
+    fn notify_consumer_loop(&mut self) {
+        let mut curr;
+
         loop {
             let cb = self.take_consumer_wait();
 
