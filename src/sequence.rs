@@ -1,5 +1,5 @@
 use {Async, AsyncError, Stream, Sender};
-use std::{mem, ops};
+use std::ops;
 use std::cell::UnsafeCell;
 use std::iter::IntoIterator;
 use std::sync::Arc;
@@ -201,13 +201,13 @@ impl<A: Async> ops::Deref for Inner<A> {
     type Target = Core<A>;
 
     fn deref(&self) -> &Core<A> {
-        unsafe { mem::transmute(self.0.get()) }
+        unsafe { &*self.0.get() }
     }
 }
 
 impl<A: Async> ops::DerefMut for Inner<A> {
     fn deref_mut(&mut self) -> &mut Core<A> {
-        unsafe { mem::transmute(self.0.get()) }
+        unsafe { &mut *self.0.get() }
     }
 }
 

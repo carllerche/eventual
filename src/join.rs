@@ -112,13 +112,11 @@ impl<P: Partial<R>, R: Send + 'static, E: Send + 'static> Progress<P, R, E> {
     }
 
     fn inner(&self) -> &ProgressInner<P, R, E> {
-        use std::mem;
-        unsafe { mem::transmute(self.inner.get()) }
+        unsafe { &*self.inner.get() }
     }
 
     fn inner_mut(&self) -> &mut ProgressInner<P, R, E> {
-        use std::mem;
-        unsafe { mem::transmute(self.inner.get()) }
+        unsafe { &mut *self.inner.get() }
     }
 }
 

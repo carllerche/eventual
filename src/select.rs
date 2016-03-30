@@ -193,13 +193,11 @@ impl<V: Values<S, E>, S: Select<E>, E: Send + 'static> Selection<V, S, E> {
     }
 
     fn core(&self) -> &Core<V, S, E> {
-        use std::mem;
-        unsafe { mem::transmute(self.core.get()) }
+        unsafe { &*self.core.get() }
     }
 
     fn core_mut(&self) -> &mut Core<V, S, E> {
-        use std::mem;
-        unsafe { mem::transmute(self.core.get()) }
+        unsafe { &mut *self.core.get() }
     }
 }
 
