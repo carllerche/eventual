@@ -273,13 +273,13 @@ impl<T: Send + 'static, U: Async, F> ops::Deref for Inner<T, U, F> {
     type Target = Core<T, U, F>;
 
     fn deref(&self) -> &Core<T, U, F> {
-        unsafe { mem::transmute(self.0.get()) }
+        unsafe { &*self.0.get() }
     }
 }
 
 impl<T: Send + 'static, U: Async, F> ops::DerefMut for Inner<T, U, F> {
     fn deref_mut(&mut self) -> &mut Core<T, U, F> {
-        unsafe { mem::transmute(self.0.get()) }
+        unsafe { &mut *self.0.get() }
     }
 }
 
