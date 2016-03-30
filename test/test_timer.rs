@@ -27,7 +27,7 @@ pub fn test_timer_register_late() {
 
     let timeout = timer.timeout_ms(300);
 
-    thread::sleep_ms(600);
+    thread::sleep(::std::time::Duration::from_millis(600));
 
     let start = SteadyTime::now();
 
