@@ -24,10 +24,10 @@
 
     
 
-    <nav class="sidebar">
+    <section class="sidebar">
         
         <p class='location'><a href='index.html'>eventual</a></p><script>window.sidebarCurrent = {name: 'Pair', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
-    </nav>
+    </section>
 
     <nav class="sub">
         <form class="search-form js-only">
@@ -45,21 +45,21 @@
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-2328' class='srclink' href='../src/eventual/lib.rs.html#275-279' title='goto source code'>[src]</a></span></h1>
+        </span><a id='src-17452' class='srclink' href='../src/eventual/lib.rs.html#275-279' title='goto source code'>[src]</a></span></h1>
 <pre class='rust trait'>pub trait Pair {
     type Tx;
-    fn <a href='#tymethod.pair' class='fnname'>pair</a>() -&gt; <a href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>(Self::<a class='trait' href='../eventual/trait.Pair.html' title='eventual::Pair'>Tx</a>, Self)</a>;
+    fn <a href='#tymethod.pair' class='fnname'>pair</a>() -&gt; <a href='http://doc.rust-lang.org/nightly/std/primitive.tuple.html'>(Self::<a class='trait' href='../eventual/trait.Pair.html' title='eventual::Pair'>Tx</a>, Self)</a>;
 }</pre>
             <h2 id='associated-types'>Associated Types</h2>
             <div class='methods'>
         <h3 id='associatedtype.Tx' class='method stab '><code>type Tx</code></h3></div>
             <h2 id='required-methods'>Required Methods</h2>
             <div class='methods'>
-        <h3 id='tymethod.pair' class='method stab '><code>fn <a href='#tymethod.pair' class='fnname'>pair</a>() -&gt; <a href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>(Self::<a class='trait' href='../eventual/trait.Pair.html' title='eventual::Pair'>Tx</a>, Self)</a></code></h3></div>
+        <h3 id='tymethod.pair' class='method stab '><code>fn <a href='#tymethod.pair' class='fnname'>pair</a>() -&gt; <a href='http://doc.rust-lang.org/nightly/std/primitive.tuple.html'>(Self::<a class='trait' href='../eventual/trait.Pair.html' title='eventual::Pair'>Tx</a>, Self)</a></code></h3></div>
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>
-    <li><code>impl&lt;T: <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static, E: <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static&gt; <a class='trait' href='../eventual/trait.Pair.html' title='eventual::Pair'>Pair</a> for <a class='struct' href='../eventual/struct.Future.html' title='eventual::Future'>Future</a>&lt;T, E&gt;</code></li>
-<li><code>impl&lt;T: <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static, E: <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static&gt; <a class='trait' href='../eventual/trait.Pair.html' title='eventual::Pair'>Pair</a> for <a class='struct' href='../eventual/struct.Stream.html' title='eventual::Stream'>Stream</a>&lt;T, E&gt;</code></li>
+    <li><code>impl&lt;T: <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static, E: <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static&gt; <a class='trait' href='../eventual/trait.Pair.html' title='eventual::Pair'>Pair</a> for <a class='struct' href='../eventual/struct.Future.html' title='eventual::Future'>Future</a>&lt;T, E&gt;</code></li>
+<li><code>impl&lt;T: <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static, E: <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static&gt; <a class='trait' href='../eventual/trait.Pair.html' title='eventual::Pair'>Pair</a> for <a class='struct' href='../eventual/struct.Stream.html' title='eventual::Stream'>Stream</a>&lt;T, E&gt;</code></li>
 </ul><script type="text/javascript" async
                               src="../implementors/eventual/trait.Pair.js">
                       </script></section>
@@ -67,12 +67,10 @@
 
     <section class="footer"></section>
 
-    <aside id="help" class="hidden">
+    <div id="help" class="hidden">
         <div>
-            <h1 class="hidden">Help</h1>
-
             <div class="shortcuts">
-                <h2>Keyboard Shortcuts</h2>
+                <h1>Keyboard Shortcuts</h1>
 
                 <dl>
                     <dt>?</dt>
@@ -89,7 +87,7 @@
             </div>
 
             <div class="infos">
-                <h2>Search Tricks</h2>
+                <h1>Search Tricks</h1>
 
                 <p>
                     Prefix searches with a type followed by a colon (e.g.
@@ -99,8 +97,8 @@
                 <p>
                     Accepted types are: <code>fn</code>, <code>mod</code>,
                     <code>struct</code>, <code>enum</code>,
-                    <code>trait</code>, <code>type</code>, <code>macro</code>,
-                    and <code>const</code>.
+                    <code>trait</code>, <code>typedef</code> (or
+                    <code>tdef</code>).
                 </p>
 
                 <p>
@@ -109,7 +107,7 @@
                 </p>
             </div>
         </div>
-    </aside>
+    </div>
 
     
 
