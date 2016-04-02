@@ -43,10 +43,10 @@
 
     <section id='main' class="content trait">
 <h1 class='fqn'><span class='in-band'>Trait <a href='index.html'>eventual</a>::<wbr><a class='trait' href=''>Cancel</a></span><span class='out-of-band'><span id='render-detail'>
-            <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
-                [<span class='inner'>&#x2212;</span>]
-            </a>
-        </span><a id='src-2337' class='srclink' href='../src/eventual/lib.rs.html#281-283' title='goto source code'>[src]</a></span></h1>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a id='src-2332' class='srclink' href='../src/eventual/src/lib.rs.html#281-283' title='goto source code'>[src]</a></span></h1>
 <pre class='rust trait'>pub trait Cancel&lt;A: <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static&gt;: <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static {
     fn <a href='#tymethod.cancel' class='fnname'>cancel</a>(self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;A&gt;;
 }</pre>
@@ -62,8 +62,8 @@
 <li><code>impl&lt;T: <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static, E: <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static&gt; <a class='trait' href='../eventual/trait.Cancel.html' title='eventual::Cancel'>Cancel</a>&lt;<a class='struct' href='../eventual/struct.BusySender.html' title='eventual::BusySender'>BusySender</a>&lt;T, E&gt;&gt; for <a class='struct' href='../eventual/struct.Receipt.html' title='eventual::Receipt'>Receipt</a>&lt;<a class='struct' href='../eventual/struct.BusySender.html' title='eventual::BusySender'>BusySender</a>&lt;T, E&gt;&gt;</code></li>
 <li><code>impl&lt;A: <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static&gt; <a class='trait' href='../eventual/trait.Cancel.html' title='eventual::Cancel'>Cancel</a>&lt;A&gt; for <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;A&gt;</code></li>
 </ul><script type="text/javascript" async
-                              src="../implementors/eventual/trait.Cancel.js">
-                      </script></section>
+                         src="../implementors/eventual/trait.Cancel.js">
+                 </script></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>
@@ -106,7 +106,7 @@
 
                 <p>
                     Search functions by type signature (e.g.
-                    <code>vec -> usize</code>)
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
                 </p>
             </div>
         </div>
