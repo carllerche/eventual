@@ -9,6 +9,7 @@
 
     <title>eventual - Rust</title>
 
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../main.css">
 
     
@@ -24,10 +25,10 @@
 
     
 
-    <section class="sidebar">
+    <nav class="sidebar">
         
         <p class='location'></p><script>window.sidebarCurrent = {name: 'eventual', ty: 'mod', relpath: '../'};</script>
-    </section>
+    </nav>
 
     <nav class="sub">
         <form class="search-form js-only">
@@ -52,8 +53,7 @@
 These utilities are primarily based around <code>Future</code> and <code>Stream</code> types as
 well as functions that allow composing computations on these types.</p>
 
-<h2 id="future" class='section-header'><a
-                           href="#future">Future</a></h2>
+<h2 id='future' class='section-header'><a href='#future'>Future</a></h2>
 <p>A <code>Future</code> is a proxy representing the result of a computation which may
 not be complete.  The computation may be running concurrently in another
 thread or may be triggered upon completion of an asynchronous callback. One
@@ -86,8 +86,7 @@ asynchronously computed.</p>
 <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='number'>61</span>, <span class='ident'>res</span>);
 </pre>
 
-<h2 id="stream" class='section-header'><a
-                           href="#stream">Stream</a></h2>
+<h2 id='stream' class='section-header'><a href='#stream'>Stream</a></h2>
 <p>A <code>Stream</code> is like a <code>Future</code>, except that instead of representing a single
 value, it represents a sequence of values.</p>
 </div><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
@@ -271,10 +270,12 @@ values in the order that they are completed.</p>
 
     <section class="footer"></section>
 
-    <div id="help" class="hidden">
+    <aside id="help" class="hidden">
         <div>
+            <h1 class="hidden">Help</h1>
+
             <div class="shortcuts">
-                <h1>Keyboard Shortcuts</h1>
+                <h2>Keyboard Shortcuts</h2>
 
                 <dl>
                     <dt>?</dt>
@@ -291,7 +292,7 @@ values in the order that they are completed.</p>
             </div>
 
             <div class="infos">
-                <h1>Search Tricks</h1>
+                <h2>Search Tricks</h2>
 
                 <p>
                     Prefix searches with a type followed by a colon (e.g.
@@ -301,8 +302,8 @@ values in the order that they are completed.</p>
                 <p>
                     Accepted types are: <code>fn</code>, <code>mod</code>,
                     <code>struct</code>, <code>enum</code>,
-                    <code>trait</code>, <code>typedef</code> (or
-                    <code>tdef</code>).
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
                 </p>
 
                 <p>
@@ -311,7 +312,7 @@ values in the order that they are completed.</p>
                 </p>
             </div>
         </div>
-    </div>
+    </aside>
 
     
 
@@ -323,6 +324,6 @@ values in the order that they are completed.</p>
     <script src="../jquery.js"></script>
     <script src="../main.js"></script>
     
-    <script async src="../search-index.js"></script>
+    <script defer src="../search-index.js"></script>
 </body>
 </html>
