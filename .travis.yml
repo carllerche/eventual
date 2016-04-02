@@ -1,6 +1,9 @@
 ---
 language: rust
 sudo: false
+rust:
+  # - stable # Currently broken
+  - 1.3.0 # Oldest supported version of Rust
 
 script:
   - cargo test
