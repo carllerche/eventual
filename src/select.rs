@@ -104,9 +104,18 @@ impl<V: Values<S, E>, S: Select<E>, E: Send + 'static> Selection<V, S, E> {
                 let complete = self.core_mut().complete.take()
                     .expect("result future previously completed");
 
-                if let Err(AsyncError::Failed(e)) = async.expect() {
-                    debug!("execution error");
-                    complete.fail(e);
+                match async.expect() {
+                    Err(AsyncError::Failed(e)) => {
+                        debug!("execution error");
+                        complete.fail(e);
+                    }
+                    Err(AsyncError::Aborted) => {
+                        debug!("future aborted");
+                        drop(complete);
+                    }
+                    _ => {
+                        debug!("WARN async should be Err, but it is Ok");
+                    }
                 }
 
                 // If cancellation error, don't do anything
