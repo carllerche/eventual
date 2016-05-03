@@ -381,7 +381,7 @@ impl<T: Send + 'static, E: Send + 'static> CoreInner<T, E> {
     }
 
     fn consumer_ready_cancel(&self, count: u64) -> bool {
-        let curr = self.state.load(Relaxed);
+        let mut curr = self.state.load(Relaxed);
 
         debug!("Core::consumer_ready_cancel; count={}; state={:?}", count, curr);
 
@@ -409,6 +409,8 @@ impl<T: Send + 'static, E: Send + 'static> CoreInner<T, E> {
                 debug!("  - transitioned from {:?} to {:?}", curr, next);
                 return true;
             }
+
+            curr = actual;
         }
     }
 
