@@ -9,8 +9,7 @@
 
     <title>select.rs.html -- source</title>
 
-    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css">
 
     
     
@@ -25,10 +24,10 @@
 
     
 
-    <nav class="sidebar">
+    <section class="sidebar">
         
         
-    </nav>
+    </section>
 
     <nav class="sub">
         <form class="search-form js-only">
@@ -593,6 +592,15 @@
 <span id="550">550</span>
 <span id="551">551</span>
 <span id="552">552</span>
+<span id="553">553</span>
+<span id="554">554</span>
+<span id="555">555</span>
+<span id="556">556</span>
+<span id="557">557</span>
+<span id="558">558</span>
+<span id="559">559</span>
+<span id="560">560</span>
+<span id="561">561</span>
 </pre><pre class='rust '>
 <span class='attribute'>#<span class='op'>!</span>[<span class='ident'>allow</span>(<span class='ident'>unused_assignments</span>)]</span>
 
@@ -700,9 +708,18 @@
                 <span class='kw'>let</span> <span class='ident'>complete</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>core_mut</span>().<span class='ident'>complete</span>.<span class='ident'>take</span>()
                     .<span class='ident'>expect</span>(<span class='string'>&quot;result future previously completed&quot;</span>);
 
-                <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Err</span>(<span class='ident'>AsyncError</span>::<span class='ident'>Failed</span>(<span class='ident'>e</span>)) <span class='op'>=</span> <span class='ident'>async</span>.<span class='ident'>expect</span>() {
-                    <span class='macro'>debug</span><span class='macro'>!</span>(<span class='string'>&quot;execution error&quot;</span>);
-                    <span class='ident'>complete</span>.<span class='ident'>fail</span>(<span class='ident'>e</span>);
+                <span class='kw'>match</span> <span class='ident'>async</span>.<span class='ident'>expect</span>() {
+                    <span class='prelude-val'>Err</span>(<span class='ident'>AsyncError</span>::<span class='ident'>Failed</span>(<span class='ident'>e</span>)) <span class='op'>=&gt;</span> {
+                        <span class='macro'>debug</span><span class='macro'>!</span>(<span class='string'>&quot;execution error&quot;</span>);
+                        <span class='ident'>complete</span>.<span class='ident'>fail</span>(<span class='ident'>e</span>);
+                    }
+                    <span class='prelude-val'>Err</span>(<span class='ident'>AsyncError</span>::<span class='ident'>Aborted</span>) <span class='op'>=&gt;</span> {
+                        <span class='macro'>debug</span><span class='macro'>!</span>(<span class='string'>&quot;future aborted&quot;</span>);
+                        <span class='ident'>drop</span>(<span class='ident'>complete</span>);
+                    }
+                    _ <span class='op'>=&gt;</span> {
+                        <span class='macro'>debug</span><span class='macro'>!</span>(<span class='string'>&quot;WARN async should be Err, but it is Ok&quot;</span>);
+                    }
                 }
 
                 <span class='comment'>// If cancellation error, don&#39;t do anything</span>
@@ -1152,12 +1169,10 @@
 
     <section class="footer"></section>
 
-    <aside id="help" class="hidden">
+    <div id="help" class="hidden">
         <div>
-            <h1 class="hidden">Help</h1>
-
             <div class="shortcuts">
-                <h2>Keyboard Shortcuts</h2>
+                <h1>Keyboard Shortcuts</h1>
 
                 <dl>
                     <dt>?</dt>
@@ -1174,7 +1189,7 @@
             </div>
 
             <div class="infos">
-                <h2>Search Tricks</h2>
+                <h1>Search Tricks</h1>
 
                 <p>
                     Prefix searches with a type followed by a colon (e.g.
@@ -1184,28 +1199,28 @@
                 <p>
                     Accepted types are: <code>fn</code>, <code>mod</code>,
                     <code>struct</code>, <code>enum</code>,
-                    <code>trait</code>, <code>type</code>, <code>macro</code>,
-                    and <code>const</code>.
+                    <code>trait</code>, <code>typedef</code> (or
+                    <code>tdef</code>).
                 </p>
 
                 <p>
                     Search functions by type signature (e.g.
-                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                    <code>vec -> usize</code>)
                 </p>
             </div>
         </div>
-    </aside>
+    </div>
 
     
 
     <script>
-        window.rootPath = "../../../";
+        window.rootPath = "../../";
         window.currentCrate = "eventual";
         window.playgroundUrl = "";
     </script>
-    <script src="../../../jquery.js"></script>
-    <script src="../../../main.js"></script>
+    <script src="../../jquery.js"></script>
+    <script src="../../main.js"></script>
     
-    <script defer src="../../../search-index.js"></script>
+    <script async src="../../search-index.js"></script>
 </body>
 </html>
