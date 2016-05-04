@@ -11,6 +11,7 @@
 
     <link rel="stylesheet" type="text/css" href="../../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../../main.css">
+    
 
     
     
@@ -605,7 +606,7 @@
 </pre><pre class='rust '>
 <span class='attribute'>#<span class='op'>!</span>[<span class='ident'>allow</span>(<span class='ident'>unused_assignments</span>)]</span>
 
-<span class='kw'>use</span> <span class='ident'>super</span>::{<span class='ident'>Async</span>, <span class='ident'>Future</span>, <span class='ident'>Complete</span>, <span class='ident'>Cancel</span>, <span class='ident'>AsyncError</span>};
+<span class='kw'>use</span> <span class='kw'>super</span>::{<span class='ident'>Async</span>, <span class='ident'>Future</span>, <span class='ident'>Complete</span>, <span class='ident'>Cancel</span>, <span class='ident'>AsyncError</span>};
 <span class='kw'>use</span> <span class='ident'>syncbox</span>::<span class='ident'>atomic</span>::{<span class='self'>self</span>, <span class='ident'>AtomicU64</span>, <span class='ident'>Ordering</span>};
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>cell</span>::<span class='ident'>UnsafeCell</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>sync</span>::<span class='ident'>Arc</span>;
@@ -659,7 +660,7 @@
 
     <span class='kw'>fn</span> <span class='ident'>consume</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>S</span>;
 
-    <span class='kw'>fn</span> <span class='ident'>cancel_callbacks</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>selected</span>: <span class='ident'>u32</span>, <span class='ident'>up_to</span>: <span class='ident'>u32</span>, <span class='ident'>tokens</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Self</span>::<span class='ident'>Tokens</span>) <span class='op'>-&gt;</span> <span class='ident'>u32</span>;
+    <span class='kw'>fn</span> <span class='ident'>cancel_callbacks</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>selected</span>: <span class='ident'>u32</span>, <span class='ident'>up_to</span>: <span class='ident'>u32</span>, <span class='ident'>tokens</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='kw'>Self</span>::<span class='ident'>Tokens</span>) <span class='op'>-&gt;</span> <span class='ident'>u32</span>;
 }
 
 <span class='kw'>struct</span> <span class='ident'>Selection</span><span class='op'>&lt;</span><span class='ident'>V</span>: <span class='ident'>Values</span><span class='op'>&lt;</span><span class='ident'>S</span>, <span class='ident'>E</span><span class='op'>&gt;</span>, <span class='ident'>S</span>: <span class='ident'>Select</span><span class='op'>&lt;</span><span class='ident'>E</span><span class='op'>&gt;</span>, <span class='ident'>E</span>: <span class='ident'>Send</span> <span class='op'>+</span> <span class='lifetime'>&#39;static</span><span class='op'>&gt;</span> {
