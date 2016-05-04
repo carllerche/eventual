@@ -9,9 +9,7 @@
 
     <title>receipt.rs.html -- source</title>
 
-    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../../main.css">
-    
+    <link rel="stylesheet" type="text/css" href="../../main.css">
 
     
     
@@ -26,10 +24,10 @@
 
     
 
-    <nav class="sidebar">
+    <section class="sidebar">
         
         
-    </nav>
+    </section>
 
     <nav class="sub">
         <form class="search-form js-only">
@@ -76,8 +74,8 @@
 <span id="32">32</span>
 <span id="33">33</span>
 </pre><pre class='rust '>
-<span class='kw'>use</span> <span class='kw'>super</span>::<span class='ident'>Async</span>;
-<span class='kw'>use</span> <span class='kw'>super</span>::<span class='ident'>core</span>::<span class='ident'>Core</span>;
+<span class='kw'>use</span> <span class='ident'>super</span>::<span class='ident'>Async</span>;
+<span class='kw'>use</span> <span class='ident'>super</span>::<span class='ident'>core</span>::<span class='ident'>Core</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>marker</span>::<span class='ident'>PhantomData</span>;
 
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Receipt</span><span class='op'>&lt;</span><span class='ident'>A</span>: <span class='ident'>Async</span><span class='op'>&gt;</span> {
@@ -115,12 +113,10 @@
 
     <section class="footer"></section>
 
-    <aside id="help" class="hidden">
+    <div id="help" class="hidden">
         <div>
-            <h1 class="hidden">Help</h1>
-
             <div class="shortcuts">
-                <h2>Keyboard Shortcuts</h2>
+                <h1>Keyboard Shortcuts</h1>
 
                 <dl>
                     <dt>?</dt>
@@ -137,7 +133,7 @@
             </div>
 
             <div class="infos">
-                <h2>Search Tricks</h2>
+                <h1>Search Tricks</h1>
 
                 <p>
                     Prefix searches with a type followed by a colon (e.g.
@@ -147,28 +143,28 @@
                 <p>
                     Accepted types are: <code>fn</code>, <code>mod</code>,
                     <code>struct</code>, <code>enum</code>,
-                    <code>trait</code>, <code>type</code>, <code>macro</code>,
-                    and <code>const</code>.
+                    <code>trait</code>, <code>typedef</code> (or
+                    <code>tdef</code>).
                 </p>
 
                 <p>
                     Search functions by type signature (e.g.
-                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                    <code>vec -> usize</code>)
                 </p>
             </div>
         </div>
-    </aside>
+    </div>
 
     
 
     <script>
-        window.rootPath = "../../../";
+        window.rootPath = "../../";
         window.currentCrate = "eventual";
         window.playgroundUrl = "";
     </script>
-    <script src="../../../jquery.js"></script>
-    <script src="../../../main.js"></script>
+    <script src="../../jquery.js"></script>
+    <script src="../../main.js"></script>
     
-    <script defer src="../../../search-index.js"></script>
+    <script async src="../../search-index.js"></script>
 </body>
 </html>

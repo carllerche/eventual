@@ -9,9 +9,7 @@
 
     <title>select.rs.html -- source</title>
 
-    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../../main.css">
-    
+    <link rel="stylesheet" type="text/css" href="../../main.css">
 
     
     
@@ -26,10 +24,10 @@
 
     
 
-    <nav class="sidebar">
+    <section class="sidebar">
         
         
-    </nav>
+    </section>
 
     <nav class="sub">
         <form class="search-form js-only">
@@ -606,7 +604,7 @@
 </pre><pre class='rust '>
 <span class='attribute'>#<span class='op'>!</span>[<span class='ident'>allow</span>(<span class='ident'>unused_assignments</span>)]</span>
 
-<span class='kw'>use</span> <span class='kw'>super</span>::{<span class='ident'>Async</span>, <span class='ident'>Future</span>, <span class='ident'>Complete</span>, <span class='ident'>Cancel</span>, <span class='ident'>AsyncError</span>};
+<span class='kw'>use</span> <span class='ident'>super</span>::{<span class='ident'>Async</span>, <span class='ident'>Future</span>, <span class='ident'>Complete</span>, <span class='ident'>Cancel</span>, <span class='ident'>AsyncError</span>};
 <span class='kw'>use</span> <span class='ident'>syncbox</span>::<span class='ident'>atomic</span>::{<span class='self'>self</span>, <span class='ident'>AtomicU64</span>, <span class='ident'>Ordering</span>};
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>cell</span>::<span class='ident'>UnsafeCell</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>sync</span>::<span class='ident'>Arc</span>;
@@ -660,7 +658,7 @@
 
     <span class='kw'>fn</span> <span class='ident'>consume</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>S</span>;
 
-    <span class='kw'>fn</span> <span class='ident'>cancel_callbacks</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>selected</span>: <span class='ident'>u32</span>, <span class='ident'>up_to</span>: <span class='ident'>u32</span>, <span class='ident'>tokens</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='kw'>Self</span>::<span class='ident'>Tokens</span>) <span class='op'>-&gt;</span> <span class='ident'>u32</span>;
+    <span class='kw'>fn</span> <span class='ident'>cancel_callbacks</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>selected</span>: <span class='ident'>u32</span>, <span class='ident'>up_to</span>: <span class='ident'>u32</span>, <span class='ident'>tokens</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Self</span>::<span class='ident'>Tokens</span>) <span class='op'>-&gt;</span> <span class='ident'>u32</span>;
 }
 
 <span class='kw'>struct</span> <span class='ident'>Selection</span><span class='op'>&lt;</span><span class='ident'>V</span>: <span class='ident'>Values</span><span class='op'>&lt;</span><span class='ident'>S</span>, <span class='ident'>E</span><span class='op'>&gt;</span>, <span class='ident'>S</span>: <span class='ident'>Select</span><span class='op'>&lt;</span><span class='ident'>E</span><span class='op'>&gt;</span>, <span class='ident'>E</span>: <span class='ident'>Send</span> <span class='op'>+</span> <span class='lifetime'>&#39;static</span><span class='op'>&gt;</span> {
@@ -1171,12 +1169,10 @@
 
     <section class="footer"></section>
 
-    <aside id="help" class="hidden">
+    <div id="help" class="hidden">
         <div>
-            <h1 class="hidden">Help</h1>
-
             <div class="shortcuts">
-                <h2>Keyboard Shortcuts</h2>
+                <h1>Keyboard Shortcuts</h1>
 
                 <dl>
                     <dt>?</dt>
@@ -1193,7 +1189,7 @@
             </div>
 
             <div class="infos">
-                <h2>Search Tricks</h2>
+                <h1>Search Tricks</h1>
 
                 <p>
                     Prefix searches with a type followed by a colon (e.g.
@@ -1203,28 +1199,28 @@
                 <p>
                     Accepted types are: <code>fn</code>, <code>mod</code>,
                     <code>struct</code>, <code>enum</code>,
-                    <code>trait</code>, <code>type</code>, <code>macro</code>,
-                    and <code>const</code>.
+                    <code>trait</code>, <code>typedef</code> (or
+                    <code>tdef</code>).
                 </p>
 
                 <p>
                     Search functions by type signature (e.g.
-                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                    <code>vec -> usize</code>)
                 </p>
             </div>
         </div>
-    </aside>
+    </div>
 
     
 
     <script>
-        window.rootPath = "../../../";
+        window.rootPath = "../../";
         window.currentCrate = "eventual";
         window.playgroundUrl = "";
     </script>
-    <script src="../../../jquery.js"></script>
-    <script src="../../../main.js"></script>
+    <script src="../../jquery.js"></script>
+    <script src="../../main.js"></script>
     
-    <script defer src="../../../search-index.js"></script>
+    <script async src="../../search-index.js"></script>
 </body>
 </html>

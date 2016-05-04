@@ -9,9 +9,7 @@
 
     <title>eventual - Rust</title>
 
-    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../main.css">
-    
 
     
     
@@ -26,10 +24,10 @@
 
     
 
-    <nav class="sidebar">
+    <section class="sidebar">
         
         <p class='location'></p><script>window.sidebarCurrent = {name: 'eventual', ty: 'mod', relpath: '../'};</script>
-    </nav>
+    </section>
 
     <nav class="sub">
         <form class="search-form js-only">
@@ -44,17 +42,18 @@
 
     <section id='main' class="content mod">
 <h1 class='fqn'><span class='in-band'>Crate <a class='mod' href=''>eventual</a></span><span class='out-of-band'><span id='render-detail'>
-                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
-                       [<span class='inner'>&#x2212;</span>]
-                   </a>
-               </span><a id='src-0' class='srclink' href='../src/eventual/src/lib.rs.html#1-453' title='goto source code'>[src]</a></span></h1>
+            <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                [<span class='inner'>&#x2212;</span>]
+            </a>
+        </span><a id='src-0' class='srclink' href='../src/eventual/lib.rs.html#1-453' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>Composable primitives for asynchronous computations</p>
 
 <p>The async module contains utilities for managing asynchronous computations.
 These utilities are primarily based around <code>Future</code> and <code>Stream</code> types as
 well as functions that allow composing computations on these types.</p>
 
-<h2 id='future' class='section-header'><a href='#future'>Future</a></h2>
+<h2 id="future" class='section-header'><a
+                           href="#future">Future</a></h2>
 <p>A <code>Future</code> is a proxy representing the result of a computation which may
 not be complete.  The computation may be running concurrently in another
 thread or may be triggered upon completion of an asynchronous callback. One
@@ -62,7 +61,6 @@ way to think of a <code>Future</code> is as a <code>Result</code> where the valu
 asynchronously computed.</p>
 
 <p>For example:</p>
-
 <pre class='rust rust-example-rendered'>
 <span class='kw'>use</span> <span class='ident'>eventual</span>::<span class='op'>*</span>;
 
@@ -88,169 +86,195 @@ asynchronously computed.</p>
 <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='number'>61</span>, <span class='ident'>res</span>);
 </pre>
 
-<h2 id='stream' class='section-header'><a href='#stream'>Stream</a></h2>
+<h2 id="stream" class='section-header'><a
+                           href="#stream">Stream</a></h2>
 <p>A <code>Stream</code> is like a <code>Future</code>, except that instead of representing a single
 value, it represents a sequence of values.</p>
 </div><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
 <table>
-                       <tr class=' module-item'>
-                           <td><a class='struct' href='struct.BusySender.html'
-                                  title='eventual::BusySender'>BusySender</a></td>
-                           <td class='docblock short'>
-                                
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class='struct' href='struct.Complete.html'
-                                  title='eventual::Complete'>Complete</a></td>
-                           <td class='docblock short'>
-                                <p>An object that is used to fulfill or reject an associated Future.</p>
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class='struct' href='struct.Future.html'
-                                  title='eventual::Future'>Future</a></td>
-                           <td class='docblock short'>
-                                
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class='struct' href='struct.Receipt.html'
-                                  title='eventual::Receipt'>Receipt</a></td>
-                           <td class='docblock short'>
-                                
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class='struct' href='struct.Sender.html'
-                                  title='eventual::Sender'>Sender</a></td>
-                           <td class='docblock short'>
-                                <p>The sending half of <code>Stream::pair()</code>. Can only be owned by a single task at
+                    <tr class=' module-item'>
+                        <td><a class='struct' href='struct.BusySender.html'
+                               title='eventual::BusySender'>BusySender</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='struct' href='struct.Complete.html'
+                               title='eventual::Complete'>Complete</a></td>
+                        <td class='docblock short'>
+                             <p>An object that is used to fulfill or reject an associated Future.</p>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='struct' href='struct.Future.html'
+                               title='eventual::Future'>Future</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='struct' href='struct.Receipt.html'
+                               title='eventual::Receipt'>Receipt</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='struct' href='struct.Sender.html'
+                               title='eventual::Sender'>Sender</a></td>
+                        <td class='docblock short'>
+                             <p>The sending half of <code>Stream::pair()</code>. Can only be owned by a single task at
 a time.</p>
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class='struct' href='struct.Stream.html'
-                                  title='eventual::Stream'>Stream</a></td>
-                           <td class='docblock short'>
-                                
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class='struct' href='struct.StreamIter.html'
-                                  title='eventual::StreamIter'>StreamIter</a></td>
-                           <td class='docblock short'>
-                                
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class='struct' href='struct.Timer.html'
-                                  title='eventual::Timer'>Timer</a></td>
-                           <td class='docblock short'>
-                                <p>Provides timeouts as a <code>Future</code> and periodic ticks as a <code>Stream</code>.</p>
-                           </td>
-                       </tr></table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='struct' href='struct.Stream.html'
+                               title='eventual::Stream'>Stream</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='struct' href='struct.StreamIter.html'
+                               title='eventual::StreamIter'>StreamIter</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='struct' href='struct.Timer.html'
+                               title='eventual::Timer'>Timer</a></td>
+                        <td class='docblock short'>
+                             <p>Provides timeouts as a <code>Future</code> and periodic ticks as a <code>Stream</code>.</p>
+
+                        </td>
+                    </tr>
+                </table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
 <table>
-                       <tr class=' module-item'>
-                           <td><a class='enum' href='enum.AsyncError.html'
-                                  title='eventual::AsyncError'>AsyncError</a></td>
-                           <td class='docblock short'>
-                                
-                           </td>
-                       </tr></table><h2 id='traits' class='section-header'><a href="#traits">Traits</a></h2>
+                    <tr class=' module-item'>
+                        <td><a class='enum' href='enum.AsyncError.html'
+                               title='eventual::AsyncError'>AsyncError</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                </table><h2 id='traits' class='section-header'><a href="#traits">Traits</a></h2>
 <table>
-                       <tr class=' module-item'>
-                           <td><a class='trait' href='trait.Async.html'
-                                  title='eventual::Async'>Async</a></td>
-                           <td class='docblock short'>
-                                <p>A value representing an asynchronous computation</p>
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class='trait' href='trait.Cancel.html'
-                                  title='eventual::Cancel'>Cancel</a></td>
-                           <td class='docblock short'>
-                                
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class='trait' href='trait.Join.html'
-                                  title='eventual::Join'>Join</a></td>
-                           <td class='docblock short'>
-                                
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class='trait' href='trait.Pair.html'
-                                  title='eventual::Pair'>Pair</a></td>
-                           <td class='docblock short'>
-                                
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class='trait' href='trait.Select.html'
-                                  title='eventual::Select'>Select</a></td>
-                           <td class='docblock short'>
-                                
-                           </td>
-                       </tr></table><h2 id='functions' class='section-header'><a href="#functions">Functions</a></h2>
+                    <tr class=' module-item'>
+                        <td><a class='trait' href='trait.Async.html'
+                               title='eventual::Async'>Async</a></td>
+                        <td class='docblock short'>
+                             <p>A value representing an asynchronous computation</p>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='trait' href='trait.Cancel.html'
+                               title='eventual::Cancel'>Cancel</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='trait' href='trait.Join.html'
+                               title='eventual::Join'>Join</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='trait' href='trait.Pair.html'
+                               title='eventual::Pair'>Pair</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='trait' href='trait.Select.html'
+                               title='eventual::Select'>Select</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                </table><h2 id='functions' class='section-header'><a href="#functions">Functions</a></h2>
 <table>
-                       <tr class=' module-item'>
-                           <td><a class='fn' href='fn.background.html'
-                                  title='eventual::background'>background</a></td>
-                           <td class='docblock short'>
-                                <p>This method backgrounds a task onto a task runner waiting for complete to be called.
+                    <tr class=' module-item'>
+                        <td><a class='fn' href='fn.background.html'
+                               title='eventual::background'>background</a></td>
+                        <td class='docblock short'>
+                             <p>This method backgrounds a task onto a task runner waiting for complete to be called.
 Currently we only support using a ThreadPool as the task runner itself.</p>
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class='fn' href='fn.defer.html'
-                                  title='eventual::defer'>defer</a></td>
-                           <td class='docblock short'>
-                                <p>This method defers a task onto a task runner until we can complete that call.
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='fn' href='fn.defer.html'
+                               title='eventual::defer'>defer</a></td>
+                        <td class='docblock short'>
+                             <p>This method defers a task onto a task runner until we can complete that call.
 Currently we only support using a ThreadPool as the task runner itself.</p>
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class='fn' href='fn.join.html'
-                                  title='eventual::join'>join</a></td>
-                           <td class='docblock short'>
-                                
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class='fn' href='fn.select.html'
-                                  title='eventual::select'>select</a></td>
-                           <td class='docblock short'>
-                                
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class='fn' href='fn.sequence.html'
-                                  title='eventual::sequence'>sequence</a></td>
-                           <td class='docblock short'>
-                                <p>Returns a <code>Stream</code> consisting of the completion of the supplied async
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='fn' href='fn.join.html'
+                               title='eventual::join'>join</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='fn' href='fn.select.html'
+                               title='eventual::select'>select</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='fn' href='fn.sequence.html'
+                               title='eventual::sequence'>sequence</a></td>
+                        <td class='docblock short'>
+                             <p>Returns a <code>Stream</code> consisting of the completion of the supplied async
 values in the order that they are completed.</p>
-                           </td>
-                       </tr></table><h2 id='types' class='section-header'><a href="#types">Type Definitions</a></h2>
+
+                        </td>
+                    </tr>
+                </table><h2 id='types' class='section-header'><a href="#types">Type Definitions</a></h2>
 <table>
-                       <tr class=' module-item'>
-                           <td><a class='type' href='type.AsyncResult.html'
-                                  title='eventual::AsyncResult'>AsyncResult</a></td>
-                           <td class='docblock short'>
-                                
-                           </td>
-                       </tr></table></section>
+                    <tr class=' module-item'>
+                        <td><a class='type' href='type.AsyncResult.html'
+                               title='eventual::AsyncResult'>AsyncResult</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                </table></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>
 
-    <aside id="help" class="hidden">
+    <div id="help" class="hidden">
         <div>
-            <h1 class="hidden">Help</h1>
-
             <div class="shortcuts">
-                <h2>Keyboard Shortcuts</h2>
+                <h1>Keyboard Shortcuts</h1>
 
                 <dl>
                     <dt>?</dt>
@@ -267,7 +291,7 @@ values in the order that they are completed.</p>
             </div>
 
             <div class="infos">
-                <h2>Search Tricks</h2>
+                <h1>Search Tricks</h1>
 
                 <p>
                     Prefix searches with a type followed by a colon (e.g.
@@ -277,17 +301,17 @@ values in the order that they are completed.</p>
                 <p>
                     Accepted types are: <code>fn</code>, <code>mod</code>,
                     <code>struct</code>, <code>enum</code>,
-                    <code>trait</code>, <code>type</code>, <code>macro</code>,
-                    and <code>const</code>.
+                    <code>trait</code>, <code>typedef</code> (or
+                    <code>tdef</code>).
                 </p>
 
                 <p>
                     Search functions by type signature (e.g.
-                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                    <code>vec -> usize</code>)
                 </p>
             </div>
         </div>
-    </aside>
+    </div>
 
     
 
@@ -299,6 +323,6 @@ values in the order that they are completed.</p>
     <script src="../jquery.js"></script>
     <script src="../main.js"></script>
     
-    <script defer src="../search-index.js"></script>
+    <script async src="../search-index.js"></script>
 </body>
 </html>
