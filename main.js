@@ -740,9 +740,7 @@
             $(".search-input").on("keyup input",function() {
                 clearTimeout(searchTimeout);
                 if ($(this).val().length === 0) {
-                    if (browserSupportsHistoryApi()) {
-                        history.replaceState("", "std - Rust", "?search=");
-                    }
+                    window.history.replaceState("", "std - Rust", "?search=");
                     $('#main.content').removeClass('hidden');
                     $('#search.content').addClass('hidden');
                 } else {
@@ -981,7 +979,7 @@
         $(".method").each(function() {
             if ($(this).next().is(".docblock") ||
                 ($(this).next().is(".stability") && $(this).next().next().is(".docblock"))) {
-                    $(this).children().last().after(toggle.clone());
+                    $(this).children().first().after(toggle.clone());
             }
         });
 
@@ -998,7 +996,7 @@
         var prev_id = 0;
 
         function set_fragment(name) {
-            if (browserSupportsHistoryApi()) {
+            if (history.replaceState) {
                 history.replaceState(null, null, '#' + name);
                 $(window).trigger('hashchange');
             } else {

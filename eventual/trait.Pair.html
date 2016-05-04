@@ -11,7 +11,6 @@
 
     <link rel="stylesheet" type="text/css" href="../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../main.css">
-    
 
     
     
@@ -44,27 +43,27 @@
 
     <section id='main' class="content trait">
 <h1 class='fqn'><span class='in-band'>Trait <a href='index.html'>eventual</a>::<wbr><a class='trait' href=''>Pair</a></span><span class='out-of-band'><span id='render-detail'>
-                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
-                       [<span class='inner'>&#x2212;</span>]
-                   </a>
-               </span><a id='src-2327' class='srclink' href='../src/eventual/src/lib.rs.html#275-279' title='goto source code'>[src]</a></span></h1>
+            <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                [<span class='inner'>&#x2212;</span>]
+            </a>
+        </span><a id='src-2340' class='srclink' href='../src/eventual/src/lib.rs.html#275-279' title='goto source code'>[src]</a></span></h1>
 <pre class='rust trait'>pub trait Pair {
-    type <a href='#associatedtype.Tx' class='type'>Tx</a>;
+    type Tx;
     fn <a href='#tymethod.pair' class='fnname'>pair</a>() -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>(</a>Self::<a class='trait' href='../eventual/trait.Pair.html' title='eventual::Pair'>Tx</a>, Self<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>)</a>;
 }</pre>
             <h2 id='associated-types'>Associated Types</h2>
             <div class='methods'>
-        <h3 id='associatedtype.Tx' class='method stab '><code>type <a href='#associatedtype.Tx' class='type'>Tx</a></code></h3></div>
+        <h3 id='associatedtype.Tx' class='method stab '><code>type Tx</code></h3></div>
             <h2 id='required-methods'>Required Methods</h2>
             <div class='methods'>
         <h3 id='tymethod.pair' class='method stab '><code>fn <a href='#tymethod.pair' class='fnname'>pair</a>() -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>(</a>Self::<a class='trait' href='../eventual/trait.Pair.html' title='eventual::Pair'>Tx</a>, Self<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>)</a></code></h3></div>
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>
-    <li><code>impl&lt;T: <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static, E: <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static&gt; Pair for <a class='struct' href='../eventual/struct.Future.html' title='eventual::Future'>Future</a>&lt;T, E&gt;</code></li>
-<li><code>impl&lt;T: <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static, E: <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static&gt; Pair for <a class='struct' href='../eventual/struct.Stream.html' title='eventual::Stream'>Stream</a>&lt;T, E&gt;</code></li>
+    <li><code>impl&lt;T: <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static, E: <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static&gt; <a class='trait' href='../eventual/trait.Pair.html' title='eventual::Pair'>Pair</a> for <a class='struct' href='../eventual/struct.Future.html' title='eventual::Future'>Future</a>&lt;T, E&gt;</code></li>
+<li><code>impl&lt;T: <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static, E: <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static&gt; <a class='trait' href='../eventual/trait.Pair.html' title='eventual::Pair'>Pair</a> for <a class='struct' href='../eventual/struct.Stream.html' title='eventual::Stream'>Stream</a>&lt;T, E&gt;</code></li>
 </ul><script type="text/javascript" async
-                         src="../implementors/eventual/trait.Pair.js">
-                 </script></section>
+                              src="../implementors/eventual/trait.Pair.js">
+                      </script></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>

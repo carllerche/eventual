@@ -11,7 +11,6 @@
 
     <link rel="stylesheet" type="text/css" href="../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../main.css">
-    
 
     
     
@@ -44,10 +43,10 @@
 
     <section id='main' class="content fn">
 <h1 class='fqn'><span class='in-band'>Function <a href='index.html'>eventual</a>::<wbr><a class='fn' href=''>background</a></span><span class='out-of-band'><span id='render-detail'>
-                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
-                       [<span class='inner'>&#x2212;</span>]
-                   </a>
-               </span><a id='src-1262' class='srclink' href='../src/eventual/src/run.rs.html#27-35' title='goto source code'>[src]</a></span></h1>
+            <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                [<span class='inner'>&#x2212;</span>]
+            </a>
+        </span><a id='src-1273' class='srclink' href='../src/eventual/src/run.rs.html#27-35' title='goto source code'>[src]</a></span></h1>
 <pre class='rust fn'>pub fn background&lt;R: Run&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/alloc/boxed/struct.Box.html' title='alloc::boxed::Box'>Box</a>&lt;TaskBox&gt;&gt; + <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static, F: <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.FnOnce.html' title='core::ops::FnOnce'>FnOnce</a>() -&gt; T + <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static, T: <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a>&gt;(task_runner: R, closure: <a class='struct' href='https://doc.rust-lang.org/nightly/alloc/boxed/struct.Box.html' title='alloc::boxed::Box'>Box</a>&lt;F&gt;) -&gt; <a class='struct' href='../eventual/struct.Future.html' title='eventual::Future'>Future</a>&lt;T, <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>&gt;</pre><div class='docblock'><p>This method backgrounds a task onto a task runner waiting for complete to be called.
 Currently we only support using a ThreadPool as the task runner itself.</p>
 </div></section>

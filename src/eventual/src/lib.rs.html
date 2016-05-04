@@ -11,7 +11,6 @@
 
     <link rel="stylesheet" type="text/css" href="../../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../../main.css">
-    
 
     
     
@@ -598,10 +597,10 @@
     <span class='kw'>fn</span> <span class='ident'>is_err</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span>;
 
     <span class='doccomment'>/// Get the underlying value if present</span>
-    <span class='kw'>fn</span> <span class='ident'>poll</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>AsyncResult</span><span class='op'>&lt;</span><span class='kw'>Self</span>::<span class='ident'>Value</span>, <span class='kw'>Self</span>::<span class='ident'>Error</span><span class='op'>&gt;</span>, <span class='kw'>Self</span><span class='op'>&gt;</span>;
+    <span class='kw'>fn</span> <span class='ident'>poll</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>AsyncResult</span><span class='op'>&lt;</span><span class='ident'>Self</span>::<span class='ident'>Value</span>, <span class='ident'>Self</span>::<span class='ident'>Error</span><span class='op'>&gt;</span>, <span class='kw'>Self</span><span class='op'>&gt;</span>;
 
     <span class='doccomment'>/// Get the underlying value if present, panic otherwise</span>
-    <span class='kw'>fn</span> <span class='ident'>expect</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>AsyncResult</span><span class='op'>&lt;</span><span class='kw'>Self</span>::<span class='ident'>Value</span>, <span class='kw'>Self</span>::<span class='ident'>Error</span><span class='op'>&gt;</span> {
+    <span class='kw'>fn</span> <span class='ident'>expect</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>AsyncResult</span><span class='op'>&lt;</span><span class='ident'>Self</span>::<span class='ident'>Value</span>, <span class='ident'>Self</span>::<span class='ident'>Error</span><span class='op'>&gt;</span> {
         <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Ok</span>(<span class='ident'>v</span>) <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>poll</span>() {
             <span class='kw'>return</span> <span class='ident'>v</span>;
         }
@@ -611,11 +610,11 @@
 
     <span class='doccomment'>/// Invokes the given function when the Async instance is ready to be</span>
     <span class='doccomment'>/// consumed.</span>
-    <span class='kw'>fn</span> <span class='ident'>ready</span><span class='op'>&lt;</span><span class='ident'>F</span><span class='op'>&gt;</span>(<span class='self'>self</span>, <span class='ident'>f</span>: <span class='ident'>F</span>) <span class='op'>-&gt;</span> <span class='kw'>Self</span>::<span class='ident'>Cancel</span> <span class='kw'>where</span> <span class='ident'>F</span>: <span class='ident'>FnOnce</span>(<span class='kw'>Self</span>) <span class='op'>+</span> <span class='ident'>Send</span> <span class='op'>+</span> <span class='lifetime'>&#39;static</span>;
+    <span class='kw'>fn</span> <span class='ident'>ready</span><span class='op'>&lt;</span><span class='ident'>F</span><span class='op'>&gt;</span>(<span class='self'>self</span>, <span class='ident'>f</span>: <span class='ident'>F</span>) <span class='op'>-&gt;</span> <span class='ident'>Self</span>::<span class='ident'>Cancel</span> <span class='kw'>where</span> <span class='ident'>F</span>: <span class='ident'>FnOnce</span>(<span class='kw'>Self</span>) <span class='op'>+</span> <span class='ident'>Send</span> <span class='op'>+</span> <span class='lifetime'>&#39;static</span>;
 
     <span class='doccomment'>/// Invoke the callback with the resolved `Async` result.</span>
     <span class='kw'>fn</span> <span class='ident'>receive</span><span class='op'>&lt;</span><span class='ident'>F</span><span class='op'>&gt;</span>(<span class='self'>self</span>, <span class='ident'>f</span>: <span class='ident'>F</span>)
-            <span class='kw'>where</span> <span class='ident'>F</span>: <span class='ident'>FnOnce</span>(<span class='ident'>AsyncResult</span><span class='op'>&lt;</span><span class='kw'>Self</span>::<span class='ident'>Value</span>, <span class='kw'>Self</span>::<span class='ident'>Error</span><span class='op'>&gt;</span>) <span class='op'>+</span> <span class='ident'>Send</span> <span class='op'>+</span> <span class='lifetime'>&#39;static</span> {
+            <span class='kw'>where</span> <span class='ident'>F</span>: <span class='ident'>FnOnce</span>(<span class='ident'>AsyncResult</span><span class='op'>&lt;</span><span class='ident'>Self</span>::<span class='ident'>Value</span>, <span class='ident'>Self</span>::<span class='ident'>Error</span><span class='op'>&gt;</span>) <span class='op'>+</span> <span class='ident'>Send</span> <span class='op'>+</span> <span class='lifetime'>&#39;static</span> {
         <span class='self'>self</span>.<span class='ident'>ready</span>(<span class='kw'>move</span> <span class='op'>|</span><span class='ident'>async</span><span class='op'>|</span> {
             <span class='kw'>match</span> <span class='ident'>async</span>.<span class='ident'>poll</span>() {
                 <span class='prelude-val'>Ok</span>(<span class='ident'>res</span>) <span class='op'>=&gt;</span> <span class='ident'>f</span>(<span class='ident'>res</span>),
@@ -626,7 +625,7 @@
 
     <span class='doccomment'>/// Blocks the thread until the async value is complete and returns the</span>
     <span class='doccomment'>/// result.</span>
-    <span class='kw'>fn</span> <span class='ident'>await</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>AsyncResult</span><span class='op'>&lt;</span><span class='kw'>Self</span>::<span class='ident'>Value</span>, <span class='kw'>Self</span>::<span class='ident'>Error</span><span class='op'>&gt;</span> {
+    <span class='kw'>fn</span> <span class='ident'>await</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>AsyncResult</span><span class='op'>&lt;</span><span class='ident'>Self</span>::<span class='ident'>Value</span>, <span class='ident'>Self</span>::<span class='ident'>Error</span><span class='op'>&gt;</span> {
         <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>sync</span>::<span class='ident'>mpsc</span>::<span class='ident'>channel</span>;
 
         <span class='kw'>let</span> (<span class='ident'>tx</span>, <span class='ident'>rx</span>) <span class='op'>=</span> <span class='ident'>channel</span>();
@@ -654,7 +653,7 @@
     <span class='doccomment'>///</span>
     <span class='doccomment'>/// If the original future completes successfully, the future returned by</span>
     <span class='doccomment'>/// this method completes with the completion value of `next`.</span>
-    <span class='kw'>fn</span> <span class='ident'>and</span><span class='op'>&lt;</span><span class='ident'>U</span>: <span class='ident'>Async</span><span class='op'>&lt;</span><span class='ident'>Error</span><span class='op'>=</span><span class='kw'>Self</span>::<span class='ident'>Error</span><span class='op'>&gt;&gt;</span>(<span class='self'>self</span>, <span class='ident'>next</span>: <span class='ident'>U</span>) <span class='op'>-&gt;</span> <span class='ident'>Future</span><span class='op'>&lt;</span><span class='ident'>U</span>::<span class='ident'>Value</span>, <span class='kw'>Self</span>::<span class='ident'>Error</span><span class='op'>&gt;</span> {
+    <span class='kw'>fn</span> <span class='ident'>and</span><span class='op'>&lt;</span><span class='ident'>U</span>: <span class='ident'>Async</span><span class='op'>&lt;</span><span class='ident'>Error</span><span class='op'>=</span><span class='ident'>Self</span>::<span class='ident'>Error</span><span class='op'>&gt;&gt;</span>(<span class='self'>self</span>, <span class='ident'>next</span>: <span class='ident'>U</span>) <span class='op'>-&gt;</span> <span class='ident'>Future</span><span class='op'>&lt;</span><span class='ident'>U</span>::<span class='ident'>Value</span>, <span class='ident'>Self</span>::<span class='ident'>Error</span><span class='op'>&gt;</span> {
         <span class='self'>self</span>.<span class='ident'>and_then</span>(<span class='kw'>move</span> <span class='op'>|</span>_<span class='op'>|</span> <span class='ident'>next</span>)
     }
 
@@ -688,8 +687,8 @@
     <span class='doccomment'>///     Ok(())</span>
     <span class='doccomment'>/// }).await();</span>
     <span class='doccomment'>/// ```</span>
-    <span class='kw'>fn</span> <span class='ident'>and_then</span><span class='op'>&lt;</span><span class='ident'>F</span>, <span class='ident'>U</span>: <span class='ident'>Async</span><span class='op'>&lt;</span><span class='ident'>Error</span><span class='op'>=</span><span class='kw'>Self</span>::<span class='ident'>Error</span><span class='op'>&gt;&gt;</span>(<span class='self'>self</span>, <span class='ident'>f</span>: <span class='ident'>F</span>) <span class='op'>-&gt;</span> <span class='ident'>Future</span><span class='op'>&lt;</span><span class='ident'>U</span>::<span class='ident'>Value</span>, <span class='kw'>Self</span>::<span class='ident'>Error</span><span class='op'>&gt;</span>
-            <span class='kw'>where</span> <span class='ident'>F</span>: <span class='ident'>FnOnce</span>(<span class='kw'>Self</span>::<span class='ident'>Value</span>) <span class='op'>-&gt;</span> <span class='ident'>U</span> <span class='op'>+</span> <span class='ident'>Send</span> <span class='op'>+</span> <span class='lifetime'>&#39;static</span>,
+    <span class='kw'>fn</span> <span class='ident'>and_then</span><span class='op'>&lt;</span><span class='ident'>F</span>, <span class='ident'>U</span>: <span class='ident'>Async</span><span class='op'>&lt;</span><span class='ident'>Error</span><span class='op'>=</span><span class='ident'>Self</span>::<span class='ident'>Error</span><span class='op'>&gt;&gt;</span>(<span class='self'>self</span>, <span class='ident'>f</span>: <span class='ident'>F</span>) <span class='op'>-&gt;</span> <span class='ident'>Future</span><span class='op'>&lt;</span><span class='ident'>U</span>::<span class='ident'>Value</span>, <span class='ident'>Self</span>::<span class='ident'>Error</span><span class='op'>&gt;</span>
+            <span class='kw'>where</span> <span class='ident'>F</span>: <span class='ident'>FnOnce</span>(<span class='ident'>Self</span>::<span class='ident'>Value</span>) <span class='op'>-&gt;</span> <span class='ident'>U</span> <span class='op'>+</span> <span class='ident'>Send</span> <span class='op'>+</span> <span class='lifetime'>&#39;static</span>,
                   <span class='ident'>U</span>::<span class='ident'>Value</span>: <span class='ident'>Send</span> <span class='op'>+</span> <span class='lifetime'>&#39;static</span> {
         <span class='kw'>let</span> (<span class='ident'>complete</span>, <span class='ident'>ret</span>) <span class='op'>=</span> <span class='ident'>Future</span>::<span class='ident'>pair</span>();
 
@@ -725,8 +724,8 @@
     <span class='doccomment'>/// If the original future completes with an error, the future returned by</span>
     <span class='doccomment'>/// this method will complete with the completion value of the `alt` future</span>
     <span class='doccomment'>/// passed in. That can be either a success or error.</span>
-    <span class='kw'>fn</span> <span class='ident'>or</span><span class='op'>&lt;</span><span class='ident'>A</span><span class='op'>&gt;</span>(<span class='self'>self</span>, <span class='ident'>alt</span>: <span class='ident'>A</span>) <span class='op'>-&gt;</span> <span class='ident'>Future</span><span class='op'>&lt;</span><span class='kw'>Self</span>::<span class='ident'>Value</span>, <span class='ident'>A</span>::<span class='ident'>Error</span><span class='op'>&gt;</span>
-            <span class='kw'>where</span> <span class='ident'>A</span>: <span class='ident'>Async</span><span class='op'>&lt;</span><span class='ident'>Value</span><span class='op'>=</span><span class='kw'>Self</span>::<span class='ident'>Value</span><span class='op'>&gt;</span> {
+    <span class='kw'>fn</span> <span class='ident'>or</span><span class='op'>&lt;</span><span class='ident'>A</span><span class='op'>&gt;</span>(<span class='self'>self</span>, <span class='ident'>alt</span>: <span class='ident'>A</span>) <span class='op'>-&gt;</span> <span class='ident'>Future</span><span class='op'>&lt;</span><span class='ident'>Self</span>::<span class='ident'>Value</span>, <span class='ident'>A</span>::<span class='ident'>Error</span><span class='op'>&gt;</span>
+            <span class='kw'>where</span> <span class='ident'>A</span>: <span class='ident'>Async</span><span class='op'>&lt;</span><span class='ident'>Value</span><span class='op'>=</span><span class='ident'>Self</span>::<span class='ident'>Value</span><span class='op'>&gt;</span> {
         <span class='self'>self</span>.<span class='ident'>or_else</span>(<span class='kw'>move</span> <span class='op'>|</span>_<span class='op'>|</span> <span class='ident'>alt</span>)
     }
 
@@ -740,9 +739,9 @@
     <span class='doccomment'>/// the callback passed to the method, which should return a future. The</span>
     <span class='doccomment'>/// future returned by this method will complete with the completion value</span>
     <span class='doccomment'>/// of that future. That can be either a success or error.</span>
-    <span class='kw'>fn</span> <span class='ident'>or_else</span><span class='op'>&lt;</span><span class='ident'>F</span>, <span class='ident'>A</span><span class='op'>&gt;</span>(<span class='self'>self</span>, <span class='ident'>f</span>: <span class='ident'>F</span>) <span class='op'>-&gt;</span> <span class='ident'>Future</span><span class='op'>&lt;</span><span class='kw'>Self</span>::<span class='ident'>Value</span>, <span class='ident'>A</span>::<span class='ident'>Error</span><span class='op'>&gt;</span>
-            <span class='kw'>where</span> <span class='ident'>F</span>: <span class='ident'>FnOnce</span>(<span class='kw'>Self</span>::<span class='ident'>Error</span>) <span class='op'>-&gt;</span> <span class='ident'>A</span> <span class='op'>+</span> <span class='ident'>Send</span> <span class='op'>+</span> <span class='lifetime'>&#39;static</span>,
-                  <span class='ident'>A</span>: <span class='ident'>Async</span><span class='op'>&lt;</span><span class='ident'>Value</span><span class='op'>=</span><span class='kw'>Self</span>::<span class='ident'>Value</span><span class='op'>&gt;</span> {
+    <span class='kw'>fn</span> <span class='ident'>or_else</span><span class='op'>&lt;</span><span class='ident'>F</span>, <span class='ident'>A</span><span class='op'>&gt;</span>(<span class='self'>self</span>, <span class='ident'>f</span>: <span class='ident'>F</span>) <span class='op'>-&gt;</span> <span class='ident'>Future</span><span class='op'>&lt;</span><span class='ident'>Self</span>::<span class='ident'>Value</span>, <span class='ident'>A</span>::<span class='ident'>Error</span><span class='op'>&gt;</span>
+            <span class='kw'>where</span> <span class='ident'>F</span>: <span class='ident'>FnOnce</span>(<span class='ident'>Self</span>::<span class='ident'>Error</span>) <span class='op'>-&gt;</span> <span class='ident'>A</span> <span class='op'>+</span> <span class='ident'>Send</span> <span class='op'>+</span> <span class='lifetime'>&#39;static</span>,
+                  <span class='ident'>A</span>: <span class='ident'>Async</span><span class='op'>&lt;</span><span class='ident'>Value</span><span class='op'>=</span><span class='ident'>Self</span>::<span class='ident'>Value</span><span class='op'>&gt;</span> {
 
         <span class='kw'>let</span> (<span class='ident'>complete</span>, <span class='ident'>ret</span>) <span class='op'>=</span> <span class='ident'>Future</span>::<span class='ident'>pair</span>();
 
@@ -773,7 +772,7 @@
 <span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>Pair</span> {
     <span class='kw'>type</span> <span class='ident'>Tx</span>;
 
-    <span class='kw'>fn</span> <span class='ident'>pair</span>() <span class='op'>-&gt;</span> (<span class='kw'>Self</span>::<span class='ident'>Tx</span>, <span class='kw'>Self</span>);
+    <span class='kw'>fn</span> <span class='ident'>pair</span>() <span class='op'>-&gt;</span> (<span class='ident'>Self</span>::<span class='ident'>Tx</span>, <span class='kw'>Self</span>);
 }
 
 <span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>Cancel</span><span class='op'>&lt;</span><span class='ident'>A</span>: <span class='ident'>Send</span> <span class='op'>+</span> <span class='lifetime'>&#39;static</span><span class='op'>&gt;</span> : <span class='ident'>Send</span> <span class='op'>+</span> <span class='lifetime'>&#39;static</span> {
