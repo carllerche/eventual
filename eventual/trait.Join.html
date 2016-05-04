@@ -9,6 +9,7 @@
 
     <title>eventual::Join - Rust</title>
 
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../main.css">
 
     
@@ -24,10 +25,10 @@
 
     
 
-    <section class="sidebar">
+    <nav class="sidebar">
         
         <p class='location'><a href='index.html'>eventual</a></p><script>window.sidebarCurrent = {name: 'Join', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
-    </section>
+    </nav>
 
     <nav class="sub">
         <form class="search-form js-only">
@@ -45,8 +46,8 @@
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-6823' class='srclink' href='../src/eventual/join.rs.html#21-23' title='goto source code'>[src]</a></span></h1>
-<pre class='rust trait'>pub trait Join&lt;T: <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static, E: <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static&gt;: <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a> + <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static {
+        </span><a id='src-826' class='srclink' href='../src/eventual/src/join.rs.html#21-23' title='goto source code'>[src]</a></span></h1>
+<pre class='rust trait'>pub trait Join&lt;T: <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static, E: <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static&gt;: <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static {
     fn <a href='#tymethod.join' class='fnname'>join</a>(self, complete: <a class='struct' href='../eventual/struct.Complete.html' title='eventual::Complete'>Complete</a>&lt;T, E&gt;);
 }</pre>
             <h2 id='required-methods'>Required Methods</h2>
@@ -54,9 +55,9 @@
         <h3 id='tymethod.join' class='method stab '><code>fn <a href='#tymethod.join' class='fnname'>join</a>(self, complete: <a class='struct' href='../eventual/struct.Complete.html' title='eventual::Complete'>Complete</a>&lt;T, E&gt;)</code></h3></div>
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>
-    <li><code>impl&lt;A: <a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Async</a>&gt; <a class='trait' href='../eventual/trait.Join.html' title='eventual::Join'>Join</a>&lt;<a class='struct' href='http://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;A::Value&gt;, A::Error&gt; for <a class='struct' href='http://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;A&gt;</code></li>
-<li><code>impl&lt;A1: <a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Async</a>&lt;Error=E&gt;, A2: <a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Async</a>&lt;Error=E&gt;, E&gt; <a class='trait' href='../eventual/trait.Join.html' title='eventual::Join'>Join</a>&lt;<a href='http://doc.rust-lang.org/nightly/std/primitive.tuple.html'>(A1::Value, A2::Value)</a>, E&gt; for <a href='http://doc.rust-lang.org/nightly/std/primitive.tuple.html'>(A1, A2)</a> <span class='where'>where E: <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static, A1::Value: <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static, A2::Value: <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static</span></code></li>
-<li><code>impl&lt;A1: <a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Async</a>&lt;Error=E&gt;, A2: <a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Async</a>&lt;Error=E&gt;, A3: <a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Async</a>&lt;Error=E&gt;, E&gt; <a class='trait' href='../eventual/trait.Join.html' title='eventual::Join'>Join</a>&lt;<a href='http://doc.rust-lang.org/nightly/std/primitive.tuple.html'>(A1::Value, A2::Value, A3::Value)</a>, E&gt; for <a href='http://doc.rust-lang.org/nightly/std/primitive.tuple.html'>(A1, A2, A3)</a> <span class='where'>where E: <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static, A1::Value: <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static, A2::Value: <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static, A3::Value: <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static</span></code></li>
+    <li><code>impl&lt;A: <a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Async</a>&gt; <a class='trait' href='../eventual/trait.Join.html' title='eventual::Join'>Join</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;A::Value&gt;, A::Error&gt; for <a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;A&gt;</code></li>
+<li><code>impl&lt;A1: <a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Async</a>&lt;Error=E&gt;, A2: <a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Async</a>&lt;Error=E&gt;, E&gt; <a class='trait' href='../eventual/trait.Join.html' title='eventual::Join'>Join</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>(</a>A1::Value, A2::Value<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>)</a>, E&gt; for <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>(</a>A1, A2<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>)</a> <span class='where'>where E: <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static, A1::Value: <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static, A2::Value: <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static</span></code></li>
+<li><code>impl&lt;A1: <a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Async</a>&lt;Error=E&gt;, A2: <a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Async</a>&lt;Error=E&gt;, A3: <a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Async</a>&lt;Error=E&gt;, E&gt; <a class='trait' href='../eventual/trait.Join.html' title='eventual::Join'>Join</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>(</a>A1::Value, A2::Value, A3::Value<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>)</a>, E&gt; for <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>(</a>A1, A2, A3<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>)</a> <span class='where'>where E: <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static, A1::Value: <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static, A2::Value: <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static, A3::Value: <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static</span></code></li>
 </ul><script type="text/javascript" async
                               src="../implementors/eventual/trait.Join.js">
                       </script></section>
@@ -64,10 +65,12 @@
 
     <section class="footer"></section>
 
-    <div id="help" class="hidden">
+    <aside id="help" class="hidden">
         <div>
+            <h1 class="hidden">Help</h1>
+
             <div class="shortcuts">
-                <h1>Keyboard Shortcuts</h1>
+                <h2>Keyboard Shortcuts</h2>
 
                 <dl>
                     <dt>?</dt>
@@ -84,7 +87,7 @@
             </div>
 
             <div class="infos">
-                <h1>Search Tricks</h1>
+                <h2>Search Tricks</h2>
 
                 <p>
                     Prefix searches with a type followed by a colon (e.g.
@@ -94,17 +97,17 @@
                 <p>
                     Accepted types are: <code>fn</code>, <code>mod</code>,
                     <code>struct</code>, <code>enum</code>,
-                    <code>trait</code>, <code>typedef</code> (or
-                    <code>tdef</code>).
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
                 </p>
 
                 <p>
                     Search functions by type signature (e.g.
-                    <code>vec -> usize</code>)
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
                 </p>
             </div>
         </div>
-    </div>
+    </aside>
 
     
 
@@ -116,6 +119,6 @@
     <script src="../jquery.js"></script>
     <script src="../main.js"></script>
     
-    <script async src="../search-index.js"></script>
+    <script defer src="../search-index.js"></script>
 </body>
 </html>

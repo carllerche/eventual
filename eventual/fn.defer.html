@@ -9,6 +9,7 @@
 
     <title>eventual::defer - Rust</title>
 
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../main.css">
 
     
@@ -24,10 +25,10 @@
 
     
 
-    <section class="sidebar">
+    <nav class="sidebar">
         
         <p class='location'><a href='index.html'>eventual</a></p><script>window.sidebarCurrent = {name: 'defer', ty: 'fn', relpath: ''};</script><script defer src="sidebar-items.js"></script>
-    </section>
+    </nav>
 
     <nav class="sub">
         <form class="search-form js-only">
@@ -45,18 +46,20 @@
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-9984' class='srclink' href='../src/eventual/run.rs.html#8-23' title='goto source code'>[src]</a></span></h1>
-<pre class='rust fn'>pub fn defer&lt;R: Run&lt;<a class='struct' href='http://doc.rust-lang.org/nightly/alloc/boxed/struct.Box.html' title='alloc::boxed::Box'>Box</a>&lt;TaskBox&gt;&gt; + <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static, A: <a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Async</a> + 'static&gt;(task_runner: R, future_in: A) -&gt; <a class='struct' href='../eventual/struct.Future.html' title='eventual::Future'>Future</a>&lt;A::Value, A::Error&gt;</pre><div class='docblock'><p>This method defers a task onto a task runner until we can complete that call.
+        </span><a id='src-1258' class='srclink' href='../src/eventual/src/run.rs.html#8-23' title='goto source code'>[src]</a></span></h1>
+<pre class='rust fn'>pub fn defer&lt;R: Run&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/alloc/boxed/struct.Box.html' title='alloc::boxed::Box'>Box</a>&lt;TaskBox&gt;&gt; + <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static, A: <a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Async</a> + 'static&gt;(task_runner: R, future_in: A) -&gt; <a class='struct' href='../eventual/struct.Future.html' title='eventual::Future'>Future</a>&lt;A::Value, A::Error&gt;</pre><div class='docblock'><p>This method defers a task onto a task runner until we can complete that call.
 Currently we only support using a ThreadPool as the task runner itself.</p>
 </div></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>
 
-    <div id="help" class="hidden">
+    <aside id="help" class="hidden">
         <div>
+            <h1 class="hidden">Help</h1>
+
             <div class="shortcuts">
-                <h1>Keyboard Shortcuts</h1>
+                <h2>Keyboard Shortcuts</h2>
 
                 <dl>
                     <dt>?</dt>
@@ -73,7 +76,7 @@ Currently we only support using a ThreadPool as the task runner itself.</p>
             </div>
 
             <div class="infos">
-                <h1>Search Tricks</h1>
+                <h2>Search Tricks</h2>
 
                 <p>
                     Prefix searches with a type followed by a colon (e.g.
@@ -83,17 +86,17 @@ Currently we only support using a ThreadPool as the task runner itself.</p>
                 <p>
                     Accepted types are: <code>fn</code>, <code>mod</code>,
                     <code>struct</code>, <code>enum</code>,
-                    <code>trait</code>, <code>typedef</code> (or
-                    <code>tdef</code>).
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
                 </p>
 
                 <p>
                     Search functions by type signature (e.g.
-                    <code>vec -> usize</code>)
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
                 </p>
             </div>
         </div>
-    </div>
+    </aside>
 
     
 
@@ -105,6 +108,6 @@ Currently we only support using a ThreadPool as the task runner itself.</p>
     <script src="../jquery.js"></script>
     <script src="../main.js"></script>
     
-    <script async src="../search-index.js"></script>
+    <script defer src="../search-index.js"></script>
 </body>
 </html>
