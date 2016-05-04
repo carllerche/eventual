@@ -1,4 +1,4 @@
-use eventual::{self, Async, Future};
+use eventual::{self, Async, Complete, Future};
 use std::sync::mpsc::channel;
 
 #[test]
@@ -75,4 +75,32 @@ pub fn test_selecting_two_completed_futures_async() {
     assert_eq!(0, i);
     assert_eq!(123, f1.expect().unwrap());
     assert_eq!(234, f2.expect().unwrap());
+}
+
+#[test]
+pub fn test_stress() {
+    use std::sync::mpsc::*;
+    use std::thread;
+
+    let (tx, rx): (Sender<Complete<(), ()>>, Receiver<Complete<(), ()>>) = channel();
+
+    thread::spawn(move || {
+        loop {
+            if let Ok(c) = rx.recv() {
+                let c: Complete<(), ()> = c;
+                c.complete(());
+            }
+        }
+    });
+
+    fn make_pair() -> (Complete<(), ()>, Future<(), ()>) {
+        Future::pair()
+    }
+
+    for _ in 0..10_000 {
+        let (c1, f1) = make_pair();
+        let (_, f2) = make_pair();
+        tx.send(c1).unwrap();
+        let _ = eventual::select((f1, f2)).await();
+    }
 }
