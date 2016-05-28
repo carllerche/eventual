@@ -1,9 +1,9 @@
 extern crate syncbox;
 
+use super::sleep_ms;
 use std::sync::atomic::AtomicBool;
 use std::sync::atomic::Ordering;
 use std::sync::Arc;
-use std::thread;
 use eventual::{background, defer, Future, Async};
 
 // TODO figure out how to get rid of unused import error here
@@ -33,7 +33,7 @@ fn test_threadpool_background() {
     }));
     // Wait for a bit to make sure that the background task hasn't run
 
-    thread::sleep_ms(100);
+    sleep_ms(100);
     // Set the flag
     flag.store(true, Ordering::Relaxed);
     assert_eq!(Ok(5), result.await());

@@ -1,6 +1,6 @@
+use super::sleep_ms;
 use eventual::{Async, Timer};
 use std::sync::mpsc::*;
-use std::thread;
 use time::{SteadyTime, Duration};
 
 #[test]
@@ -27,7 +27,7 @@ pub fn test_timer_register_late() {
 
     let timeout = timer.timeout_ms(300);
 
-    thread::sleep_ms(600);
+    sleep_ms(600);
 
     let start = SteadyTime::now();
 
