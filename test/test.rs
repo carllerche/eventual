@@ -104,6 +104,5 @@ fn spawn<F: FnOnce() + Send + 'static>(f: F) {
 
 fn sleep_ms(ms: usize) {
     use std::thread;
-    use std::time::Duration;
-    thread::sleep(Duration::from_millis(ms as u64));
+    thread::sleep_ms(ms as u32);
 }
