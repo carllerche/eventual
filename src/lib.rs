@@ -61,7 +61,7 @@ pub use self::receipt::Receipt;
 pub use self::run::{background, defer};
 pub use self::select::{select, Select};
 pub use self::sequence::sequence;
-pub use self::stream::{Stream, StreamIter, Sender, BusySender};
+pub use self::stream::{Head, Stream, StreamIter, Sender, BusySender};
 pub use self::timer::Timer;
 
 use std::error::Error;
