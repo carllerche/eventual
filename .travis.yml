@@ -4,7 +4,7 @@ sudo: false
 rust:
   - nightly
   - stable
-  - 1.3.0 # Oldest supported version of Rust
+  - 1.8.0 # Oldest supported version of Rust
 
 script:
   - cargo test
