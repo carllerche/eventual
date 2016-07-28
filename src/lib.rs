@@ -51,6 +51,7 @@
 
 extern crate syncbox;
 extern crate time;
+extern crate void;
 
 #[macro_use]
 extern crate log;
@@ -66,6 +67,7 @@ pub use self::timer::Timer;
 
 use std::error::Error;
 use std::fmt;
+use void::Void;
 
 // ## TODO
 //
@@ -291,7 +293,7 @@ pub trait Cancel<A: Send + 'static> : Send + 'static {
 impl<T: Send + 'static, E: Send + 'static> Async for Result<T, E> {
     type Value = T;
     type Error = E;
-    type Cancel = Option<Result<T, E>>;
+    type Cancel = Option<Void>;
 
     fn is_ready(&self) -> bool {
         true
@@ -305,7 +307,7 @@ impl<T: Send + 'static, E: Send + 'static> Async for Result<T, E> {
         Ok(self.await())
     }
 
-    fn ready<F: FnOnce(Result<T, E>) + Send + 'static>(self, f: F) -> Option<Result<T, E>> {
+    fn ready<F: FnOnce(Result<T, E>) + Send + 'static>(self, f: F) -> Option<Void> {
         f(self);
         None
     }
@@ -314,18 +316,27 @@ impl<T: Send + 'static, E: Send + 'static> Async for Result<T, E> {
         self.map_err(|e| AsyncError::Failed(e))
     }
 }
-
+/*
 impl<A: Send + 'static> Cancel<A> for Option<A> {
     fn cancel(self) -> Option<A> {
         self
+    }
+}*/
+
+impl<A: Send + 'static> Cancel<A> for Option<Void> {
+    fn cancel(self) -> Option<A> {
+        match self {
+            Some(v) => void::unreachable(v),
+            None => None 
+        }
     }
 }
 
 /// Convenience implementation for (), to ease use of side-effecting functions returning unit
 impl Async for () {
     type Value  = ();
-    type Error  = ();
-    type Cancel = Option<()>;
+    type Error  = Void;
+    type Cancel = Option<Void>;
 
     fn is_ready(&self) -> bool {
         true
@@ -335,16 +346,16 @@ impl Async for () {
         false
     }
 
-    fn poll(self) -> Result<AsyncResult<(), ()>, ()> {
+    fn poll(self) -> Result<AsyncResult<(), Void>, ()> {
         Ok(Ok(self))
     }
 
-    fn ready<F: FnOnce(()) + Send + 'static>(self, f: F) -> Option<()> {
+    fn ready<F: FnOnce(()) + Send + 'static>(self, f: F) -> Option<Void> {
         f(self);
         None
     }
 
-    fn await(self) -> AsyncResult<(), ()> {
+    fn await(self) -> AsyncResult<(), Void> {
          Ok(self)
     }
 }
