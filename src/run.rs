@@ -1,5 +1,4 @@
 use super::{Async, Pair, AsyncError, Future};
-use syncbox::Task;
 use syncbox::TaskBox;
 use syncbox::Run;
 

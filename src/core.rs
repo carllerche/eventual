@@ -1,4 +1,4 @@
-use {Async, BoxedReceive, AsyncResult, AsyncError};
+use {BoxedReceive, AsyncResult, AsyncError};
 use syncbox::atomic::{self, AtomicU64, AtomicUsize, Ordering};
 use std::{fmt, mem};
 use std::sync::atomic::Ordering::{Acquire, Relaxed, Release};
