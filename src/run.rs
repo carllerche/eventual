@@ -1,4 +1,4 @@
-use super::{Async, Pair, AsyncError, Future};
+use super::{Async, AsyncError, Future};
 use syncbox::TaskBox;
 use syncbox::Run;
 
