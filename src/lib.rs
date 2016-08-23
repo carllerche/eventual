@@ -51,6 +51,7 @@
 
 extern crate syncbox;
 extern crate time;
+extern crate void;
 
 #[macro_use]
 extern crate log;
@@ -66,6 +67,7 @@ pub use self::timer::Timer;
 
 use std::error::Error;
 use std::fmt;
+use void::Void;
 
 // ## TODO
 //
@@ -324,7 +326,7 @@ impl<A: Send + 'static> Cancel<A> for Option<A> {
 /// Convenience implementation for (), to ease use of side-effecting functions returning unit
 impl Async for () {
     type Value  = ();
-    type Error  = ();
+    type Error  = Void;
     type Cancel = Option<()>;
 
     fn is_ready(&self) -> bool {
@@ -335,7 +337,7 @@ impl Async for () {
         false
     }
 
-    fn poll(self) -> Result<AsyncResult<(), ()>, ()> {
+    fn poll(self) -> Result<AsyncResult<(), Void>, ()> {
         Ok(Ok(self))
     }
 
@@ -344,7 +346,7 @@ impl Async for () {
         None
     }
 
-    fn await(self) -> AsyncResult<(), ()> {
+    fn await(self) -> AsyncResult<(), Void> {
          Ok(self)
     }
 }
