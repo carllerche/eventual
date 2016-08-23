@@ -282,3 +282,18 @@ pub fn test_ready_fn_does_nothing() {
     complete.complete(123);
     assert_eq!("done", rx.recv().unwrap());
 }
+
+#[test]
+pub fn test_complete_async() {
+    let (complete, future) = Future::<i32, &'static str>::pair();
+    let (tx, rx) = channel();
+
+    future.receive(move |res| {
+        tx.send(res.unwrap()).unwrap();
+    });
+
+    let lazy = Future::<i32, &'static str>::lazy(|| Ok(10));
+
+    complete.complete_async(lazy).await().unwrap();
+    assert_eq!(10, rx.recv().unwrap());
+}

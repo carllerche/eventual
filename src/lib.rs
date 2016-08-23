@@ -148,6 +148,55 @@ pub trait Async : Send + 'static + Sized {
      *
      */
 
+    /// This method returns a Future whose completion value depends on the
+    /// ready value of the original future.
+    ///
+    /// ```
+    /// use eventual::*;
+    /// #[derive(Debug, PartialEq)]
+    /// struct Move(u8);
+    ///
+    /// let m = Move(10);
+    ///
+    /// let f = Future::<&'static str, ()>::of("hello");
+    /// let computed = f.when(move |res| {
+    ///     match res {
+    ///         Ok(res) => Ok((res, m)),
+    ///         Err(e) => Err((e, m))
+    ///     }
+    /// }).await();
+    ///
+    /// assert_eq!(computed, Ok(("hello", Move(10))));
+    ///
+    /// ```
+    fn when<F, U: Async>(self, f: F) -> Future<U::Value, U::Error>
+            where F: FnOnce(Result<Self::Value, Self::Error>) -> U + Send + 'static,
+                  U::Value: Send + 'static,
+                  U::Error: Send + 'static {
+        let (complete, ret) = Future::pair();
+
+        complete.receive(move |c| {
+            if let Ok(complete) = c {
+                self.receive(move |res| {
+                    let res = match res {
+                        Ok(v) => Ok(v),
+                        Err(AsyncError::Failed(e)) => Err(e),
+                        Err(AsyncError::Aborted) => return
+                    };
+                    f(res).receive(move |res| {
+                        match res {
+                            Ok(u) => complete.complete(u),
+                            Err(AsyncError::Failed(e)) => complete.fail(e),
+                            _ => {}
+                        }
+                    })
+                });
+            }
+        });
+
+        ret
+    }
+
     /// This method returns a future whose completion value depends on the
     /// completion value of the original future.
     ///

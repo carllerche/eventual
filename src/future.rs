@@ -294,6 +294,18 @@ impl<T: Send + 'static, E: Send + 'static> Complete<T, E> {
         core::take(&mut self.core).complete(Err(AsyncError::failed(err)), true);
     }
 
+    /// Complete the associated Future with the ready result of the 
+    /// provided Async.
+    pub fn complete_async<A>(self, async: A) -> Future<(), ()>
+        where A: Async<Value=T, Error=E> {
+        async.when(move |res| {
+            match res {
+                Ok(v) => self.complete(v),
+                Err(e) => self.fail(e)
+            }
+        })
+    }
+
     pub fn abort(self) {
         drop(self);
     }
