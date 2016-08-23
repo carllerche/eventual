@@ -1,6 +1,6 @@
 use {Async, Future, Stream, Sender};
 use syncbox::ScheduledThreadPool;
-use time::{SteadyTime, Duration};
+use std::time::{Instant, Duration};
 
 /// Provides timeouts as a `Future` and periodic ticks as a `Stream`.
 pub struct Timer {
@@ -24,18 +24,19 @@ impl Timer {
     pub fn timeout_ms(&self, ms: u32) -> Future<(), ()> {
         let (tx, rx) = Future::pair();
         let pool = self.pool.clone();
-        let now = SteadyTime::now();
+        let now = Instant::now();
 
         tx.receive(move |res| {
             if let Ok(tx) = res {
-                let elapsed = (SteadyTime::now() - now).num_milliseconds() as u32;
+                let elapsed = now.elapsed();
+                let elapsed_ms = elapsed.as_secs() as u32 * 1000 + elapsed.subsec_nanos() / 1000_000;
 
-                if elapsed >= ms {
+                if elapsed_ms >= ms {
                     tx.complete(());
                     return;
                 }
 
-                pool.schedule_ms(ms - elapsed, move || {
+                pool.schedule_ms(ms - elapsed_ms, move || {
                     tx.complete(());
                 });
             }
@@ -48,8 +49,8 @@ impl Timer {
     pub fn interval_ms(&self, ms: u32) -> Stream<(), ()> {
         let (tx, rx) = Stream::pair();
         let pool = self.pool.clone();
-        let interval = Duration::milliseconds(ms as i64);
-        let next = SteadyTime::now() + interval;
+        let interval = Duration::from_millis(ms as u64);
+        let next = Instant::now() + interval;
 
         do_interval(pool, tx, next, interval);
 
@@ -60,18 +61,19 @@ impl Timer {
 /// Processes the interval stream
 fn do_interval<S>(pool: ScheduledThreadPool,
                   sender: S,
-                  next: SteadyTime,
+                  next: Instant,
                   interval: Duration)
         where S: Async<Value=Sender<(), ()>> {
 
     sender.receive(move |res| {
         if let Ok(sender) = res {
-            let now = SteadyTime::now();
+            let now = Instant::now();
             let delay = next - now;
             let next = next + interval;
             let pool2 = pool.clone();
+            let delay_ms = delay.as_secs() as u32 * 1000 + delay.subsec_nanos() / 1000_000;
 
-            pool.schedule_ms(delay.num_milliseconds() as u32, move || {
+            pool.schedule_ms(delay_ms, move || {
                 let busy = sender.send(());
                 do_interval(pool2, busy, next, interval);
             });

@@ -1,7 +1,5 @@
-use super::{Async, Pair, AsyncError, Future};
-use syncbox::Task;
-use syncbox::TaskBox;
-use syncbox::Run;
+use super::{Async, AsyncError, Future};
+use syncbox::{TaskBox, Run};
 
 /// This method defers a task onto a task runner until we can complete that call.
 /// Currently we only support using a ThreadPool as the task runner itself.

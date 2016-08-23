@@ -1,18 +1,18 @@
 use eventual::{Async, Timer};
 use std::sync::mpsc::*;
 use std::thread;
-use time::{SteadyTime, Duration};
+use std::time::{Instant, Duration};
 
 #[test]
 pub fn test_timer_register_early() {
     let timer = Timer::new();
     let (tx, rx) = channel();
 
-    let start = SteadyTime::now();
+    let start = Instant::now();
 
     timer.timeout_ms(300)
         .and_then(move |_| {
-            assert!(SteadyTime::now() - start >= ms(300));
+            assert!(start.elapsed() >= ms(300));
             tx.send("done").unwrap()
         })
         .fire();
@@ -27,13 +27,13 @@ pub fn test_timer_register_late() {
 
     let timeout = timer.timeout_ms(300);
 
-    thread::sleep_ms(600);
+    thread::sleep(Duration::from_millis(600));
 
-    let start = SteadyTime::now();
+    let start = Instant::now();
 
     timeout
         .and_then(move |_| {
-            assert!(SteadyTime::now() - start < ms(100));
+            assert!(start.elapsed() < ms(100));
             tx.send("done").unwrap()
         })
         .fire();
@@ -45,17 +45,16 @@ pub fn test_timer_register_late() {
 pub fn test_timer_interval() {
     let timer = Timer::new();
 
-    let mut prev = SteadyTime::now();
+    let mut prev = Instant::now();
     let ticks = timer.interval_ms(200).iter().take(10);
 
     for _ in ticks {
-        let now = SteadyTime::now();
-        let diff = now - prev;
-        assert!(diff >= Duration::milliseconds(180), "actual={}", diff);
-        prev = now
+        let diff = prev.elapsed();
+        assert!(diff >= ms(180), "actual={:?}", diff);
+        prev = Instant::now()
     }
 }
 
-fn ms(ms: u32) -> Duration {
-    Duration::milliseconds(ms as i64)
+fn ms(ms: u64) -> Duration {
+    Duration::from_millis(ms)
 }

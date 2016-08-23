@@ -16,7 +16,6 @@
 //! # Stream
 
 extern crate eventual;
-extern crate time;
 extern crate syncbox;
 
 #[macro_use]
@@ -85,7 +84,7 @@ fn nums<E: Send>(from: usize, to: usize) -> Stream<usize, E> {
 }
 
 fn futures<T: Send, E: Send>(n: u32) -> (Vec<Complete<T, E>>, Receiver<Future<T, E>>) {
-    let mut v = vec![];
+    let mut v = Vec::with_capacity(n as usize);
     let (tx, rx) = channel();
 
     for _ in 0..n {
@@ -102,7 +101,8 @@ fn spawn<F: FnOnce() + Send + 'static>(f: F) {
     thread::spawn(f);
 }
 
-fn sleep_ms(ms: usize) {
+fn sleep_ms(ms: u64) {
     use std::thread;
-    thread::sleep_ms(ms as u32);
+    use std::time::Duration;
+    thread::sleep(Duration::from_millis(ms));
 }

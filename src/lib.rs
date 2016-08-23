@@ -50,7 +50,6 @@
 #![deny(warnings)]
 
 extern crate syncbox;
-extern crate time;
 
 #[macro_use]
 extern crate log;
