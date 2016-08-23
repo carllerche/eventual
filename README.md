@@ -1,3 +1,7 @@
+# This crate is deprecated!
+
+This crate is deprecated in favor of [futures](https://crates.io/crates/futures).
+
 # Eventual - Futures & Streams for Rust
 
 Eventual provides a Future & Stream abstraction for Rust as well as a
