@@ -9,7 +9,6 @@
 
     <title>eventual::Select - Rust</title>
 
-    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../main.css">
 
     
@@ -25,10 +24,10 @@
 
     
 
-    <nav class="sidebar">
+    <section class="sidebar">
         
         <p class='location'><a href='index.html'>eventual</a></p><script>window.sidebarCurrent = {name: 'Select', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
-    </nav>
+    </section>
 
     <nav class="sub">
         <form class="search-form js-only">
@@ -46,17 +45,17 @@
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-1299' class='srclink' href='../src/eventual/src/select.rs.html#24-26' title='goto source code'>[src]</a></span></h1>
-<pre class='rust trait'>pub trait Select&lt;E: <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static&gt;: <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static {
-    fn <a href='#tymethod.select' class='fnname'>select</a>(self, complete: <a class='struct' href='../eventual/struct.Complete.html' title='eventual::Complete'>Complete</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>(</a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u32.html'>u32</a>, Self<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>)</a>, E&gt;);
+        </span><a id='src-10187' class='srclink' href='../src/eventual/select.rs.html#24-26' title='goto source code'>[src]</a></span></h1>
+<pre class='rust trait'>pub trait Select&lt;E: <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static&gt;: <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a> + <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static {
+    fn <a href='#tymethod.select' class='fnname'>select</a>(self, complete: <a class='struct' href='../eventual/struct.Complete.html' title='eventual::Complete'>Complete</a>&lt;<a href='http://doc.rust-lang.org/nightly/std/primitive.tuple.html'>(<a href='http://doc.rust-lang.org/nightly/std/primitive.u32.html'>u32</a>, Self)</a>, E&gt;);
 }</pre>
             <h2 id='required-methods'>Required Methods</h2>
             <div class='methods'>
-        <h3 id='tymethod.select' class='method stab '><code>fn <a href='#tymethod.select' class='fnname'>select</a>(self, complete: <a class='struct' href='../eventual/struct.Complete.html' title='eventual::Complete'>Complete</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>(</a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u32.html'>u32</a>, Self<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>)</a>, E&gt;)</code></h3></div>
+        <h3 id='tymethod.select' class='method stab '><code>fn <a href='#tymethod.select' class='fnname'>select</a>(self, complete: <a class='struct' href='../eventual/struct.Complete.html' title='eventual::Complete'>Complete</a>&lt;<a href='http://doc.rust-lang.org/nightly/std/primitive.tuple.html'>(<a href='http://doc.rust-lang.org/nightly/std/primitive.u32.html'>u32</a>, Self)</a>, E&gt;)</code></h3></div>
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>
-    <li><code>impl&lt;A1: <a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Async</a>&lt;Error=E&gt;, A2: <a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Async</a>&lt;Error=E&gt;, E: <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static&gt; <a class='trait' href='../eventual/trait.Select.html' title='eventual::Select'>Select</a>&lt;E&gt; for <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>(</a>A1, A2<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>)</a></code></li>
-<li><code>impl&lt;A1: <a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Async</a>&lt;Error=E&gt;, A2: <a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Async</a>&lt;Error=E&gt;, A3: <a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Async</a>&lt;Error=E&gt;, E: <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static&gt; <a class='trait' href='../eventual/trait.Select.html' title='eventual::Select'>Select</a>&lt;E&gt; for <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>(</a>A1, A2, A3<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>)</a></code></li>
+    <li><code>impl&lt;A1: <a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Async</a>&lt;Error=E&gt;, A2: <a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Async</a>&lt;Error=E&gt;, E: <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static&gt; <a class='trait' href='../eventual/trait.Select.html' title='eventual::Select'>Select</a>&lt;E&gt; for <a href='http://doc.rust-lang.org/nightly/std/primitive.tuple.html'>(A1, A2)</a></code></li>
+<li><code>impl&lt;A1: <a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Async</a>&lt;Error=E&gt;, A2: <a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Async</a>&lt;Error=E&gt;, A3: <a class='trait' href='../eventual/trait.Async.html' title='eventual::Async'>Async</a>&lt;Error=E&gt;, E: <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + 'static&gt; <a class='trait' href='../eventual/trait.Select.html' title='eventual::Select'>Select</a>&lt;E&gt; for <a href='http://doc.rust-lang.org/nightly/std/primitive.tuple.html'>(A1, A2, A3)</a></code></li>
 </ul><script type="text/javascript" async
                               src="../implementors/eventual/trait.Select.js">
                       </script></section>
@@ -64,12 +63,10 @@
 
     <section class="footer"></section>
 
-    <aside id="help" class="hidden">
+    <div id="help" class="hidden">
         <div>
-            <h1 class="hidden">Help</h1>
-
             <div class="shortcuts">
-                <h2>Keyboard Shortcuts</h2>
+                <h1>Keyboard Shortcuts</h1>
 
                 <dl>
                     <dt>?</dt>
@@ -86,7 +83,7 @@
             </div>
 
             <div class="infos">
-                <h2>Search Tricks</h2>
+                <h1>Search Tricks</h1>
 
                 <p>
                     Prefix searches with a type followed by a colon (e.g.
@@ -96,17 +93,17 @@
                 <p>
                     Accepted types are: <code>fn</code>, <code>mod</code>,
                     <code>struct</code>, <code>enum</code>,
-                    <code>trait</code>, <code>type</code>, <code>macro</code>,
-                    and <code>const</code>.
+                    <code>trait</code>, <code>typedef</code> (or
+                    <code>tdef</code>).
                 </p>
 
                 <p>
                     Search functions by type signature (e.g.
-                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                    <code>vec -> usize</code>)
                 </p>
             </div>
         </div>
-    </aside>
+    </div>
 
     
 
@@ -118,6 +115,6 @@
     <script src="../jquery.js"></script>
     <script src="../main.js"></script>
     
-    <script defer src="../search-index.js"></script>
+    <script async src="../search-index.js"></script>
 </body>
 </html>
