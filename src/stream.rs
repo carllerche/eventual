@@ -11,6 +11,7 @@ use {
 };
 use super::core::{self, Core};
 use std::fmt;
+use void::Void;
 
 /*
  *
@@ -496,7 +497,7 @@ impl<T: Send + 'static, E: Send + 'static> Sender<T, E> {
 
 impl<T: Send + 'static, E: Send + 'static> Async for Sender<T, E> {
     type Value = Sender<T, E>;
-    type Error = ();
+    type Error = Void;
     type Cancel = Receipt<Sender<T, E>>;
 
     fn is_ready(&self) -> bool {
@@ -507,7 +508,7 @@ impl<T: Send + 'static, E: Send + 'static> Async for Sender<T, E> {
         core::get(&self.core).producer_is_err()
     }
 
-    fn poll(mut self) -> Result<AsyncResult<Sender<T, E>, ()>, Sender<T, E>> {
+    fn poll(mut self) -> Result<AsyncResult<Sender<T, E>, Void>, Sender<T, E>> {
         debug!("Sender::poll; is_ready={}", self.is_ready());
 
         let core = core::take(&mut self.core);
@@ -562,7 +563,7 @@ impl<T: Send + 'static, E: Send + 'static> BusySender<T, E> {
 
 impl<T: Send + 'static, E: Send + 'static> Async for BusySender<T, E> {
     type Value = Sender<T, E>;
-    type Error = ();
+    type Error = Void;
     type Cancel = Receipt<BusySender<T, E>>;
 
     fn is_ready(&self) -> bool {
@@ -573,7 +574,7 @@ impl<T: Send + 'static, E: Send + 'static> Async for BusySender<T, E> {
         core::get(&self.core).consumer_is_err()
     }
 
-    fn poll(mut self) -> Result<AsyncResult<Sender<T, E>, ()>, BusySender<T, E>> {
+    fn poll(mut self) -> Result<AsyncResult<Sender<T, E>, Void>, BusySender<T, E>> {
         debug!("Sender::poll; is_ready={}", self.is_ready());
 
         let core = core::take(&mut self.core);
@@ -750,3 +751,4 @@ impl<T: Send + 'static, E: Send + 'static> Drop for StreamIter<T, E> {
 pub fn from_core<T: Send + 'static, E: Send + 'static>(core: StreamCore<T, E>) -> Stream<T, E> {
     Stream { core: Some(core) }
 }
+

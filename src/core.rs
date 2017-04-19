@@ -3,6 +3,7 @@ use syncbox::atomic::{self, AtomicU64, AtomicUsize, Ordering};
 use std::{fmt, mem};
 use std::sync::atomic::Ordering::{Acquire, Relaxed, Release};
 use std::thread;
+use void::Void;
 
 use self::Lifecycle::*;
 
@@ -78,7 +79,7 @@ impl<T: Send + 'static, E: Send + 'static> Core<T, E> {
         self.inner().producer_is_err()
     }
 
-    pub fn producer_poll(&self) -> Option<AsyncResult<Core<T, E>, ()>> {
+    pub fn producer_poll(&self) -> Option<AsyncResult<Core<T, E>, Void>> {
         self.inner().producer_poll()
     }
 
@@ -424,7 +425,7 @@ impl<T: Send + 'static, E: Send + 'static> CoreInner<T, E> {
         curr.is_canceled()
     }
 
-    pub fn producer_poll(&self) -> Option<AsyncResult<Core<T, E>, ()>> {
+    pub fn producer_poll(&self) -> Option<AsyncResult<Core<T, E>, Void>> {
         let curr = self.state.load(Relaxed);
 
         debug!("Core::producer_poll; state={:?}", curr);

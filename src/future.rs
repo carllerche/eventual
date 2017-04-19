@@ -11,6 +11,7 @@ use super::{
 };
 use super::core::{self, Core};
 use std::fmt;
+use void::Void;
 
 /* TODO:
  * - Add AsyncVal trait that impls all the various monadic fns
@@ -87,7 +88,7 @@ impl<T: Send +'static, E: Send +'static> Future<T, E> {
 
         // Complete the future with the provided function once consumer
         // interest has been registered.
-        complete.receive(move |c: AsyncResult<Complete<T, E>, ()>| {
+        complete.receive(move |c: AsyncResult<Complete<T, E>, Void>| {
             if let Ok(c) = c {
                 f().receive(move |res| {
                     match res {
@@ -306,7 +307,7 @@ impl<T: Send + 'static, E: Send + 'static> Complete<T, E> {
         core::get(&self.core).producer_is_err()
     }
 
-    fn poll(mut self) -> Result<AsyncResult<Complete<T, E>, ()>, Complete<T, E>> {
+    fn poll(mut self) -> Result<AsyncResult<Complete<T, E>, Void>, Complete<T, E>> {
         debug!("Complete::poll; is_ready={}", self.is_ready());
 
         let core = core::take(&mut self.core);
@@ -322,7 +323,7 @@ impl<T: Send + 'static, E: Send + 'static> Complete<T, E> {
             .producer_ready(move |core| f(Complete::from_core(core)));
     }
 
-    pub fn await(self) -> AsyncResult<Complete<T, E>, ()> {
+    pub fn await(self) -> AsyncResult<Complete<T, E>, Void> {
         core::get(&self.core).producer_await();
         self.poll().ok().expect("Complete not ready")
     }
@@ -340,7 +341,7 @@ impl<T: Send + 'static, E: Send + 'static> Complete<T, E> {
 
 impl<T: Send + 'static, E: Send + 'static> Async for Complete<T, E> {
     type Value = Complete<T, E>;
-    type Error = ();
+    type Error = Void;
     type Cancel = Receipt<Complete<T, E>>;
 
     fn is_ready(&self) -> bool {
@@ -351,7 +352,7 @@ impl<T: Send + 'static, E: Send + 'static> Async for Complete<T, E> {
         Complete::is_err(self)
     }
 
-    fn poll(self) -> Result<AsyncResult<Complete<T, E>, ()>, Complete<T, E>> {
+    fn poll(self) -> Result<AsyncResult<Complete<T, E>, Void>, Complete<T, E>> {
         Complete::poll(self)
     }
 

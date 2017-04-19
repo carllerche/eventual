@@ -21,6 +21,7 @@ exclude       = [
 log     = "0.3.0"
 time    = "0.1.25"
 syncbox = "0.2.3"
+void    = "1.0.2"
 
 [dev-dependencies]
 env_logger = "0.3.0"
